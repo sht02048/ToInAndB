@@ -1,0 +1,16 @@
+body {
+  background-color: rgb(24, 24, 24);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#canvas-container {
+  position: relative;
+  width: 60vw;
+  height: 100vh;
+}
+
+canvas {
+  position: absolute;
+}
