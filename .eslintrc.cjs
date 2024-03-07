@@ -4,7 +4,7 @@ module.exports = {
         "es2021": true
     },
     "extends": [
-        "airbnb",
+        "airbnb-base",
         "plugin:prettier/recommended"
     ],
     "overrides": [
