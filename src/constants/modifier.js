@@ -1,0 +1,15 @@
+const BASE_MODIFIER = {
+  GAP: -3,
+};
+
+const BLOCK_MODIFIER = {
+  SCALE: 0.4,
+  GAP: 3,
+  HEIGHT: -6,
+};
+
+const PLATE_MODIFIER = {
+  GAP: 1,
+};
+
+export { BASE_MODIFIER, BLOCK_MODIFIER, PLATE_MODIFIER };
