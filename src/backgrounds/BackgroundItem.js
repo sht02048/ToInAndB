@@ -1,5 +1,4 @@
 import Sprite from "../game/Sprite";
-import BACKGROUND_SPEED from "../constants/speed";
 
 class BackgroundItem extends Sprite {
   constructor({
@@ -25,12 +24,24 @@ class BackgroundItem extends Sprite {
     };
   }
 
+  draw() {
+    this.ctx.drawImage(
+      this.sprite,
+      this.x,
+      this.y,
+      this.width,
+      this.canvas.height,
+    );
+
+    requestAnimationFrame(() => this.draw());
+  }
+
   drop() {
     const gap = Math.ceil(this.height - this.canvas.height) + this.gapModifier;
 
     this.ctx.clearRect(this.x, 0, this.width, this.height);
 
-    this.y += BACKGROUND_SPEED;
+    this.y += this.speed;
 
     if (this.y >= this.canvas.height + this.heightModifier) {
       this.y = 0;
