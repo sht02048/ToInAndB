@@ -1,13 +1,22 @@
-import Aircraft from "./Aircraft";
+import Canvas from "../game/Canvas";
+import Sprite from "../game/Sprite";
 
-class PlayerAircraft extends Aircraft {
+class PlayerAircraft extends Canvas {
   constructor(playerPath) {
-    super(playerPath);
+    const { PLAYER_STRAIGHT, PLAYER_STATIC, PLATER_LEFT, PLATER_RIGHT } =
+      playerPath;
 
-    this.spriteStatic.onload = () => {
+    super("battle-field-canvas");
+
+    this.staticShip = new Sprite(PLAYER_STATIC);
+    this.straightShip = new Sprite(PLAYER_STRAIGHT);
+    this.leftShip = new Sprite(PLATER_LEFT);
+    this.rightShip = new Sprite(PLATER_RIGHT);
+
+    this.staticShip.onload = () => {
       this.speed += 1;
-      this.width = this.spriteStatic.width;
-      this.height = this.spriteStatic.height;
+      this.width = this.staticShip.width;
+      this.height = this.staticShip.height;
       this.x = this.canvas.width / 2 - this.width / 2;
       this.y = this.canvas.height - this.height * 3;
       this.previousPosition = this.speed + 2;
@@ -32,10 +41,10 @@ class PlayerAircraft extends Aircraft {
   }
 
   control() {
-    this.currentDirection = this.spriteStatic;
+    this.currentDirection = this.staticShip;
 
     if (this.keyPresses.ArrowUp) {
-      this.currentDirection = this.spriteStraight;
+      this.currentDirection = this.straightShip;
 
       if (this.y > this.minY) {
         this.y -= this.speed;
@@ -51,7 +60,7 @@ class PlayerAircraft extends Aircraft {
     }
 
     if (this.keyPresses.ArrowLeft) {
-      this.currentDirection = this.spriteLeft;
+      this.currentDirection = this.leftShip;
 
       if (this.x > this.minX) {
         this.x -= this.speed;
@@ -70,7 +79,7 @@ class PlayerAircraft extends Aircraft {
     }
 
     if (this.keyPresses.ArrowRight) {
-      this.currentDirection = this.spriteRight;
+      this.currentDirection = this.rightShip;
 
       if (this.x < this.maxX) {
         this.x += this.speed;
@@ -106,20 +115,20 @@ class PlayerAircraft extends Aircraft {
     requestAnimationFrame(() => this.control());
   }
 
-  gameStart() {
+  in() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.y += 2;
+    this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
-      this.spriteStatic,
+      this.staticShip,
       this.x,
       this.y - this.canvas.height,
       this.width,
       this.height,
     );
 
-    const playerAppear = requestAnimationFrame(() => this.gameStart());
+    const playerAppear = requestAnimationFrame(() => this.in());
 
     if (this.y > this.canvas.height * 2 - this.height * 3) {
       this.y = this.canvas.height - this.height * 3;

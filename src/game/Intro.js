@@ -1,4 +1,5 @@
 import Canvas from "./Canvas";
+import Sprite from "./Sprite";
 
 class Intro extends Canvas {
   #floatSpeed = 0.1;
@@ -7,11 +8,8 @@ class Intro extends Canvas {
     super("intro-canvas");
 
     this.x = this.canvas.width / 2;
-    this.y = 0;
-    this.title = new Image();
-    this.instruction = new Image();
-    this.title.src = titlePath;
-    this.instruction.src = instructionPath;
+    this.title = new Sprite(titlePath);
+    this.instruction = new Sprite(instructionPath);
     this.isUp = true;
     this.amplitude = 0;
   }
@@ -51,10 +49,10 @@ class Intro extends Canvas {
     this.introAppear = requestAnimationFrame(() => this.float());
   }
 
-  gameStart() {
+  out() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.y += 2;
+    this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
       this.title,
@@ -72,7 +70,7 @@ class Intro extends Canvas {
       this.instruction.height / 2,
     );
 
-    const introDown = requestAnimationFrame(() => this.gameStart());
+    const introDown = requestAnimationFrame(() => this.out());
 
     if (this.y > this.canvas.height) {
       cancelAnimationFrame(this.introAppear);

@@ -11,19 +11,19 @@ class Sound {
   }
 
   static toggleSound(toggleButton) {
-    Sound.instances.forEach((instance) => {
-      if (instance.isPlaying) {
-        instance.isPlaying = false;
-        instance.sound.muted = true;
-        toggleButton.innerHTML =
-          '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';
-        return;
-      }
+    const currentSound = Sound.instances[Sound.instances.length - 1];
 
-      instance.isPlaying = true;
-      instance.sound.muted = false;
-      toggleButton.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
-    });
+    if (currentSound.isPlaying) {
+      currentSound.isPlaying = false;
+      currentSound.sound.muted = true;
+      toggleButton.innerHTML =
+        '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';
+      return;
+    }
+
+    currentSound.isPlaying = true;
+    currentSound.sound.muted = false;
+    toggleButton.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
   }
 
   playAudio() {

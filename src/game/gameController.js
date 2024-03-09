@@ -42,8 +42,6 @@ const playAircraft = new PlayerAircraft(SPRITE_PATH);
 const intro = new Intro(IMAGE_PATH.TITLE, IMAGE_PATH.INSTRUCTION_START);
 const introMusic = new Sound(AUDIO_PATH.INTRO);
 
-const backgroundMusic = new Sound(AUDIO_PATH.BATTLE);
-
 function playIntro() {
   const muteToggle = document.getElementById("mute-toggle");
 
@@ -54,23 +52,23 @@ function playIntro() {
     Sound.toggleSound(muteToggle);
   });
 
-  addEventListener("keydown", (event) => {
-    introMusic.pauseAudio();
-    onEnterPress(event);
-  });
+  addEventListener("keydown", onEnterPress);
 }
 
 function start() {
+  const backgroundMusic = new Sound(AUDIO_PATH.BATTLE);
+
   backgroundMusic.playAudio();
-  intro.gameStart();
-  playAircraft.gameStart();
-  plate.gameStart();
-  leftBlock.gameStart();
-  rightBlock.gameStart();
+  intro.out();
+  playAircraft.in();
+  plate.in();
+  leftBlock.in();
+  rightBlock.in();
 }
 
 function onEnterPress(event) {
   if (event.key === "Enter") {
+    introMusic.pauseAudio();
     start();
     removeEventListener("keydown", onEnterPress);
   }

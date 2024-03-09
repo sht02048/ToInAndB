@@ -1,6 +1,7 @@
-import BackgroundSprite from "./BackgroundSprite";
+import Canvas from "../game/Canvas";
+import Sprite from "../game/Sprite";
 
-class BackgroundItem extends BackgroundSprite {
+class BackgroundItem extends Canvas {
   constructor({
     imagePath,
     isRight = false,
@@ -8,10 +9,12 @@ class BackgroundItem extends BackgroundSprite {
     heightModifier = 0,
     scaleModifier = false,
   }) {
-    super(imagePath);
+    super("background-canvas");
 
     this.gapModifier = gapModifier;
     this.heightModifier = heightModifier;
+
+    this.sprite = new Sprite(imagePath);
 
     this.sprite.onload = () => {
       const scale = scaleModifier
@@ -24,19 +27,7 @@ class BackgroundItem extends BackgroundSprite {
     };
   }
 
-  draw() {
-    this.ctx.drawImage(
-      this.sprite,
-      this.x,
-      this.y,
-      this.width,
-      this.canvas.height,
-    );
-
-    requestAnimationFrame(() => this.draw());
-  }
-
-  drop() {
+  circulateDown() {
     const gap = Math.ceil(this.height - this.canvas.height) + this.gapModifier;
 
     this.ctx.clearRect(this.x, 0, this.width, this.height);
@@ -62,13 +53,13 @@ class BackgroundItem extends BackgroundSprite {
       this.canvas.height,
     );
 
-    requestAnimationFrame(() => this.drop());
+    requestAnimationFrame(() => this.circulateDown());
   }
 
-  gameStart() {
+  in() {
     this.ctx.clearRect(this.x, 0, this.width, this.height);
 
-    this.y += this.speed;
+    this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
       this.sprite,
@@ -78,10 +69,10 @@ class BackgroundItem extends BackgroundSprite {
       this.canvas.height,
     );
 
-    const backgroundAppear = requestAnimationFrame(() => this.gameStart());
+    const backgroundAppear = requestAnimationFrame(() => this.in());
 
     if (this.y > this.canvas.height) {
-      this.drop();
+      this.circulateDown();
 
       cancelAnimationFrame(backgroundAppear);
     }
