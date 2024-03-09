@@ -1,15 +1,17 @@
-import Aircraft from "../game/Aircraft";
+import Aircraft from "./Aircraft";
 
 class PlayerAircraft extends Aircraft {
   constructor(playerPath) {
     super(playerPath);
 
-    this.speed += 1;
-    this.width = this.spriteStatic.width;
-    this.height = this.spriteStatic.height;
-    this.x = this.canvas.width / 2 - this.width / 2;
-    this.y = this.canvas.height - this.height * 3;
-    this.previousPosition = this.speed + 2;
+    this.spriteStatic.onload = () => {
+      this.speed += 1;
+      this.width = this.spriteStatic.width;
+      this.height = this.spriteStatic.height;
+      this.x = this.canvas.width / 2 - this.width / 2;
+      this.y = this.canvas.height - this.height * 3;
+      this.previousPosition = this.speed + 2;
+    };
 
     this.keyPresses = {
       ArrowUp: false,
@@ -102,6 +104,29 @@ class PlayerAircraft extends Aircraft {
     );
 
     requestAnimationFrame(() => this.control());
+  }
+
+  gameStart() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.y += 2;
+
+    this.ctx.drawImage(
+      this.spriteStatic,
+      this.x,
+      this.y - this.canvas.height,
+      this.width,
+      this.height,
+    );
+
+    const playerAppear = requestAnimationFrame(() => this.gameStart());
+
+    if (this.y > this.canvas.height * 2 - this.height * 3) {
+      this.y = this.canvas.height - this.height * 3;
+      this.control();
+
+      cancelAnimationFrame(playerAppear);
+    }
   }
 }
 

@@ -1,6 +1,6 @@
-import Sprite from "../game/Sprite";
+import BackgroundSprite from "./BackgroundSprite";
 
-class BackgroundItem extends Sprite {
+class BackgroundItem extends BackgroundSprite {
   constructor({
     imagePath,
     isRight = false,
@@ -63,6 +63,28 @@ class BackgroundItem extends Sprite {
     );
 
     requestAnimationFrame(() => this.drop());
+  }
+
+  gameStart() {
+    this.ctx.clearRect(this.x, 0, this.width, this.height);
+
+    this.y += this.speed;
+
+    this.ctx.drawImage(
+      this.sprite,
+      this.x,
+      this.y - this.canvas.height,
+      this.width,
+      this.canvas.height,
+    );
+
+    const backgroundAppear = requestAnimationFrame(() => this.gameStart());
+
+    if (this.y > this.canvas.height) {
+      this.drop();
+
+      cancelAnimationFrame(backgroundAppear);
+    }
   }
 }
 
