@@ -27,10 +27,12 @@ class Sound {
   }
 
   playAudio() {
+    this.sound.muted = false;
     this.sound.play();
   }
 
   pauseAudio() {
+    this.sound.muted = true;
     this.sound.pause();
   }
 }

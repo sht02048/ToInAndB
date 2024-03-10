@@ -20,4 +20,10 @@ const AUDIO_PATH = {
   INTRO: "/assets/audios/background/battle.mp3",
 };
 
-export { SPRITE_PATH, IMAGE_PATH, AUDIO_PATH };
+const PROJECTILE_PATH = {
+  LEVEL_1: "/assets/images/projectile_1.png",
+  LEVEL_2: "/assets/images/projectile_2.png",
+  LEVEL_3: "/assets/images/projectile_3.png",
+};
+
+export { SPRITE_PATH, IMAGE_PATH, AUDIO_PATH, PROJECTILE_PATH };

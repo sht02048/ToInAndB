@@ -1,7 +1,12 @@
 import Canvas from "../game/Canvas";
 import Sprite from "../game/Sprite";
+import Projectile from "./Projectile";
+import { PROJECTILE_PATH } from "../constants/path";
 
 class PlayerAircraft extends Canvas {
+  #bulletList = [];
+  #isComingIn = true;
+
   constructor(playerPath) {
     const { PLAYER_STRAIGHT, PLAYER_STATIC, PLATER_LEFT, PLATER_RIGHT } =
       playerPath;
@@ -19,7 +24,6 @@ class PlayerAircraft extends Canvas {
       this.height = this.staticShip.height;
       this.x = this.canvas.width / 2 - this.width / 2;
       this.y = this.canvas.height - this.height * 3;
-      this.previousPosition = this.speed + 2;
     };
 
     this.keyPresses = {
@@ -29,18 +33,52 @@ class PlayerAircraft extends Canvas {
       ArrowRight: false,
     };
 
-    const handleKeyPress = (event, isDown) => {
+    const handleControl = (event, isDown) => {
       if (Object.hasOwn(this.keyPresses, event.key)) {
         this.keyPresses[event.key] = isDown;
       }
     };
 
-    addEventListener("keydown", (event) => handleKeyPress(event, true));
+    const handleAttack = (event) => {
+      if (event.key === " ") {
+        this.bullet = new Projectile(PROJECTILE_PATH.LEVEL_1);
+        this.bullet.x = this.x + 3;
+        this.bullet.y = this.y - 50;
 
-    addEventListener("keyup", (event) => handleKeyPress(event, false));
+        this.#bulletList.push(this.bullet);
+      }
+    };
+
+    addEventListener("keydown", (event) => handleControl(event, true));
+
+    addEventListener("keyup", (event) => handleControl(event, false));
+
+    addEventListener("keydown", handleAttack);
+  }
+
+  attack() {
+    for (let i = 0; i < this.#bulletList.length; i++) {
+      const currentBullet = this.#bulletList[i];
+
+      if (currentBullet.y > currentBullet.minY) {
+        currentBullet.y -= currentBullet.speed;
+
+        this.ctx.drawImage(
+          currentBullet.projectile,
+          currentBullet.x,
+          currentBullet.y,
+        );
+      }
+    }
   }
 
   control() {
+    if (this.#isComingIn) {
+      this.in();
+
+      return;
+    }
+
     this.currentDirection = this.staticShip;
 
     if (this.keyPresses.ArrowUp) {
@@ -48,15 +86,11 @@ class PlayerAircraft extends Canvas {
 
       if (this.y > this.minY) {
         this.y -= this.speed;
-        this.dy = this.previousPosition;
-        this.dx = 0;
       }
     }
 
     if (this.keyPresses.ArrowDown && this.y < this.maxY) {
       this.y += this.speed;
-      this.dy = -this.previousPosition;
-      this.dx = 0;
     }
 
     if (this.keyPresses.ArrowLeft) {
@@ -64,17 +98,6 @@ class PlayerAircraft extends Canvas {
 
       if (this.x > this.minX) {
         this.x -= this.speed;
-
-        if (!this.keyPresses.ArrowRight) {
-          this.dx = this.previousPosition;
-        }
-
-        if (
-          (!this.keyPresses.ArrowDown && !this.keyPresses.ArrowUp) ||
-          (this.keyPresses.ArrowDown && this.keyPresses.ArrowUp)
-        ) {
-          this.dy = 0;
-        }
       }
     }
 
@@ -83,26 +106,8 @@ class PlayerAircraft extends Canvas {
 
       if (this.x < this.maxX) {
         this.x += this.speed;
-
-        if (!this.keyPresses.ArrowLeft) {
-          this.dx = -this.previousPosition;
-        }
-
-        if (
-          (!this.keyPresses.ArrowDown && !this.keyPresses.ArrowUp) ||
-          (this.keyPresses.ArrowDown && this.keyPresses.ArrowUp)
-        ) {
-          this.dy = 0;
-        }
       }
     }
-
-    this.ctx.clearRect(
-      this.x + this.dx,
-      this.y + this.dy,
-      this.width,
-      this.height,
-    );
 
     this.ctx.drawImage(
       this.currentDirection,
@@ -111,13 +116,9 @@ class PlayerAircraft extends Canvas {
       this.width,
       this.height,
     );
-
-    requestAnimationFrame(() => this.control());
   }
 
   in() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
@@ -128,13 +129,9 @@ class PlayerAircraft extends Canvas {
       this.height,
     );
 
-    const playerAppear = requestAnimationFrame(() => this.in());
-
     if (this.y > this.canvas.height * 2 - this.height * 3) {
       this.y = this.canvas.height - this.height * 3;
-      this.control();
-
-      cancelAnimationFrame(playerAppear);
+      this.#isComingIn = false;
     }
   }
 }
