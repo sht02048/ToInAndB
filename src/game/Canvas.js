@@ -13,8 +13,8 @@ class Canvas {
     this.maxX = this.canvas.width - this.#rightBlockSize;
     this.minY = -10;
     this.maxY = this.canvas.height - this.#PlayerAircraftHeight + 5;
-    this.speed = 2;
-    this.inAndOutSpeed = 4;
+    this.speed = (this.canvas.width + this.canvas.height) * 0.002;
+    this.inAndOutSpeed = this.speed * 2;
   }
 }
 

@@ -2,6 +2,8 @@ import Canvas from "../game/Canvas";
 import Sprite from "../game/Sprite";
 
 class BackgroundItem extends Canvas {
+  #isComingIn = true;
+
   constructor({
     imagePath,
     isRight = false,
@@ -9,7 +11,7 @@ class BackgroundItem extends Canvas {
     heightModifier = 0,
     scaleModifier = false,
   }) {
-    super("background-canvas");
+    super("battle-field-canvas");
 
     this.gapModifier = gapModifier;
     this.heightModifier = heightModifier;
@@ -28,9 +30,13 @@ class BackgroundItem extends Canvas {
   }
 
   circulateDown() {
-    const gap = Math.ceil(this.height - this.canvas.height) + this.gapModifier;
+    if (this.#isComingIn) {
+      this.in();
 
-    this.ctx.clearRect(this.x, 0, this.width, this.height);
+      return;
+    }
+
+    const gap = Math.ceil(this.height - this.canvas.height) + this.gapModifier;
 
     this.y += this.speed;
 
@@ -52,13 +58,9 @@ class BackgroundItem extends Canvas {
       this.width,
       this.canvas.height,
     );
-
-    requestAnimationFrame(() => this.circulateDown());
   }
 
   in() {
-    this.ctx.clearRect(this.x, 0, this.width, this.height);
-
     this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
@@ -69,12 +71,8 @@ class BackgroundItem extends Canvas {
       this.canvas.height,
     );
 
-    const backgroundAppear = requestAnimationFrame(() => this.in());
-
     if (this.y > this.canvas.height) {
-      this.circulateDown();
-
-      cancelAnimationFrame(backgroundAppear);
+      this.#isComingIn = false;
     }
   }
 }

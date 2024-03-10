@@ -15,8 +15,6 @@ class Intro extends Canvas {
   }
 
   float() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     if (this.isUp) {
       this.y += this.#floatSpeed;
     } else {
@@ -45,13 +43,9 @@ class Intro extends Canvas {
       this.instruction.width / 2,
       this.instruction.height / 2,
     );
-
-    this.introAppear = requestAnimationFrame(() => this.float());
   }
 
   out() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.y += this.inAndOutSpeed;
 
     this.ctx.drawImage(
@@ -69,13 +63,6 @@ class Intro extends Canvas {
       this.instruction.width / 2,
       this.instruction.height / 2,
     );
-
-    const introDown = requestAnimationFrame(() => this.out());
-
-    if (this.y > this.canvas.height) {
-      cancelAnimationFrame(this.introAppear);
-      cancelAnimationFrame(introDown);
-    }
   }
 }
 

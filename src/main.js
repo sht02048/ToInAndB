@@ -1,6 +1,18 @@
 import "./style.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 
-import playIntro from "./game/gameController";
+import Game from "./game/Game";
 
-playIntro();
+const game = new Game();
+
+game.startIntro();
+game.playIntroMusic();
+
+const startGame = () => {
+  game.startGame();
+  game.playBattleMusic();
+
+  removeEventListener("keypress", startGame);
+};
+
+addEventListener("keypress", startGame);
