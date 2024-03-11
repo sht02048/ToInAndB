@@ -1,28 +1,23 @@
-import Canvas from "../game/Canvas";
 import Sprite from "../game/Sprite";
 import Projectile from "./Projectile";
 import { PROJECTILE_PATH } from "../constants/path";
 
-class PlayerAircraft extends Canvas {
-  #bulletList = [];
+class PlayerAircraft {
   #isComingIn = true;
 
-  constructor(playerPath) {
+  constructor(playerPath, game) {
     const { PLAYER_STRAIGHT, PLAYER_STATIC, PLATER_LEFT, PLATER_RIGHT } =
       playerPath;
 
-    super("battle-field-canvas");
-
+    this.game = game;
     this.staticShip = new Sprite(PLAYER_STATIC);
     this.straightShip = new Sprite(PLAYER_STRAIGHT);
     this.leftShip = new Sprite(PLATER_LEFT);
     this.rightShip = new Sprite(PLATER_RIGHT);
 
-    this.speed += 1;
-    this.width = this.staticShip.width;
-    this.height = this.staticShip.height;
-    this.x = this.canvas.width / 2 - this.width / 2;
-    this.y = this.canvas.height - this.height * 3;
+    this.speed = 3;
+    this.x = this.game.backgroundCanvas.width / 2 - this.staticShip.width / 2;
+    this.y = this.game.backgroundCanvas.height - this.staticShip.height * 3;
 
     this.keyPresses = {
       ArrowUp: false,
@@ -43,7 +38,7 @@ class PlayerAircraft extends Canvas {
         this.bullet.x = this.x + 3;
         this.bullet.y = this.y - 50;
 
-        this.#bulletList.push(this.bullet);
+        this.game.bulletList.push(this.bullet);
       }
     };
 
@@ -55,13 +50,13 @@ class PlayerAircraft extends Canvas {
   }
 
   attack() {
-    for (let i = 0; i < this.#bulletList.length; i++) {
-      const currentBullet = this.#bulletList[i];
+    for (let i = 0; i < this.game.bulletList.length; i++) {
+      const currentBullet = this.game.bulletList[i];
 
-      if (currentBullet.y > currentBullet.minY) {
+      if (currentBullet.y > this.game.minY) {
         currentBullet.y -= currentBullet.speed;
 
-        this.ctx.drawImage(
+        this.game.backgroundCtx.drawImage(
           currentBullet.projectile,
           currentBullet.x,
           currentBullet.y,
@@ -82,19 +77,19 @@ class PlayerAircraft extends Canvas {
     if (this.keyPresses.ArrowUp) {
       this.currentDirection = this.straightShip;
 
-      if (this.y > this.minY) {
+      if (this.y > this.game.minY) {
         this.y -= this.speed;
       }
     }
 
-    if (this.keyPresses.ArrowDown && this.y < this.maxY) {
+    if (this.keyPresses.ArrowDown && this.y < this.game.maxY) {
       this.y += this.speed;
     }
 
     if (this.keyPresses.ArrowLeft) {
       this.currentDirection = this.leftShip;
 
-      if (this.x > this.minX) {
+      if (this.x > this.game.minX) {
         this.x -= this.speed;
       }
     }
@@ -102,33 +97,36 @@ class PlayerAircraft extends Canvas {
     if (this.keyPresses.ArrowRight) {
       this.currentDirection = this.rightShip;
 
-      if (this.x < this.maxX) {
+      if (this.x < this.game.maxX) {
         this.x += this.speed;
       }
     }
 
-    this.ctx.drawImage(
+    this.game.backgroundCtx.drawImage(
       this.currentDirection,
       this.x,
       this.y,
-      this.width,
-      this.height,
+      this.staticShip.width,
+      this.staticShip.height,
     );
   }
 
   in() {
-    this.y += this.inAndOutSpeed;
+    this.y += this.game.inAndOutSpeed;
 
-    this.ctx.drawImage(
+    this.game.backgroundCtx.drawImage(
       this.staticShip,
       this.x,
-      this.y - this.canvas.height,
-      this.width,
-      this.height,
+      this.y - this.game.backgroundCanvas.height,
+      this.staticShip.width,
+      this.staticShip.height,
     );
 
-    if (this.y > this.canvas.height * 2 - this.height * 3) {
-      this.y = this.canvas.height - this.height * 3;
+    if (
+      this.y >
+      this.game.backgroundCanvas.height * 2 - this.staticShip.height * 3
+    ) {
+      this.y = this.game.backgroundCanvas.height - this.staticShip.height * 3;
       this.#isComingIn = false;
     }
   }

@@ -1,32 +1,30 @@
-import Canvas from "../game/Canvas";
 import Sprite from "../game/Sprite";
 
-class Projectile extends Canvas {
-  constructor(imagePath) {
-    super("battle-field-canvas");
-
-    this.speed += 6;
+class Projectile {
+  constructor(imagePath, game, subjectX, subjectY) {
+    this.game = game;
+    this.speed = 5;
     this.damage = 2;
-    this.projectileX;
-    this.projectileY;
+    this.x;
+    this.y;
 
     this.projectile = new Sprite(imagePath);
   }
 
-  launch(subjectX, subjectY) {
-    this.x = subjectX;
-    this.y = subjectY;
+  launch() {
+    for (let i = 0; i < this.game, bulletList.length; i++) {
+      const currentBullet = this.game.bulletList[i];
 
-    this.x += this.speed;
-    this.y += this.speed;
+      if (currentBullet.y > currentBullet.game.minY) {
+        currentBullet.y -= currentBullet.speed;
 
-    this.ctx.drawImage(
-      this.projectile,
-      this.x,
-      this.y - 100,
-      this.projectile.width,
-      this.projectile.height,
-    );
+        this.game.backgroundCtx.drawImage(
+          currentBullet.projectile,
+          this.x,
+          this.y,
+        );
+      }
+    }
   }
 }
 

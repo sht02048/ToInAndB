@@ -1,13 +1,12 @@
-import Canvas from "./Canvas";
 import Sprite from "./Sprite";
 
-class Intro extends Canvas {
+class Intro {
   #floatSpeed = 0.1;
 
-  constructor(titlePath, instructionPath) {
-    super("intro-canvas");
-
-    this.x = this.canvas.width / 2;
+  constructor(titlePath, instructionPath, game) {
+    this.game = game;
+    this.x = this.game.introCanvas.width / 2;
+    this.y = 0;
     this.title = new Sprite(titlePath);
     this.instruction = new Sprite(instructionPath);
     this.isUp = true;
@@ -28,7 +27,7 @@ class Intro extends Canvas {
       this.isUp = !this.isUp;
     }
 
-    this.ctx.drawImage(
+    this.game.introCtx.drawImage(
       this.title,
       this.x - this.title.width / 4,
       100,
@@ -36,10 +35,10 @@ class Intro extends Canvas {
       this.title.height / 2,
     );
 
-    this.ctx.drawImage(
+    this.game.introCtx.drawImage(
       this.instruction,
       this.x - this.instruction.width / 4,
-      this.y + this.canvas.height - 150,
+      this.y + this.game.introCanvas.height - 150,
       this.instruction.width / 2,
       this.instruction.height / 2,
     );
@@ -48,7 +47,7 @@ class Intro extends Canvas {
   out() {
     this.y += this.inAndOutSpeed;
 
-    this.ctx.drawImage(
+    this.game.introCtx.drawImage(
       this.title,
       this.x - this.title.width / 4,
       this.y + 100,
@@ -56,10 +55,10 @@ class Intro extends Canvas {
       this.title.height / 2,
     );
 
-    this.ctx.drawImage(
+    this.game.introCtx.drawImage(
       this.instruction,
       this.x - this.instruction.width / 4,
-      this.y + this.canvas.height - 150,
+      this.y + this.game.introCanvas.height - 150,
       this.instruction.width / 2,
       this.instruction.height / 2,
     );
