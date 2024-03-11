@@ -8,6 +8,7 @@ const SPRITE_PATH = {
   PLAYER_STRAIGHT: "/assets/sprites/aircraft/player_straight.png",
   PLATER_LEFT: "/assets/sprites/aircraft/player_left.png",
   PLATER_RIGHT: "/assets/sprites/aircraft/player_right.png",
+  ENEMY_HEAVY: "/assets/sprites/aircraft/enemy_.png",
 };
 
 const IMAGE_PATH = {
@@ -26,4 +27,15 @@ const PROJECTILE_PATH = {
   LEVEL_3: "/assets/images/projectile_3.png",
 };
 
-export { SPRITE_PATH, IMAGE_PATH, AUDIO_PATH, PROJECTILE_PATH };
+const ENEMY_PROJECTILE_PATH = {
+  NORMAL: "/assets/images/projectile_4.png",
+  ENHANCED: "/assets/images/projectile_5.png",
+};
+
+export {
+  SPRITE_PATH,
+  IMAGE_PATH,
+  AUDIO_PATH,
+  PROJECTILE_PATH,
+  ENEMY_PROJECTILE_PATH,
+};
