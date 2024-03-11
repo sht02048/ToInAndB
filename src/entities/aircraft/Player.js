@@ -1,7 +1,7 @@
 import Projectile from "./Projectile";
 
-import Sprite from "../game/Sprite";
-import { SPRITE_PATH, PROJECTILE_PATH } from "../constants/path";
+import Sprite from "../Sprite";
+import { SPRITE_PATH, PROJECTILE_PATH } from "../../constants/path";
 
 class Player {
   #speed = 3.5;
@@ -81,6 +81,7 @@ class Player {
 
     const handleAttack = (event) => {
       if (event.key === " ") {
+        console.log(event);
         this.bullet = new Projectile(PROJECTILE_PATH[this.level]);
         this.bullet.x =
           this.x +

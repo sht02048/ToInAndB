@@ -1,4 +1,4 @@
-import Sprite from "../game/Sprite";
+import Sprite from "../entities/Sprite";
 
 class Background {
   #isInStarted = true;

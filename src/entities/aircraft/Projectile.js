@@ -1,4 +1,4 @@
-import Sprite from "../game/Sprite";
+import Sprite from "../Sprite";
 
 class Projectile {
   constructor(imagePath) {

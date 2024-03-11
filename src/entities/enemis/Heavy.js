@@ -1,6 +1,6 @@
-import Sprite from "../game/Sprite";
-import { SPRITE_PATH } from "../constants/path";
-import { ENEMY_PROJECTILE_PATH } from "../constants/path";
+import Sprite from "../Sprite";
+import { SPRITE_PATH } from "../../constants/path";
+import { ENEMY_PROJECTILE_PATH } from "../../constants/path";
 
 class Heavy {
   constructor(game) {

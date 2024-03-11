@@ -1,4 +1,4 @@
-import Sprite from "./Sprite";
+import Sprite from "../entities/Sprite";
 import { IMAGE_PATH } from "../constants/path";
 
 class Intro {

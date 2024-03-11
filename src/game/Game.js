@@ -1,10 +1,11 @@
-import Intro from "./Intro";
-import Enemy from "../enemis/Enemy";
-import Player from "../aircraft/Player";
 import DistanceCalculator from "./DistanceCalculator";
-import resizeCanvas from "./resizeCanvas";
-import Background from "../backgrounds/Background";
+
+import Intro from "../scens/Intro";
+import Enemy from "../entities/enemis/Enemy";
+import Background from "../scens/Background";
 import { SPRITE_PATH } from "../constants/path";
+import Player from "../entities/aircraft/Player";
+import resizeCanvas from "../utils/resizeCanvas";
 
 class Game {
   #leftBlockSize = 100;
