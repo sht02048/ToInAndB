@@ -1,7 +1,6 @@
 const SPRITE_PATH = {
   BASE: "/assets/sprites/backgrounds/base.png",
-  BLOCK_LEFT: "/assets/sprites/backgrounds/block_left.png",
-  BLOCK_RIGHT: "/assets/sprites/backgrounds/block_right.png",
+  BLOCK: "/assets/sprites/backgrounds/block.png",
   PLATE: "/assets/sprites/backgrounds/plate.png",
   SPACE: "/assets/sprites/backgrounds/space.png",
   PLAYER_STATIC: "/assets/sprites/aircraft/player_static.png",
