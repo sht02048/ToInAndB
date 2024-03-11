@@ -43,6 +43,8 @@ class Game {
     });
     this.playAircraft = new PlayerAircraft(SPRITE_PATH);
     this.intro = new Intro(IMAGE_PATH.TITLE, IMAGE_PATH.INSTRUCTION_START);
+    this.introMusic = new Sound(AUDIO_PATH.INTRO);
+    this.backgroundMusic = new Sound(AUDIO_PATH.BATTLE);
   }
 
   startGame() {
@@ -82,15 +84,12 @@ class Game {
   }
 
   playBattleMusic() {
-    this.backgroundMusic = new Sound(AUDIO_PATH.BATTLE);
     this.introMusic.pauseAudio();
     this.backgroundMusic.playAudio();
   }
 
   playIntroMusic() {
     const muteToggle = document.getElementById("mute-toggle");
-
-    this.introMusic = new Sound(AUDIO_PATH.INTRO);
 
     muteToggle.addEventListener("click", () => {
       this.introMusic.playAudio();

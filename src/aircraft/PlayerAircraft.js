@@ -18,13 +18,11 @@ class PlayerAircraft extends Canvas {
     this.leftShip = new Sprite(PLATER_LEFT);
     this.rightShip = new Sprite(PLATER_RIGHT);
 
-    this.staticShip.onload = () => {
-      this.speed += 1;
-      this.width = this.staticShip.width;
-      this.height = this.staticShip.height;
-      this.x = this.canvas.width / 2 - this.width / 2;
-      this.y = this.canvas.height - this.height * 3;
-    };
+    this.speed += 1;
+    this.width = this.staticShip.width;
+    this.height = this.staticShip.height;
+    this.x = this.canvas.width / 2 - this.width / 2;
+    this.y = this.canvas.height - this.height * 3;
 
     this.keyPresses = {
       ArrowUp: false,

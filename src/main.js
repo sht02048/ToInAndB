@@ -8,11 +8,12 @@ const game = new Game();
 game.startIntro();
 game.playIntroMusic();
 
-const startGame = () => {
-  game.startGame();
-  game.playBattleMusic();
-
-  removeEventListener("keypress", startGame);
+const startGame = (event) => {
+  if (event.key === "Enter") {
+    game.startGame();
+    game.playBattleMusic();
+    removeEventListener("keypress", startGame);
+  }
 };
 
 addEventListener("keypress", startGame);

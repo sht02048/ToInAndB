@@ -18,15 +18,13 @@ class BackgroundItem extends Canvas {
 
     this.sprite = new Sprite(imagePath);
 
-    this.sprite.onload = () => {
-      const scale = scaleModifier
-        ? scaleModifier
-        : this.canvas.width / this.sprite.width;
+    const scale = scaleModifier
+      ? scaleModifier
+      : this.canvas.width / this.sprite.width;
 
-      this.width = this.sprite.width * scale;
-      this.height = this.sprite.height * scale;
-      this.x = isRight ? this.canvas.width - this.width : 0;
-    };
+    this.width = this.sprite.width * scale;
+    this.height = this.sprite.height * scale;
+    this.x = isRight ? this.canvas.width - this.width : 0;
   }
 
   circulateDown() {
