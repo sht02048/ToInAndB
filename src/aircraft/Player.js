@@ -1,5 +1,7 @@
-import { SPRITE_PATH } from "../constants/path";
+import Projectile from "./Projectile";
+
 import Sprite from "../game/Sprite";
+import { SPRITE_PATH, PROJECTILE_PATH } from "../constants/path";
 
 class Player {
   #speed = 3.5;
@@ -11,6 +13,7 @@ class Player {
     this.rightShip = new Sprite(SPRITE_PATH.PLATER_RIGHT);
     this.staticShip = new Sprite(SPRITE_PATH.PLAYER_STATIC);
     this.straightShip = new Sprite(SPRITE_PATH.PLAYER_STRAIGHT);
+    this.level = "LEVEL_1";
 
     this.currentDirection = this.staticShip;
     this.initialY = this.game.mainCanvas.height;
@@ -26,15 +29,6 @@ class Player {
       ArrowLeft: false,
       ArrowRight: false,
     };
-
-    const handleControl = (event, isDown) => {
-      if (Object.hasOwn(this.keyPresses, event.key)) {
-        this.keyPresses[event.key] = isDown;
-      }
-    };
-
-    addEventListener("keydown", (event) => handleControl(event, true));
-    addEventListener("keyup", (event) => handleControl(event, false));
   }
 
   control() {
@@ -75,12 +69,49 @@ class Player {
     }
   }
 
+  addEvent() {
+    const handleControl = (event, isDown) => {
+      if (Object.hasOwn(this.keyPresses, event.key)) {
+        this.keyPresses[event.key] = isDown;
+      }
+    };
+
+    const handleAttack = (event) => {
+      if (event.key === " ") {
+        this.bullet = new Projectile(PROJECTILE_PATH[this.level]);
+        this.bullet.x =
+          this.x + this.currentDirection.width / 2 - this.bullet.width / 2;
+        this.bullet.y = this.y - 50;
+
+        this.game.bulletList.push(this.bullet);
+
+        console.log(this.game.bulletList);
+      }
+    };
+
+    addEventListener("keydown", (event) => handleControl(event, true));
+    addEventListener("keyup", (event) => handleControl(event, false));
+    addEventListener("keypress", handleAttack);
+  }
+
+  attack() {
+    this.game.bulletList.forEach((bullet) => {
+      if (bullet.y > this.game.minY - 50) {
+        bullet.y -= bullet.speed;
+      }
+    });
+  }
+
   render() {
     this.game.mainCtx.drawImage(
       this.currentDirection,
       this.x,
       this.y - this.initialY,
     );
+
+    this.game.bulletList.forEach((bullet) => {
+      this.game.mainCtx.drawImage(bullet.projectile, bullet.x, bullet.y);
+    });
   }
 }
 

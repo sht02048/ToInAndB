@@ -22,6 +22,8 @@ class Game {
     this.maxY = this.mainCanvas.height - this.#PlayerAircraftHeight + 5;
     this.inAndOutSpeed = 4;
 
+    this.bulletList = [];
+
     this.intro = new Intro(this);
     this.player = new Player(this);
     this.block = new Background({
@@ -41,6 +43,7 @@ class Game {
     this.block.in();
     this.plate.circulateDown();
     this.block.circulateDown();
+    this.player.attack();
   }
 
   render() {
@@ -55,6 +58,10 @@ class Game {
     this.render();
 
     requestAnimationFrame(() => this.play());
+  }
+
+  handleEvent() {
+    this.player.addEvent();
   }
 }
 
