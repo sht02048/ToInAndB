@@ -7,7 +7,7 @@ const SPRITE_PATH = {
   PLAYER_STRAIGHT: "/assets/sprites/aircraft/player_straight.png",
   PLATER_LEFT: "/assets/sprites/aircraft/player_left.png",
   PLATER_RIGHT: "/assets/sprites/aircraft/player_right.png",
-  ENEMY_HEAVY: "/assets/sprites/aircraft/enemy_.png",
+  ENEMY_HEAVY: "/assets/sprites/aircraft/enemy_1.png",
 };
 
 const IMAGE_PATH = {

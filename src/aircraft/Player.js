@@ -16,7 +16,10 @@ class Player {
     this.level = "LEVEL_1";
 
     this.currentDirection = this.staticShip;
-    this.initialY = this.game.mainCanvas.height;
+
+    // ACTIVATE 실제 작업시 주석해제 필요
+    // this.initialY = this.game.mainCanvas.height;
+    this.initialY = 0;
 
     this.currentDirection.onload = () => {
       this.x = this.game.mainCanvas.width / 2 - this.currentDirection.width / 2;
@@ -80,12 +83,12 @@ class Player {
       if (event.key === " ") {
         this.bullet = new Projectile(PROJECTILE_PATH[this.level]);
         this.bullet.x =
-          this.x + this.currentDirection.width / 2 - this.bullet.width / 2;
+          this.x +
+          (this.currentDirection.width * 1.2) / 2 -
+          this.bullet.width / 2;
         this.bullet.y = this.y - 50;
 
         this.game.bulletList.push(this.bullet);
-
-        console.log(this.game.bulletList);
       }
     };
 
@@ -96,6 +99,10 @@ class Player {
 
   attack() {
     this.game.bulletList.forEach((bullet) => {
+      if (bullet.isHitByEnemy) {
+        return;
+      }
+
       if (bullet.y > this.game.minY - 50) {
         bullet.y -= bullet.speed;
       }
@@ -107,9 +114,15 @@ class Player {
       this.currentDirection,
       this.x,
       this.y - this.initialY,
+      this.currentDirection.width * 1.2,
+      this.currentDirection.height * 1.2,
     );
 
     this.game.bulletList.forEach((bullet) => {
+      if (bullet.isHitByEnemy) {
+        return;
+      }
+
       this.game.mainCtx.drawImage(bullet.projectile, bullet.x, bullet.y);
     });
   }

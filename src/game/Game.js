@@ -1,5 +1,7 @@
 import Intro from "./Intro";
+import Enemy from "../enemis/Enemy";
 import Player from "../aircraft/Player";
+import DistanceCalculator from "./DistanceCalculator";
 import resizeCanvas from "./resizeCanvas";
 import Background from "../backgrounds/Background";
 import { SPRITE_PATH } from "../constants/path";
@@ -23,9 +25,14 @@ class Game {
     this.inAndOutSpeed = 4;
 
     this.bulletList = [];
+    this.enemyList = {
+      heavy: [],
+    };
 
     this.intro = new Intro(this);
+    this.enemy = new Enemy(this);
     this.player = new Player(this);
+    this.distanceCalculator = new DistanceCalculator(this);
     this.block = new Background({
       game: this,
       imagePath: SPRITE_PATH.BLOCK,
@@ -34,13 +41,16 @@ class Game {
       game: this,
       imagePath: SPRITE_PATH.PLATE,
     });
+
+    this.enemy.spawn();
+    this.enemy.spawn();
+    this.enemy.spawn();
   }
 
   update() {
+    this.distanceCalculator.getHeavyDistance();
     this.player.control();
-    this.player.in();
-    this.plate.in();
-    this.block.in();
+    this.enemy.update();
     this.plate.circulateDown();
     this.block.circulateDown();
     this.player.attack();
@@ -50,6 +60,7 @@ class Game {
     this.plate.render();
     this.block.render();
     this.player.render();
+    this.enemy.render();
   }
 
   play() {
