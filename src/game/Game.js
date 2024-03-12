@@ -1,11 +1,11 @@
-import DistanceCalculator from "./DistanceCalculator";
-
-import Intro from "../scens/Intro";
-import Enemy from "../entities/enemis/Enemy";
-import Background from "../scens/Background";
-import { SPRITE_PATH } from "../constants/path";
+import Sound from "../utils/Sound";
+import Intro from "../scenes/Intro";
+import { SPRITE, AUDIO } from "../constants/path";
+import Enemy from "../entities/enemies/Enemy";
+import Background from "../scenes/Background";
 import Player from "../entities/aircraft/Player";
 import resizeCanvas from "../utils/resizeCanvas";
+import DistanceCalculator from "../collisions/CollisionChecker";
 
 class Game {
   #leftBlockSize = 100;
@@ -29,18 +29,25 @@ class Game {
     this.enemyList = {
       heavy: [],
     };
+    this.enemyHitList = [];
+    this.enemyDestroyedList = [];
 
-    this.intro = new Intro(this);
+    this.introMusic = new Sound(AUDIO.INTRO);
+    this.battleMusic = new Sound(AUDIO.BATTLE);
+
     this.enemy = new Enemy(this);
     this.player = new Player(this);
+
     this.distanceCalculator = new DistanceCalculator(this);
+
+    this.intro = new Intro(this);
     this.block = new Background({
       game: this,
-      imagePath: SPRITE_PATH.BLOCK,
+      imagePath: SPRITE.BLOCK,
     });
     this.plate = new Background({
       game: this,
-      imagePath: SPRITE_PATH.PLATE,
+      imagePath: SPRITE.PLATE,
     });
 
     this.enemy.spawn();
@@ -49,7 +56,7 @@ class Game {
   }
 
   update() {
-    this.distanceCalculator.getHeavyDistance();
+    this.distanceCalculator.checkHeavy();
     this.player.control();
     this.enemy.update();
     this.plate.circulateDown();
@@ -60,8 +67,8 @@ class Game {
   render() {
     this.plate.render();
     this.block.render();
-    this.player.render();
     this.enemy.render();
+    this.player.render();
   }
 
   play() {
