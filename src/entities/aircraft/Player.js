@@ -1,7 +1,7 @@
-import Projectile from "./Projectile";
+import Projectile from "../../collisions/Projectile";
 
 import Sprite from "../Sprite";
-import { SPRITE_PATH, PROJECTILE_PATH } from "../../constants/path";
+import { SPRITE, PROJECTILE } from "../../constants/path";
 
 class Player {
   #speed = 3.5;
@@ -9,10 +9,10 @@ class Player {
   constructor(game) {
     this.game = game;
 
-    this.leftShip = new Sprite(SPRITE_PATH.PLATER_LEFT);
-    this.rightShip = new Sprite(SPRITE_PATH.PLATER_RIGHT);
-    this.staticShip = new Sprite(SPRITE_PATH.PLAYER_STATIC);
-    this.straightShip = new Sprite(SPRITE_PATH.PLAYER_STRAIGHT);
+    this.leftShip = new Sprite(SPRITE.PLATER_LEFT);
+    this.rightShip = new Sprite(SPRITE.PLATER_RIGHT);
+    this.staticShip = new Sprite(SPRITE.PLAYER_STATIC);
+    this.straightShip = new Sprite(SPRITE.PLAYER_STRAIGHT);
     this.level = "LEVEL_1";
 
     this.currentDirection = this.staticShip;
@@ -81,8 +81,7 @@ class Player {
 
     const handleAttack = (event) => {
       if (event.key === " ") {
-        console.log(event);
-        this.bullet = new Projectile(PROJECTILE_PATH[this.level]);
+        this.bullet = new Projectile(PROJECTILE[this.level]);
         this.bullet.x =
           this.x +
           (this.currentDirection.width * 1.2) / 2 -
@@ -100,7 +99,7 @@ class Player {
 
   attack() {
     this.game.bulletList.forEach((bullet) => {
-      if (bullet.isHitByEnemy) {
+      if (bullet.didHitEnemy) {
         return;
       }
 
@@ -120,7 +119,7 @@ class Player {
     );
 
     this.game.bulletList.forEach((bullet) => {
-      if (bullet.isHitByEnemy) {
+      if (bullet.didHitEnemy) {
         return;
       }
 

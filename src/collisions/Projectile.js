@@ -1,4 +1,4 @@
-import Sprite from "../Sprite";
+import Sprite from "../entities/Sprite";
 
 class Projectile {
   constructor(imagePath) {
@@ -6,7 +6,7 @@ class Projectile {
 
     this.speed = 5;
     this.damage = 2;
-    this.isHitByEnemy = false;
+    this.didHitEnemy = false;
     this.x;
     this.y;
     this.width = this.projectile.width;

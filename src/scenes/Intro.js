@@ -1,5 +1,5 @@
 import Sprite from "../entities/Sprite";
-import { IMAGE_PATH } from "../constants/path";
+import { IMAGE } from "../constants/path";
 
 class Intro {
   #floatSpeed = 0.1;
@@ -9,8 +9,8 @@ class Intro {
     this.x = this.game.introCanvas.width / 2;
     this.titleY = 100;
     this.instructionY = this.game.introCanvas.height - 150;
-    this.title = new Sprite(IMAGE_PATH.TITLE);
-    this.instruction = new Sprite(IMAGE_PATH.INSTRUCTION_START);
+    this.title = new Sprite(IMAGE.TITLE);
+    this.instruction = new Sprite(IMAGE.INSTRUCTION_START);
     this.isUp = true;
     this.amplitude = 0;
   }
