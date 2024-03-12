@@ -1,4 +1,5 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from "../constants/canvasScale";
+const CANVAS_WIDTH = window.innerWidth * 0.6;
+const CANVAS_HEIGHT = window.innerHeight;
 
 function resizeCanvas() {
   const canvases = document.querySelectorAll("canvas");
