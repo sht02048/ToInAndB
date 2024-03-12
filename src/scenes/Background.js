@@ -10,6 +10,11 @@ class Background {
     this.y = 0;
   }
 
+  update() {
+    this.in();
+    this.circulateDown();
+  }
+
   circulateDown() {
     this.y += this.game.inAndOutSpeed;
 

@@ -1,6 +1,5 @@
-import Sound from "../utils/Sound";
 import Intro from "../scenes/Intro";
-import { SPRITE, AUDIO } from "../constants/path";
+import { SPRITE } from "../constants/path";
 import Enemy from "../entities/enemies/Enemy";
 import Background from "../scenes/Background";
 import Player from "../entities/aircraft/Player";
@@ -32,9 +31,6 @@ class Game {
     this.enemyHitList = [];
     this.enemyDestroyedList = [];
 
-    this.introMusic = new Sound(AUDIO.INTRO);
-    this.battleMusic = new Sound(AUDIO.BATTLE);
-
     this.enemy = new Enemy(this);
     this.player = new Player(this);
 
@@ -56,23 +52,45 @@ class Game {
   }
 
   update() {
+    this.intro.out();
     this.distanceCalculator.checkHeavy();
-    this.player.control();
+    this.player.update();
     this.enemy.update();
-    this.plate.circulateDown();
-    this.block.circulateDown();
-    this.player.attack();
+    this.plate.update();
+    this.block.update();
   }
 
   render() {
+    this.intro.render();
     this.plate.render();
     this.block.render();
     this.enemy.render();
     this.player.render();
   }
 
+  setUp() {
+    this.introCtx.clearRect(
+      0,
+      0,
+      this.introCanvas.width,
+      this.introCanvas.height,
+    );
+
+    this.intro.float();
+    this.intro.render();
+
+    requestAnimationFrame(() => this.setUp());
+  }
+
   play() {
     this.mainCtx.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
+    this.introCtx.clearRect(
+      0,
+      0,
+      this.introCanvas.width,
+      this.introCanvas.height,
+    );
+
     this.update();
     this.render();
 
@@ -80,7 +98,18 @@ class Game {
   }
 
   handleEvent() {
-    this.player.addEvent();
+    const handleEnter = (event) => {
+      if (event.key === "Enter") {
+        this.intro.playBattleMusic();
+        this.play();
+        this.player.addEvent();
+
+        removeEventListener("keydown", handleEnter);
+      }
+    };
+
+    this.intro.playIntroMusic();
+    addEventListener("keydown", handleEnter);
   }
 }
 

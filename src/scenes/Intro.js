@@ -1,18 +1,25 @@
+import Sound from "../utils/Sound";
 import Sprite from "../entities/Sprite";
-import { IMAGE } from "../constants/path";
+import { IMAGE, AUDIO } from "../constants/path";
 
 class Intro {
   #floatSpeed = 0.1;
 
   constructor(game) {
     this.game = game;
-    this.x = this.game.introCanvas.width / 2;
-    this.titleY = 100;
-    this.instructionY = this.game.introCanvas.height - 150;
+
     this.title = new Sprite(IMAGE.TITLE);
     this.instruction = new Sprite(IMAGE.INSTRUCTION_START);
+
+    this.x = this.game.introCanvas.width / 2;
+    this.instructionY = this.game.introCanvas.height - 150;
+    this.titleY = 100;
+
     this.isUp = true;
     this.amplitude = 0;
+
+    this.introMusic = new Sound(AUDIO.INTRO);
+    this.battleMusic = new Sound(AUDIO.BATTLE);
   }
 
   float() {
@@ -51,6 +58,20 @@ class Intro {
       this.instruction.width / 2,
       this.instruction.height / 2,
     );
+  }
+
+  playIntroMusic() {
+    const muteToggle = document.getElementById("mute-toggle");
+
+    muteToggle.addEventListener("click", () => {
+      this.introMusic.playAudio();
+      Sound.toggleSound(muteToggle);
+    });
+  }
+
+  playBattleMusic() {
+    this.introMusic.pauseAudio();
+    this.battleMusic.playAudio();
   }
 }
 
