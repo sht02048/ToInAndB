@@ -24,12 +24,11 @@ class Game {
     this.maxY = this.mainCanvas.height - this.#PlayerAircraftHeight + 5;
     this.inAndOutSpeed = 4;
 
-    this.bulletList = [];
+    this.playerBulletList = [];
     this.enemyList = {
       heavy: [],
     };
-    this.enemyHitList = [];
-    this.enemyDestroyedList = [];
+    this.enemyBulletList = [];
 
     this.enemy = new Enemy(this);
     this.player = new Player(this);
@@ -53,7 +52,7 @@ class Game {
 
   update() {
     this.intro.out();
-    this.distanceCalculator.checkHeavy();
+    this.distanceCalculator.update();
     this.player.update();
     this.enemy.update();
     this.plate.update();
@@ -101,13 +100,15 @@ class Game {
     const handleEnter = (event) => {
       if (event.key === "Enter") {
         this.intro.playBattleMusic();
-        this.play();
-        this.player.addEvent();
+        // ACTIVATE 실제 작업 시 주석해제 및 하단 this.player.addEvent 삭제 필요
+        // this.play();
+        // this.player.addEvent();
 
         removeEventListener("keydown", handleEnter);
       }
     };
 
+    this.player.addEvent();
     this.intro.playIntroMusic();
     addEventListener("keydown", handleEnter);
   }
