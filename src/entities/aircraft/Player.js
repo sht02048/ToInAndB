@@ -4,6 +4,11 @@ import Sprite from "../Sprite";
 import { SPRITE, PROJECTILE } from "../../constants/path";
 
 class Player {
+  static x = 0;
+  static y = 0;
+  static width = 0;
+  static height = 0;
+
   #speed = 3.5;
 
   constructor(game) {
@@ -32,6 +37,13 @@ class Player {
       ArrowLeft: false,
       ArrowRight: false,
     };
+  }
+
+  update() {
+    // ACTIVATE 실제 작업시 주석해제 필요
+    // this.in();
+    this.control();
+    this.attack();
   }
 
   control() {
@@ -64,6 +76,11 @@ class Player {
         this.x += this.#speed;
       }
     }
+
+    Player.x = this.x;
+    Player.y = this.y;
+    Player.width = this.currentDirection.width;
+    Player.height = this.currentDirection.height;
   }
 
   in() {
@@ -88,7 +105,7 @@ class Player {
           this.bullet.width / 2;
         this.bullet.y = this.y - 50;
 
-        this.game.bulletList.push(this.bullet);
+        this.game.playerBulletList.push(this.bullet);
       }
     };
 
@@ -98,8 +115,8 @@ class Player {
   }
 
   attack() {
-    this.game.bulletList.forEach((bullet) => {
-      if (bullet.didHitEnemy) {
+    this.game.playerBulletList.forEach((bullet) => {
+      if (bullet.didHit) {
         return;
       }
 
@@ -118,8 +135,8 @@ class Player {
       this.currentDirection.height * 1.2,
     );
 
-    this.game.bulletList.forEach((bullet) => {
-      if (bullet.didHitEnemy) {
+    this.game.playerBulletList.forEach((bullet) => {
+      if (bullet.didHit) {
         return;
       }
 

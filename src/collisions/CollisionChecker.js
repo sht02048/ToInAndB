@@ -1,28 +1,58 @@
 import Explosion from "./Explosion";
+import Player from "../entities/aircraft/Player";
 
 class CollisionChecker {
   constructor(game) {
     this.game = game;
-    this.bulletList = this.game.bulletList;
-    this.heavyList = this.game.enemyList.heavy;
-    this.enemyHitList = this.game.enemyHitList;
+
+    this.enemyList = this.game.enemyList;
+    this.playerBulletList = this.game.playerBulletList;
+    this.enemyBulletList = this.game.enemyBulletList;
 
     this.explosion = new Explosion(game);
   }
 
-  checkHeavy() {
-    this.heavyList.forEach((heavy) => {
-      if (heavy.isDestroyed) {
+  update() {
+    this.checkEnemy(this.enemyList.heavy);
+  }
+
+  checkEnemy(enemyList) {
+    enemyList.forEach((enemy) => {
+      if (enemy.isDestroyed) {
         return;
       }
 
-      const heavyLeft = heavy.x;
-      const heavyRight = heavy.x + heavy.width;
-      const heavyTop = heavy.y;
-      const heavyBottom = heavy.y + heavy.height;
+      enemy.bulletList.forEach((bullet) => {
+        if (bullet.didHit) {
+          return;
+        }
 
-      this.bulletList.forEach((bullet) => {
-        if (bullet.didHitEnemy) {
+        const playerLeft = Player.x;
+        const playerRight = Player.x + Player.width;
+        const playerTop = Player.y;
+        const playerBottom = Player.y + Player.height;
+
+        const bulletLeft = bullet.x;
+        const bulletRight = bullet.x + bullet.width;
+        const bulletBottom = bullet.y + bullet.height - 20;
+
+        if (
+          playerLeft <= bulletRight &&
+          playerRight >= bulletLeft &&
+          playerTop <= bulletBottom &&
+          playerBottom >= bulletBottom
+        ) {
+          bullet.didHit = true;
+        }
+      });
+
+      const heavyLeft = enemy.x;
+      const heavyRight = enemy.x + enemy.width;
+      const heavyTop = enemy.y;
+      const heavyBottom = enemy.y + enemy.height;
+
+      this.playerBulletList.forEach((bullet) => {
+        if (bullet.didHit) {
           return;
         }
 
@@ -36,13 +66,12 @@ class CollisionChecker {
           heavyTop <= bulletTop &&
           heavyBottom >= bulletTop
         ) {
-          heavy.health -= bullet.damage;
-          heavy.hitNumber += 1;
-          heavy.isHit = true;
-          bullet.didHitEnemy = true;
+          enemy.health -= bullet.damage;
+          enemy.isHit = true;
+          bullet.didHit = true;
 
-          if (heavy.health <= 0) {
-            heavy.isDestroyed = true;
+          if (enemy.health <= 0) {
+            enemy.isDestroyed = true;
             return;
           }
         }

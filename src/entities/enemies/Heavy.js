@@ -16,7 +16,7 @@ class Heavy extends EnemyBase {
     this.game = game;
     this.heavyList = this.game.enemyList.heavy;
 
-    this.health = 5;
+    this.health = 4;
     this.speed = 1;
 
     this.ship.onload = () => {
@@ -25,19 +25,46 @@ class Heavy extends EnemyBase {
     };
   }
 
-  spawn() {
-    this.heavyList.push(this);
-  }
-
   update() {
     this.heavyList.forEach((heavy) => {
+      const bulletList = heavy.bulletList;
+
+      bulletList.forEach((bullet) => {
+        if (bullet.didHit) {
+          return;
+        }
+
+        bullet.y += bullet.speed + this.speed;
+      });
+
+      if (heavy.isDestroyed || heavy.y > this.game.mainCanvas.height) {
+        clearInterval(heavy.straightInterval);
+        return;
+      }
+
       heavy.y += this.speed;
     });
   }
 
   render() {
     this.heavyList.forEach((heavy) => {
-      if (heavy.isDestroyed) {
+      const bulletList = heavy.bulletList;
+
+      bulletList.forEach((bullet) => {
+        if (bullet.didHit) {
+          return;
+        }
+
+        this.game.mainCtx.drawImage(
+          bullet.projectile,
+          bullet.x,
+          bullet.y + 10,
+          bullet.width / 2,
+          bullet.height / 2,
+        );
+      });
+
+      if (heavy.isDestroyed || heavy.y > this.game.mainCanvas.height) {
         this.explosion.destroy(heavy);
         return;
       }
@@ -62,6 +89,23 @@ class Heavy extends EnemyBase {
         heavy.height,
       );
     });
+  }
+
+  spawn() {
+    this.heavyList.push(this);
+    this.startAttack();
+  }
+
+  startAttack() {
+    if (this.isStraightLaunched) {
+      return;
+    }
+
+    this.straightInterval = setInterval(() => {
+      this.launchStraightProjectile(this.x, this.y);
+    }, 1000);
+
+    this.isStraightLaunched = true;
   }
 }
 

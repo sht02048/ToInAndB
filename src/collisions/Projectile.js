@@ -6,9 +6,10 @@ class Projectile {
 
     this.speed = 5;
     this.damage = 2;
-    this.didHitEnemy = false;
+    this.didHit = false;
     this.x;
     this.y;
+
     this.width = this.projectile.width;
     this.height = this.projectile.height;
   }
