@@ -63,7 +63,9 @@ class Intro {
   playIntroMusic() {
     const muteToggle = document.getElementById("mute-toggle");
 
-    muteToggle.addEventListener("click", () => {
+    muteToggle.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+
       this.introMusic.playAudio();
       Sound.toggleSound(muteToggle);
     });

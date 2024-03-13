@@ -44,10 +44,6 @@ class Game {
       game: this,
       imagePath: SPRITE.PLATE,
     });
-
-    this.enemy.spawn();
-    this.enemy.spawn();
-    this.enemy.spawn();
   }
 
   update() {

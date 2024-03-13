@@ -23,89 +23,49 @@ class Heavy extends EnemyBase {
       this.width = this.ship.width * 1.2;
       this.height = this.ship.height * 1.2;
     };
+
+    this.heavyList.push(this);
   }
 
   update() {
-    this.heavyList.forEach((heavy) => {
-      const bulletList = heavy.bulletList;
+    this.launchedGuided(this);
+    this.updateBullet(this);
 
-      bulletList.forEach((bullet) => {
-        if (bullet.didHit) {
-          return;
-        }
-
-        bullet.y += bullet.speed + this.speed;
-      });
-
-      if (heavy.isDestroyed || heavy.y > this.game.mainCanvas.height) {
-        clearInterval(heavy.straightInterval);
-        return;
-      }
-
-      heavy.y += this.speed;
-    });
-  }
-
-  render() {
-    this.heavyList.forEach((heavy) => {
-      const bulletList = heavy.bulletList;
-
-      bulletList.forEach((bullet) => {
-        if (bullet.didHit) {
-          return;
-        }
-
-        this.game.mainCtx.drawImage(
-          bullet.projectile,
-          bullet.x,
-          bullet.y + 10,
-          bullet.width / 2,
-          bullet.height / 2,
-        );
-      });
-
-      if (heavy.isDestroyed || heavy.y > this.game.mainCanvas.height) {
-        this.explosion.destroy(heavy);
-        return;
-      }
-
-      if (heavy.isHit) {
-        this.explosion.hit(heavy, this.destroyedShip);
-        heavy.hitFrame += 1;
-
-        if (heavy.hitFrame === 5) {
-          heavy.hitFrame = 0;
-          heavy.isHit = false;
-        }
-
-        return;
-      }
-
-      this.game.mainCtx.drawImage(
-        heavy.ship,
-        heavy.x,
-        heavy.y,
-        heavy.width,
-        heavy.height,
-      );
-    });
-  }
-
-  spawn() {
-    this.heavyList.push(this);
-    this.startAttack();
-  }
-
-  startAttack() {
-    if (this.isStraightLaunched) {
+    if (this.isDestroyed || this.y > this.game.mainCanvas.height) {
+      this.isDestroyed = true;
       return;
     }
 
-    this.straightInterval = setInterval(() => {
-      this.launchStraightProjectile(this.x, this.y);
-    }, 1000);
+    this.y += this.speed;
+  }
 
-    this.isStraightLaunched = true;
+  render() {
+    this.renderBullet(this);
+
+    if (this.isDestroyed || this.y > this.game.mainCanvas.height) {
+      this.explosion.destroy(this);
+      return;
+    }
+
+    if (this.isHit) {
+      this.explosion.hit(this, this.destroyedShip);
+      this.hitFrame += 1;
+
+      if (this.hitFrame === 5) {
+        this.hitFrame = 0;
+        this.isHit = false;
+      }
+
+      return;
+    }
+
+    this.game.mainCtx.drawImage(
+      this.ship,
+      this.x,
+      this.y,
+      this.width,
+      this.height,
+    );
   }
 }
 

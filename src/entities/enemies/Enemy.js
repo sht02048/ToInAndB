@@ -7,19 +7,23 @@ class Enemy {
     this.health = 5;
     this.enemyX = 0;
     this.enemyY = 0;
-  }
 
-  spawn() {
-    this.heavy = new Heavy(this.game);
-    this.heavy.spawn();
+    // TODO scene 추가
+    this.heavy1 = new Heavy(this.game);
+    this.heavy2 = new Heavy(this.game);
+    this.heavy3 = new Heavy(this.game);
   }
 
   update() {
-    this.heavy.update();
+    this.heavy1.update();
+    this.heavy2.update();
+    this.heavy3.update();
   }
 
   render() {
-    this.heavy.render();
+    this.heavy1.render();
+    this.heavy2.render();
+    this.heavy3.render();
   }
 }
 

@@ -9,6 +9,7 @@ class Projectile {
     this.didHit = false;
     this.x;
     this.y;
+    this.frame = 0;
 
     this.width = this.projectile.width;
     this.height = this.projectile.height;

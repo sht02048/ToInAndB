@@ -15,11 +15,11 @@ class Explosion {
   }
 
   destroy(enemy) {
-    if (enemy.explosionFrame === 66) {
+    if (enemy.explosionFrame === 44) {
       return;
     }
 
-    const currentFrame = Math.floor(enemy.explosionFrame / 6);
+    const currentFrame = Math.floor(enemy.explosionFrame / 4);
 
     this.game.mainCtx.drawImage(
       this.#enemyExplosionList[currentFrame],

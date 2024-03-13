@@ -18,10 +18,6 @@ class CollisionChecker {
 
   checkEnemy(enemyList) {
     enemyList.forEach((enemy) => {
-      if (enemy.isDestroyed) {
-        return;
-      }
-
       enemy.bulletList.forEach((bullet) => {
         if (bullet.didHit) {
           return;
@@ -34,7 +30,7 @@ class CollisionChecker {
 
         const bulletLeft = bullet.x;
         const bulletRight = bullet.x + bullet.width;
-        const bulletBottom = bullet.y + bullet.height - 20;
+        const bulletBottom = bullet.y + bullet.height;
 
         if (
           playerLeft <= bulletRight &&
@@ -45,6 +41,10 @@ class CollisionChecker {
           bullet.didHit = true;
         }
       });
+
+      if (enemy.isDestroyed) {
+        return;
+      }
 
       const heavyLeft = enemy.x;
       const heavyRight = enemy.x + enemy.width;
