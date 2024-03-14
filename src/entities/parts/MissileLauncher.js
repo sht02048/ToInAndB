@@ -22,7 +22,13 @@ class MissileLauncher {
   }
 
   render() {
-    this.missileList.forEach((missile) => missile.render(missile.x, missile.y));
+    this.missileList.forEach((missile) => {
+      if (missile.isVanished) {
+        return;
+      }
+
+      missile.render(missile.x, missile.y);
+    });
   }
 
   update(missileSpeed) {

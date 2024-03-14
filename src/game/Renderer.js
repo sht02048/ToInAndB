@@ -8,10 +8,8 @@ class Renderer {
   constructor(imagePath, width, height) {
     this.imagePath = imagePath;
     this.image = new Image();
-
     this.width = width;
     this.height = height;
-
     this.image.src = this.imagePath;
 
     this.mainCtx = this.#mainCanvas.getContext("2d");
@@ -24,6 +22,13 @@ class Renderer {
     this.maxY = this.canvasHeight - this.#playerShipHeight + 5;
     this.inAndOutSpeed = 4;
     this.frame = 0;
+
+    if (this.width === undefined && this.height === undefined) {
+      this.image.onload = () => {
+        this.width = this.image.width;
+        this.height = this.image.height;
+      };
+    }
   }
 
   render(x, y, width, height) {
