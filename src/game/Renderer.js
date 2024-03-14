@@ -35,6 +35,10 @@ class Renderer {
 
     this.mainCtx.drawImage(this.image, x, y);
   }
+
+  renderIntro(x, y, width, height) {
+    this.introCtx.drawImage(this.image, x, y, width, height);
+  }
 }
 
 export default Renderer;

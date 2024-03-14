@@ -1,18 +1,23 @@
 import Sound from "../utils/Sound";
-import Sprite from "../entities/Sprite";
 import { IMAGE, AUDIO } from "../constants/path";
+import Renderer from "../game/Renderer";
 
 class Intro {
   #floatSpeed = 0.1;
+  #titleWidth = 1158;
+  #titleHeight = 951;
+  #instructionWidth = 934;
+  #instructionHeight = 53;
 
-  constructor(game) {
-    this.game = game;
+  constructor() {
+    this.title = new Renderer(IMAGE.TITLE);
+    this.instruction = new Renderer(IMAGE.INSTRUCTION_START);
 
-    this.title = new Sprite(IMAGE.TITLE);
-    this.instruction = new Sprite(IMAGE.INSTRUCTION_START);
+    this.canvasWidth = this.title.canvasWidth;
+    this.canvasHeight = this.title.canvasHeight;
 
-    this.x = this.game.introCanvas.width / 2;
-    this.instructionY = this.game.introCanvas.height - 150;
+    this.x = this.canvasWidth / 2;
+    this.instructionY = this.canvasHeight - 150;
     this.titleY = 100;
 
     this.isUp = true;
@@ -43,20 +48,17 @@ class Intro {
   }
 
   render() {
-    this.game.introCtx.drawImage(
-      this.title,
-      this.x - this.title.width / 4,
+    this.title.renderIntro(
+      this.x - this.#titleWidth / 4,
       this.titleY,
-      this.title.width / 2,
-      this.title.height / 2,
+      this.#titleWidth / 2,
+      this.#titleHeight / 2,
     );
-
-    this.game.introCtx.drawImage(
-      this.instruction,
-      this.x - this.instruction.width / 4,
+    this.instruction.renderIntro(
+      this.x - this.#instructionWidth / 4,
       this.instructionY,
-      this.instruction.width / 2,
-      this.instruction.height / 2,
+      this.#instructionWidth / 2,
+      this.#instructionHeight / 2,
     );
   }
 
