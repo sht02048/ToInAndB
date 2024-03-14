@@ -1,25 +1,27 @@
-import Sprite from "../entities/Sprite";
+import Renderer from "../game/Renderer";
 
 class Background {
   #isInStarted = true;
 
-  constructor({ game, imagePath }) {
-    this.game = game;
-    this.background = new Sprite(imagePath);
+  constructor(imagePath) {
+    this.background1 = new Renderer(imagePath);
+    this.background2 = new Renderer(imagePath);
+    this.canvasWidth = this.background1.canvasWidth;
+    this.canvasHeight = this.background1.canvasHeight;
     this.x = 0;
     this.y = 0;
   }
 
   update() {
     // ACTIVATE 실제 작업 시 주석해제 필요
-    // this.in();
+    this.in();
     this.circulateDown();
   }
 
   circulateDown() {
-    this.y += this.game.inAndOutSpeed;
+    this.y += this.background1.inAndOutSpeed;
 
-    if (this.y > this.game.mainCanvas.height) {
+    if (this.y > this.canvasHeight) {
       this.y = 0;
     }
   }
@@ -27,24 +29,22 @@ class Background {
   in() {
     if (this.#isInStarted) {
       this.#isInStarted = false;
-      this.y -= this.game.mainCanvas.height;
+      this.y -= this.canvasHeight;
     }
   }
 
   render() {
-    this.game.mainCtx.drawImage(
-      this.background,
+    this.background1.render(
       this.x,
       this.y,
-      this.game.mainCanvas.width,
-      this.game.mainCanvas.height,
+      this.canvasWidth,
+      this.canvasHeight,
     );
-    this.game.mainCtx.drawImage(
-      this.background,
+    this.background2.render(
       this.x,
-      this.y - this.game.mainCanvas.height,
-      this.game.mainCanvas.width,
-      this.game.mainCanvas.height,
+      this.y - this.canvasHeight,
+      this.canvasWidth,
+      this.canvasHeight,
     );
   }
 }
