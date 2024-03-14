@@ -1,147 +1,101 @@
-import Projectile from "../../collisions/Projectile";
+import Cockpit from "./Cockpit";
+import MissileLauncher from "../parts/MissileLauncher";
 
-import Sprite from "../Sprite";
+import Renderer from "../../game/Renderer";
 import { SPRITE, PROJECTILE } from "../../constants/path";
 
 class Player {
-  static x = 0;
-  static y = 0;
-  static width = 0;
-  static height = 0;
+  #leftWidth = 41;
+  #leftHeight = 61;
+  #rightWidth = 41;
+  #rightHeight = 61;
+  #staticWidth = 41;
+  #staticHeight = 61;
+  #straightWidth = 41;
+  #straightHeight = 61;
+  #missileWidth = 36;
+  #missileHeight = 49;
+  #missileSpeed = 5;
+  #shipSpeed = 3.5;
 
-  #speed = 3.5;
-
-  constructor(game) {
-    this.game = game;
-
-    this.leftShip = new Sprite(SPRITE.PLATER_LEFT);
-    this.rightShip = new Sprite(SPRITE.PLATER_RIGHT);
-    this.staticShip = new Sprite(SPRITE.PLAYER_STATIC);
-    this.straightShip = new Sprite(SPRITE.PLAYER_STRAIGHT);
-    this.level = "LEVEL_1";
+  constructor() {
+    this.leftShip = new Renderer(
+      SPRITE.PLATER_LEFT,
+      this.#leftWidth,
+      this.#leftHeight,
+    );
+    this.rightShip = new Renderer(
+      SPRITE.PLATER_RIGHT,
+      this.#rightWidth,
+      this.#rightHeight,
+    );
+    this.staticShip = new Renderer(
+      SPRITE.PLAYER_STATIC,
+      this.#staticWidth,
+      this.#staticHeight,
+    );
+    this.straightShip = new Renderer(
+      SPRITE.PLAYER_STRAIGHT,
+      this.#straightWidth,
+      this.#straightHeight,
+    );
 
     this.currentDirection = this.staticShip;
+    this.canvasWidth = this.currentDirection.canvasWidth;
+    this.canvasHeight = this.currentDirection.canvasHeight;
 
-    // ACTIVATE 실제 작업시 주석해제 필요
-    // this.initialY = this.game.mainCanvas.height;
-    this.initialY = 0;
+    // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
+    this.initialY = this.canvasHeight;
+    // this.initialY = 0;
+    this.x = this.canvasWidth / 2 - this.#missileWidth / 2;
+    this.y = this.canvasHeight - this.#staticHeight * 3;
 
-    this.currentDirection.onload = () => {
-      this.x = this.game.mainCanvas.width / 2 - this.currentDirection.width / 2;
-      this.y = this.game.mainCanvas.height - this.currentDirection.height * 3;
-    };
+    this.isShooting = false;
+    this.reloadFrame = 10;
 
-    this.keyPresses = {
-      ArrowUp: false,
-      ArrowDown: false,
-      ArrowLeft: false,
-      ArrowRight: false,
-    };
+    this.controller = new Cockpit(this);
+    this.missileLauncher = new MissileLauncher(
+      this.#staticWidth,
+      this.#staticHeight,
+    );
+  }
+
+  render() {
+    this.currentDirection.render(this.x, this.y - this.initialY);
+    this.missileLauncher.render();
   }
 
   update() {
-    // ACTIVATE 실제 작업시 주석해제 필요
-    // this.in();
-    this.control();
-    this.attack();
+    this.controller.control(this.#shipSpeed);
+    this.missileLauncher.update(this.#missileSpeed);
+    this.in();
+    this.launch();
   }
 
-  control() {
-    this.currentDirection = this.staticShip;
-
-    if (this.keyPresses.ArrowUp) {
-      this.currentDirection = this.straightShip;
-
-      if (this.y > this.game.minY) {
-        this.y -= this.#speed;
-      }
+  launch() {
+    if (!this.isShooting) {
+      return;
     }
 
-    if (this.keyPresses.ArrowDown && this.y < this.game.maxY) {
-      this.y += this.#speed;
+    this.reloadFrame += 1;
+
+    if (this.reloadFrame % 10 !== 0) {
+      return;
     }
 
-    if (this.keyPresses.ArrowLeft) {
-      this.currentDirection = this.leftShip;
-
-      if (this.x > this.game.minX) {
-        this.x -= this.#speed;
-      }
-    }
-
-    if (this.keyPresses.ArrowRight) {
-      this.currentDirection = this.rightShip;
-
-      if (this.x < this.game.maxX) {
-        this.x += this.#speed;
-      }
-    }
-
-    Player.x = this.x;
-    Player.y = this.y;
-    Player.width = this.currentDirection.width;
-    Player.height = this.currentDirection.height;
+    this.missileLauncher.load(
+      PROJECTILE.LEVEL_1,
+      this.x,
+      this.y,
+      this.#missileWidth,
+      this.#missileHeight,
+    );
   }
 
   in() {
     if (this.initialY > 0) {
-      this.initialY -= this.game.inAndOutSpeed;
+      this.initialY -= this.currentDirection.inAndOutSpeed;
     }
-  }
-
-  addEvent() {
-    const handleControl = (event, isDown) => {
-      if (Object.hasOwn(this.keyPresses, event.key)) {
-        this.keyPresses[event.key] = isDown;
-      }
-    };
-
-    const handleAttack = (event) => {
-      if (event.key === " ") {
-        this.bullet = new Projectile(PROJECTILE[this.level]);
-        this.bullet.x =
-          this.x +
-          (this.currentDirection.width * 1.2) / 2 -
-          this.bullet.width / 2;
-        this.bullet.y = this.y - 50;
-
-        this.game.playerBulletList.push(this.bullet);
-      }
-    };
-
-    addEventListener("keydown", (event) => handleControl(event, true));
-    addEventListener("keyup", (event) => handleControl(event, false));
-    addEventListener("keypress", handleAttack);
-  }
-
-  attack() {
-    this.game.playerBulletList.forEach((bullet) => {
-      if (bullet.didHit) {
-        return;
-      }
-
-      if (bullet.y > this.game.minY - 50) {
-        bullet.y -= bullet.speed;
-      }
-    });
-  }
-
-  render() {
-    this.game.mainCtx.drawImage(
-      this.currentDirection,
-      this.x,
-      this.y - this.initialY,
-      this.currentDirection.width * 1.2,
-      this.currentDirection.height * 1.2,
-    );
-
-    this.game.playerBulletList.forEach((bullet) => {
-      if (bullet.didHit) {
-        return;
-      }
-
-      this.game.mainCtx.drawImage(bullet.projectile, bullet.x, bullet.y);
-    });
   }
 }
 
