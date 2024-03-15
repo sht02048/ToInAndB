@@ -34,8 +34,8 @@ class Player {
     this.canvasHeight = this.currentDirection.canvasHeight;
 
     // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
-    // this.initialY = this.canvasHeight;
-    this.initialY = 0;
+    this.initialY = this.canvasHeight;
+    // this.initialY = 0;
     this.x = this.canvasWidth / 2 - this.#staticWidth / 2;
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
@@ -55,6 +55,7 @@ class Player {
     this.setSize();
     this.launch();
     this.cockpit.control(this.#shipSpeed);
+    this.cockpit.makeShotSound();
     this.collisionDetector.detectCollision();
     this.missileLauncher.setMissileRoute(
       MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT,

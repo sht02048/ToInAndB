@@ -1,11 +1,8 @@
-import DistanceCalculator from "../../utils/DistanceCalculator";
-
 class CollisionDetector {
   #targetTopModifier = 56;
 
   constructor(missileList) {
     this.missileList = missileList;
-    this.distanceCalculator = new DistanceCalculator();
   }
 
   setTargetList(targetList) {

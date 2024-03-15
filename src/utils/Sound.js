@@ -1,41 +1,52 @@
 class Sound {
-  static instances = [];
+  static isPlaying = false;
+  static audioList = [];
 
   constructor(soundPath) {
     this.sound = new Audio(soundPath);
     this.sound.loop = true;
     this.sound.muted = true;
-    this.isPlaying = false;
     this.path = soundPath;
+    this.isPaused = false;
+    this.index = Sound.audioList.length;
 
-    Sound.instances.push(this);
+    Sound.audioList.push(this);
   }
 
   static toggleSound(toggleButton) {
-    for (let i = 0; i < Sound.instances.length; i += 1) {
-      const currentSound = Sound.instances[i];
+    if (Sound.isPlaying) {
+      Sound.audioList.forEach((audio) => {
+        audio.sound.muted = true;
+      });
 
-      if (currentSound.isPlaying) {
-        currentSound.isPlaying = false;
-        currentSound.sound.muted = true;
-        toggleButton.innerHTML =
-          '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';
-        return;
-      }
+      toggleButton.innerHTML =
+        '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';
+      Sound.isPlaying = false;
 
-      currentSound.isPlaying = true;
-      currentSound.sound.muted = false;
-      toggleButton.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
+      return;
     }
+
+    Sound.audioList.forEach((audio) => {
+      audio.sound.muted = false;
+    });
+
+    toggleButton.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
+    Sound.isPlaying = true;
   }
 
   playAudio() {
+    const currentSound = Sound.audioList[this.index];
+
+    if (currentSound.isPaused) {
+      return;
+    }
+
     this.sound.play();
   }
 
   pauseAudio() {
-    this.sound.muted = true;
-    Sound.instances.shift();
+    const currentSound = Sound.audioList[this.index];
+    currentSound.isPaused = true;
     this.sound.pause();
   }
 }
