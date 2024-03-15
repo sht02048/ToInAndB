@@ -20,7 +20,7 @@ const AUDIO = {
   BATTLE: "src/assets/audios/background/pixel-perfect.mp3",
   INTRO: "src/assets/audios/background/battle.mp3",
   EXPLOSION: "src/assets/audios/effects/explosion_1.mp3",
-  SHOOT: "src/assets/audios/effects/shoot_1.mp3",
+  SHOT: "src/assets/audios/effects/shot_1.mp3",
 };
 
 const PROJECTILE = {
