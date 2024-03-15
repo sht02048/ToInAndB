@@ -31,6 +31,8 @@ const PROJECTILE = {
 
 const ENEMY_PROJECTILE = {
   NORMAL: "src/assets/images/projectile_1_enemy.png",
+  AIMED: "src/assets/images/projectile_2_enemy.png",
+  GUIDED: "src/assets/images/projectile_3_enemy.png",
   ENHANCED: "src/assets/images/projectile_5.png",
 };
 

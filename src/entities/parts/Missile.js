@@ -6,6 +6,8 @@ class Missile extends Renderer {
 
     this.isVanished = false;
     this.missileDamage = null;
+    this.vx;
+    this.vy;
   }
 
   checkVanished() {
@@ -19,8 +21,17 @@ class Missile extends Renderer {
     }
   }
 
-  launchStraight(missileSpeed) {
+  playerStraight(missileSpeed) {
     this.y -= missileSpeed;
+  }
+
+  enemyStraight(missileSpeed) {
+    this.y += missileSpeed;
+  }
+
+  enemyTargetMove() {
+    this.x += this.vx;
+    this.y += this.vy;
   }
 }
 

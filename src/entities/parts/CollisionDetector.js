@@ -1,6 +1,8 @@
 import DistanceCalculator from "../../utils/DistanceCalculator";
 
 class CollisionDetector {
+  #targetTopModifier = 56;
+
   constructor(missileList) {
     this.missileList = missileList;
     this.distanceCalculator = new DistanceCalculator();
@@ -19,7 +21,7 @@ class CollisionDetector {
 
         const targetLeft = target.x;
         const targetRight = target.x + target.width;
-        const targetTop = target.y;
+        const targetTop = target.y + this.#targetTopModifier;
         const targetBottom = target.y + target.height;
 
         const missileLeft = missile.x;

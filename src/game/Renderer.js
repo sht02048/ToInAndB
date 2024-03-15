@@ -41,6 +41,20 @@ class Renderer {
     this.mainCtx.drawImage(this.image, x, y);
   }
 
+  renderAngle(x, y, width, height, angle) {
+    this.mainCtx.save();
+    this.mainCtx.translate(x, y + 10);
+    this.mainCtx.rotate(angle);
+    this.mainCtx.drawImage(
+      this.image,
+      -width / 2 + 10,
+      -height + 20,
+      width,
+      height,
+    );
+    this.mainCtx.restore();
+  }
+
   renderIntro(x, y, width, height) {
     this.introCtx.drawImage(this.image, x, y, width, height);
   }

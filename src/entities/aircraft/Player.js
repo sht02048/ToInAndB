@@ -3,8 +3,10 @@ import Cockpit from "./Cockpit";
 import MissileLauncher from "../parts/MissileLauncher";
 import CollisionDetector from "../parts/CollisionDetector";
 
+import TEAM from "../../constants/team";
 import Renderer from "../../game/Renderer";
 import { SPRITE, PROJECTILE } from "../../constants/path";
+import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Player {
   #staticWidth = 41;
@@ -50,10 +52,14 @@ class Player {
   }
 
   update() {
-    this.cockpit.control(this.#shipSpeed);
-    this.missileLauncher.update(this.#missileSpeed);
-    this.collisionDetector.detectCollision();
+    this.setSize();
     this.launch();
+    this.cockpit.control(this.#shipSpeed);
+    this.collisionDetector.detectCollision();
+    this.missileLauncher.setMissileRoute(
+      MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT,
+      this.#missileSpeed,
+    );
 
     if (this.initialY > 0) {
       this.in();
@@ -71,13 +77,21 @@ class Player {
       return;
     }
 
-    this.missileLauncher.load(
-      PROJECTILE.LEVEL_1,
-      this.x,
-      this.y,
-      this.#missileWidth,
-      this.#missileDamage,
-    );
+    this.loadMissile();
+  }
+
+  loadMissile() {
+    const missileInformation = {
+      projectilePath: PROJECTILE.LEVEL_1,
+      x: this.x,
+      y: this.y,
+      missileWidth: this.#missileWidth,
+      missileDamage: this.#missileDamage,
+      missileSpeed: this.#missileSpeed,
+      team: TEAM.PLATER,
+    };
+
+    this.missileLauncher.loadSingleAmmo(missileInformation);
   }
 
   in() {
@@ -85,7 +99,13 @@ class Player {
   }
 
   setTargetList(targetList) {
+    this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
+  }
+
+  setSize() {
+    this.width = this.currentDirection.width;
+    this.height = this.currentDirection.height;
   }
 }
 
