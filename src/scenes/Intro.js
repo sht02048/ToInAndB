@@ -15,6 +15,7 @@ class Intro {
 
     this.canvasWidth = this.title.canvasWidth;
     this.canvasHeight = this.title.canvasHeight;
+    this.inAndOutSpeed = this.title.inAndOutSpeed;
 
     this.x = this.canvasWidth / 2;
     this.instructionY = this.canvasHeight - 150;
@@ -43,8 +44,8 @@ class Intro {
   }
 
   out() {
-    this.titleY += this.game.inAndOutSpeed;
-    this.instructionY += this.game.inAndOutSpeed;
+    this.titleY += this.inAndOutSpeed;
+    this.instructionY += this.inAndOutSpeed;
   }
 
   render() {

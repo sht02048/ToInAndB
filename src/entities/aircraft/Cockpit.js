@@ -1,3 +1,6 @@
+import Sound from "../../utils/Sound";
+import { AUDIO } from "../../constants/path";
+
 class Cockpit {
   #keyPresses = {
     ArrowUp: false,
@@ -14,7 +17,24 @@ class Cockpit {
     this.minY = this.ship.currentDirection.minY;
     this.maxY = this.ship.currentDirection.maxY;
 
+    this.shotSound = new Sound(AUDIO.SHOT);
+    this.shotSound.sound.loop = false;
+    this.isShotSoundPlaying = false;
+    this.currentSoundTime = this.shotSound.sound.currentTime;
+
     this.addEvent();
+  }
+
+  makeShotSound() {
+    if (this.#keyPresses.Space) {
+      if (this.currentSoundTime === 0) {
+        this.shotSound.playAudio();
+      }
+
+      if (this.shotSound.sound.currentTime > 0.2) {
+        this.shotSound.sound.currentTime = 0;
+      }
+    }
   }
 
   control(shipSpeed) {
