@@ -1,9 +1,9 @@
 import Intro from "../scenes/Intro";
 import { SPRITE } from "../constants/path";
 import Background from "../scenes/Background";
-import Player from "../entities/aircraft/Player";
-import Heavy from "../entities/enemies/Heavy";
-import Renderer from "./Renderer";
+import Player from "./Player";
+import Heavy from "./Heavy";
+import Renderer from "../graphics/Renderer";
 
 class Game extends Renderer {
   constructor() {

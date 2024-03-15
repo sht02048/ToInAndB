@@ -1,10 +1,10 @@
-import CollisionDetector from "../parts/CollisionDetector";
-import MissileLauncher from "../parts/MissileLauncher";
+import CollisionDetector from "../physics/CollisionDetector";
+import MissileLauncher from "../weapons/MissileLauncher";
 
-import Explosion from "../../collisions/Explosion";
-import Renderer from "../../game/Renderer";
-import { SPRITE, ENEMY_PROJECTILE } from "../../constants/path";
-import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
+import Explosion from "../graphics/Explosion";
+import Renderer from "../graphics/Renderer";
+import { SPRITE, ENEMY_PROJECTILE } from "../constants/path";
+import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Heavy {
   #heavyWidth = 44;

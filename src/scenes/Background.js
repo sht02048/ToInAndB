@@ -1,4 +1,4 @@
-import Renderer from "../game/Renderer";
+import Renderer from "../graphics/Renderer";
 
 class Background {
   #isInStarted = true;

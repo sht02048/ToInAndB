@@ -1,5 +1,5 @@
-import Sound from "../../utils/Sound";
-import { AUDIO } from "../../constants/path";
+import Sound from "../utils/Sound";
+import { AUDIO } from "../constants/path";
 
 class Cockpit {
   #keyPresses = {

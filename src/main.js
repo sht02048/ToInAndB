@@ -2,7 +2,7 @@ import "./style.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import resizeCanvas from "./utils/resizeCanvas";
 
-import Game from "./game/Game";
+import Game from "./entities/Game";
 
 resizeCanvas();
 const game = new Game();

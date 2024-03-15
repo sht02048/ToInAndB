@@ -1,7 +1,7 @@
 import Missile from "./Missile";
 
-import TEAM from "../../constants/team";
-import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
+import TEAM from "../constants/team";
+import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class MissileLauncher {
   #projectileNumber = 30;

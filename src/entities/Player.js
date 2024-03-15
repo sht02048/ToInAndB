@@ -1,12 +1,12 @@
 import Cockpit from "./Cockpit";
 
-import MissileLauncher from "../parts/MissileLauncher";
-import CollisionDetector from "../parts/CollisionDetector";
+import MissileLauncher from "../weapons/MissileLauncher";
+import CollisionDetector from "../physics/CollisionDetector";
 
-import TEAM from "../../constants/team";
-import Renderer from "../../game/Renderer";
-import { SPRITE, PROJECTILE } from "../../constants/path";
-import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
+import TEAM from "../constants/team";
+import Renderer from "../graphics/Renderer";
+import { SPRITE, PROJECTILE } from "../constants/path";
+import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Player {
   #staticWidth = 41;

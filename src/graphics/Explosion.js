@@ -1,4 +1,4 @@
-import Renderer from "../game/Renderer";
+import Renderer from "./Renderer";
 import { ENEMY_EXPLOSION } from "../constants/path";
 
 class Explosion {
