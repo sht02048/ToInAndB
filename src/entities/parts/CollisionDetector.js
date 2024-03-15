@@ -34,7 +34,8 @@ class CollisionDetector {
           targetBottom >= missileTop
         ) {
           missile.isVanished = true;
-          target.isDestroyed = true;
+          target.isHit = true;
+          target.healthPoint -= missile.damage;
         }
       });
     });

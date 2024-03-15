@@ -1,4 +1,4 @@
-import Sprite from "../entities/Sprite";
+import Renderer from "../game/Renderer";
 import { ENEMY_EXPLOSION } from "../constants/path";
 
 class Explosion {
@@ -9,37 +9,27 @@ class Explosion {
 
     for (let i = 1; i < 12; i += 1) {
       this.#enemyExplosionList.push(
-        new Sprite(`${ENEMY_EXPLOSION}enemy_${i}.png`),
+        new Renderer(`${ENEMY_EXPLOSION}enemy_${i}.png`),
       );
     }
+
+    this.explosionFrame = 0;
   }
 
-  destroy(enemy) {
-    if (enemy.explosionFrame === 44) {
+  destroy(x, y, width) {
+    if (this.explosionFrame === 44) {
       return;
     }
 
-    const currentFrame = Math.floor(enemy.explosionFrame / 4);
+    const currentFrame = Math.floor(this.explosionFrame / 4);
 
-    this.game.mainCtx.drawImage(
-      this.#enemyExplosionList[currentFrame],
-      enemy.x,
-      enemy.y,
-      enemy.width,
-      enemy.height,
-    );
+    this.#enemyExplosionList[currentFrame].render(x, y, width, width);
 
-    enemy.explosionFrame += 1;
+    this.explosionFrame += 1;
   }
 
-  hit(enemy, substituteImage) {
-    this.game.mainCtx.drawImage(
-      substituteImage,
-      enemy.x,
-      enemy.y,
-      enemy.width,
-      enemy.height,
-    );
+  hit(substituteImage, x, y) {
+    substituteImage.render(x, y);
   }
 }
 

@@ -1,10 +1,11 @@
 import Renderer from "../../game/Renderer";
 
 class Missile extends Renderer {
-  constructor(imagePath, width, height) {
-    super(imagePath, width, height);
+  constructor(imagePath) {
+    super(imagePath);
 
     this.isVanished = false;
+    this.missileDamage = null;
   }
 
   checkVanished() {

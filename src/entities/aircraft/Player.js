@@ -10,8 +10,8 @@ class Player {
   #staticWidth = 41;
   #staticHeight = 61;
   #missileWidth = 36;
-  #missileHeight = 49;
   #missileSpeed = 5;
+  #missileDamage = 2;
   #shipSpeed = 3.5;
 
   constructor() {
@@ -41,7 +41,7 @@ class Player {
     this.isDestroyed = false;
     this.reloadFrame = 10;
 
-    this.controller = new Cockpit(this);
+    this.cockpit = new Cockpit(this);
   }
 
   render() {
@@ -50,11 +50,14 @@ class Player {
   }
 
   update() {
-    this.controller.control(this.#shipSpeed);
+    this.cockpit.control(this.#shipSpeed);
     this.missileLauncher.update(this.#missileSpeed);
     this.collisionDetector.detectCollision();
-    this.in();
     this.launch();
+
+    if (this.initialY > 0) {
+      this.in();
+    }
   }
 
   launch() {
@@ -73,14 +76,12 @@ class Player {
       this.x,
       this.y,
       this.#missileWidth,
-      this.#missileHeight,
+      this.#missileDamage,
     );
   }
 
   in() {
-    if (this.initialY > 0) {
-      this.initialY -= this.currentDirection.inAndOutSpeed;
-    }
+    this.initialY -= this.currentDirection.inAndOutSpeed;
   }
 
   setTargetList(targetList) {

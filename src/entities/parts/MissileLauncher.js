@@ -10,13 +10,14 @@ class MissileLauncher {
     this.missileList = [];
   }
 
-  load(projectilePath, x, y, missileWidth, missileHeight) {
-    const missile = new Missile(projectilePath, missileWidth, missileHeight);
+  load(projectilePath, x, y, missileWidth, missileDamage) {
+    const missile = new Missile(projectilePath);
 
     this.x = x;
     this.y = y;
-    missile.x = this.x + this.width / 2 - missile.width / 2;
+    missile.x = this.x + this.width / 2 - missileWidth / 2;
     missile.y = this.y - 50;
+    missile.damage = missileDamage;
 
     this.missileList.push(missile);
   }
