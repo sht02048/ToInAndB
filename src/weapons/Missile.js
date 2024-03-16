@@ -8,6 +8,7 @@ class Missile extends Renderer {
     this.missileDamage = null;
     this.vx;
     this.vy;
+    this.angle;
   }
 
   checkVanished() {

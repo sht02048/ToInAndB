@@ -28,6 +28,7 @@ class MissileLauncher {
     missileDamage,
     team,
     missileSpeed,
+    isAimed = false,
   }) {
     const missile = new Missile(projectilePath);
     this.x = x;
@@ -47,11 +48,13 @@ class MissileLauncher {
     missile.damage = missileDamage;
     missile.speed = missileSpeed;
 
-    const { vx, vy, angle } = this.getTargetDirection(missile);
+    if (isAimed) {
+      const { vx, vy, angle } = this.getTargetDirection(missile);
 
-    missile.vx = vx;
-    missile.vy = vy;
-    missile.angle = angle;
+      missile.vx = vx;
+      missile.vy = vy;
+      missile.angle = angle;
+    }
 
     return missile;
   }
@@ -85,19 +88,19 @@ class MissileLauncher {
         return;
       }
 
-      if (missile.team === TEAM.PLATER) {
-        missile.render(missile.x, missile.y);
-        return;
-      }
-
       if (missile.angle !== undefined) {
         missile.renderAngle(
           missile.x,
           missile.y,
-          missile.width / 2,
-          missile.height / 2,
+          missile.width,
+          missile.height,
           missile.angle,
         );
+        return;
+      }
+
+      if (missile.team === TEAM.PLATER) {
+        missile.render(missile.x, missile.y);
         return;
       }
 
@@ -125,10 +128,21 @@ class MissileLauncher {
           missile.enemyTargetMove();
           break;
 
-        case MISSILE_ROUTE_COMMAND.ENEMY_GUIDED:
-          if (missile.frame < 120) {
-            const { vx, vy, angle } = this.getTargetDirection(missile);
+        case MISSILE_ROUTE_COMMAND.GUIDED:
+          const { vx, vy, angle } = this.getTargetDirection(missile);
 
+          if (vx === 0 && vy === 0) {
+            if (missile.vx && missile.vy) {
+              missile.enemyTargetMove();
+
+              return;
+            }
+
+            missile.playerStraight(missile.speed);
+            return;
+          }
+
+          if (missile.frame < 120) {
             missile.vx = vx;
             missile.vy = vy;
             missile.angle = angle;
@@ -151,6 +165,10 @@ class MissileLauncher {
     let minDistance = Infinity;
 
     this.targetList.forEach((target) => {
+      if (target.isDestroyed) {
+        return;
+      }
+
       const targetX = target.x + target.width / 2;
       const targetY = target.y + target.height / 2;
 
@@ -165,6 +183,8 @@ class MissileLauncher {
     });
 
     if (closestTarget === null) {
+      missile.isLostTarget = true;
+
       return { vx: 0, vy: 0, angle: 0 };
     }
 
@@ -177,7 +197,7 @@ class MissileLauncher {
     const normalizedDx = dx / magnitude;
     const normalizedDy = dy / magnitude;
 
-    const angle = Math.atan2(dy, dx) - Math.PI / 2;
+    const angle = Math.atan2(dy, dx) + Math.PI / 2;
     const vx = normalizedDx * missile.speed;
     const vy = normalizedDy * missile.speed;
 
