@@ -1,4 +1,5 @@
 import Cockpit from "./Cockpit";
+import SpaceShip from "./Spaceship";
 
 import Renderer from "../graphics/Renderer";
 import MissileLauncher from "../weapons/MissileLauncher";
@@ -8,19 +9,21 @@ import TEAM from "../constants/team";
 import { SPRITE, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
-class Player {
+class Player extends SpaceShip {
   #staticWidth = 41;
   #staticHeight = 61;
   #straightMissileWidth = 36;
   #straightMissileSpeed = 5;
   #straightMissileReload = 10;
   #guidedMissileWidth = 80;
-  #guidedMissileSpeed = 1.5;
+  #guidedMissileSpeed = 2.5;
   #guidedMissileReload = 100;
   #missileDamage = 2;
   #shipSpeed = 3.5;
 
   constructor() {
+    super();
+
     this.leftShip = new Renderer(SPRITE.PLATER_LEFT);
     this.rightShip = new Renderer(SPRITE.PLATER_RIGHT);
     this.staticShip = new Renderer(SPRITE.PLAYER_STATIC);
@@ -52,19 +55,11 @@ class Player {
 
     this.level = 1;
     this.isShooting = false;
-    this.isDestroyed = false;
     this.reloadFrame = 10;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
-    this.frame = 0;
 
     this.cockpit = new Cockpit(this);
-  }
-
-  render() {
-    this.guidedMissileLauncher.render();
-    this.straightMissileLauncher.render();
-    this.currentDirection.render(this.x, this.y - this.initialY);
   }
 
   update() {
@@ -91,6 +86,32 @@ class Player {
     this.frame += 1;
   }
 
+  render() {
+    this.guidedMissileLauncher.render();
+    this.straightMissileLauncher.render();
+    this.currentDirection.render(this.x, this.y - this.initialY);
+  }
+
+  upgrade() {
+    switch (this.level) {
+      case 2:
+        this.#missileDamage += 1;
+        this.straightProjectile = PROJECTILE.LEVEL_2;
+        this.#straightMissileWidth = 52;
+        break;
+
+      case 3:
+        this.#missileDamage += 1;
+        this.straightProjectile = PROJECTILE.LEVEL_3;
+        this.#straightMissileWidth = 90;
+        break;
+    }
+
+    if (this.reloadFrame % this.#guidedMissileReload === 0 && this.level > 1) {
+      this.loadGuidedMissile();
+    }
+  }
+
   launchMissile() {
     if (!this.isShooting) {
       return;
@@ -106,39 +127,39 @@ class Player {
   }
 
   loadStraightMissile() {
-    const missileInformation = {
-      projectilePath: this.straightProjectile,
-      x: this.x,
-      y: this.y,
-      missileWidth: this.#straightMissileWidth,
-      missileDamage: this.#missileDamage,
-      missileSpeed: this.#straightMissileSpeed,
-      team: TEAM.PLATER,
-    };
+    const missileInformation = this.setMissileInformation(
+      this.straightProjectile,
+      this.x,
+      this.y,
+      this.#straightMissileWidth,
+      this.#straightMissileSpeed,
+    );
 
     this.straightMissileLauncher.loadSingleAmmo(missileInformation);
   }
 
   loadGuidedMissile() {
-    const leftMissileInformation = {
-      projectilePath: this.guidedProjectile,
-      x: this.x - this.currentDirection.width / 2,
-      y: this.y + this.currentDirection.height / 2,
-      missileWidth: this.#guidedMissileWidth,
-      missileDamage: this.#missileDamage,
-      missileSpeed: this.#straightMissileSpeed,
-      team: TEAM.PLATER,
-    };
+    const leftX = this.x - this.currentDirection.width / 2;
+    const rightX = this.x + this.currentDirection.width / 2;
+    const sharedY = this.y + this.currentDirection.height / 2;
 
-    const rightMissileInformation = {
-      projectilePath: this.guidedProjectile,
-      x: this.x + this.currentDirection.width / 2,
-      y: this.y + this.currentDirection.height / 2,
-      missileWidth: -this.#guidedMissileWidth / 2,
-      missileDamage: this.#missileDamage,
-      missileSpeed: this.#straightMissileSpeed,
-      team: TEAM.PLATER,
-    };
+    const leftWidth = this.#guidedMissileWidth;
+    const rightWidth = -this.#guidedMissileWidth / 2;
+
+    const leftMissileInformation = this.setMissileInformation(
+      this.guidedProjectile,
+      leftX,
+      sharedY,
+      leftWidth,
+      this.#guidedMissileSpeed,
+    );
+    const rightMissileInformation = this.setMissileInformation(
+      this.guidedProjectile,
+      rightX,
+      sharedY,
+      rightWidth,
+      this.#guidedMissileSpeed,
+    );
 
     this.guidedMissileLauncher.loadSingleAmmo(leftMissileInformation);
     this.guidedMissileLauncher.loadSingleAmmo(rightMissileInformation);
@@ -160,24 +181,24 @@ class Player {
     this.height = this.currentDirection.height;
   }
 
-  upgrade() {
-    switch (this.level) {
-      case 2:
-        this.#missileDamage += 1;
-        this.straightProjectile = PROJECTILE.LEVEL_2;
-        this.#straightMissileWidth = 52;
-        break;
+  setMissileInformation(
+    projectilePath,
+    positionX,
+    positionY,
+    missileWidth,
+    missileSpeed,
+  ) {
+    const missileInformation = {
+      projectilePath: projectilePath,
+      x: positionX,
+      y: positionY,
+      missileWidth: missileWidth,
+      missileDamage: this.#missileDamage,
+      missileSpeed: missileSpeed,
+      team: TEAM.PLATER,
+    };
 
-      case 3:
-        this.#missileDamage += 1;
-        this.straightProjectile = PROJECTILE.LEVEL_3;
-        this.#straightMissileWidth = 90;
-        break;
-    }
-
-    if (this.reloadFrame % this.#guidedMissileReload === 0 && this.level > 1) {
-      this.loadGuidedMissile();
-    }
+    return missileInformation;
   }
 }
 

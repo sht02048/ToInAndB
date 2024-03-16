@@ -1,48 +1,35 @@
 import Enemy from "./Enemy";
 
 import PowerUp from "../items/powerUp";
-import Explosion from "../graphics/Explosion";
-import Renderer from "../graphics/Renderer";
-import CollisionDetector from "../physics/CollisionDetector";
-import MissileLauncher from "../weapons/MissileLauncher";
 import { SPRITE, ENEMY_PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Heavy extends Enemy {
-  #heavyWidth = 44;
-  #heavyHeight = 52;
   #missileWidth = 25;
-  #missileSpeed = 1.5;
+  #missileSpeed = 2.5;
   #heavySpeed = 1;
   #missileInterval = 100;
 
   constructor(x, y) {
-    super(x, y, 4);
+    super({
+      x,
+      y,
+      health: 4,
+      shipImage: SPRITE.ENEMY_HEAVY,
+      destroyedShipImage: SPRITE.ENEMY_HEAVY_DESTROYED,
+      width: 44,
+      height: 52,
+    });
 
     this.powerUp = new PowerUp();
-    this.explosion = new Explosion();
-    this.ship = new Renderer(SPRITE.ENEMY_HEAVY);
-    this.destroyedShip = new Renderer(SPRITE.ENEMY_HEAVY_DESTROYED);
-    this.missileLauncher = new MissileLauncher(
-      this.#heavyWidth,
-      this.#heavyHeight,
-    );
-    this.collisionDetector = new CollisionDetector(
-      this.missileLauncher.missileList,
-    );
 
     this.itemX;
     this.itemY;
   }
 
-  setSize() {
-    this.width = this.ship.width;
-    this.height = this.ship.height;
-  }
-
   update() {
     this.collisionDetector.detectCollision();
-    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT);
+    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_AIMED);
 
     if (this.isDestroyed || this.isVanished) {
       if (this.powerUp.isGained) {
@@ -57,14 +44,15 @@ class Heavy extends Enemy {
     }
 
     if (this.frame % this.#missileInterval === 0) {
-      this.loadMissile();
+      const missileInformation = this.setMissileInformation();
+
+      this.loadSingleMissile(missileInformation);
     }
 
     this.y += this.#heavySpeed;
     this.itemX = this.x;
     this.itemY = this.y;
 
-    this.setSize();
     this.checkShipStatus();
 
     this.frame += 1;
@@ -97,50 +85,13 @@ class Heavy extends Enemy {
     this.ship.render(this.x, this.y);
   }
 
-  renderHit() {
-    this.hitFrame -= 1;
-    this.destroyedShip.render(this.x, this.y);
-
-    if (this.hitFrame === 0) {
-      this.isHit = false;
-    }
-  }
-
-  checkShipStatus() {
-    if (this.healthPoint <= 0) {
-      this.isDestroyed = true;
-    }
-
-    if (this.y > this.ship.maxY) {
-      this.isVanished = true;
-    }
-  }
-
-  loadMissile() {
-    const missileInformation = {
-      projectilePath: ENEMY_PROJECTILE.GUIDED,
-      x: this.x,
-      y: this.y,
-      missileWidth: this.#missileWidth,
-      missileSpeed: this.#missileSpeed,
-    };
-
-    this.missileLauncher.loadSingleAmmo(missileInformation);
-  }
-
-  setTargetList(targetList) {
-    this.missileLauncher.setTargetList(targetList);
-    this.collisionDetector.setTargetList(targetList);
-    this.powerUp.setTargetList(targetList);
-  }
-
   updateItem() {
     this.itemX += this.powerUp.xSpeed;
     this.itemY += this.powerUp.ySpeed;
 
     if (
       this.itemX - this.powerUp.width > this.powerUp.maxX ||
-      this.itemY < this.powerUp.minX
+      this.itemX < this.powerUp.minX
     ) {
       this.powerUp.xSpeed *= -1;
     }
@@ -151,6 +102,25 @@ class Heavy extends Enemy {
     ) {
       this.powerUp.ySpeed *= -1;
     }
+  }
+
+  setTargetList(targetList) {
+    this.missileLauncher.setTargetList(targetList);
+    this.collisionDetector.setTargetList(targetList);
+    this.powerUp.setTargetList(targetList);
+  }
+
+  setMissileInformation() {
+    const missileInformation = {
+      projectilePath: ENEMY_PROJECTILE.AIMED,
+      x: this.x,
+      y: this.y,
+      missileWidth: this.#missileWidth,
+      missileSpeed: this.#missileSpeed,
+      isAimed: true,
+    };
+
+    return missileInformation;
   }
 }
 
