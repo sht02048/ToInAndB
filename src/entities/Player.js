@@ -1,10 +1,10 @@
 import Cockpit from "./Cockpit";
 
+import Renderer from "../graphics/Renderer";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
 import TEAM from "../constants/team";
-import Renderer from "../graphics/Renderer";
 import { SPRITE, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
@@ -34,14 +34,16 @@ class Player {
     this.canvasHeight = this.currentDirection.canvasHeight;
 
     // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
-    this.initialY = this.canvasHeight;
-    // this.initialY = 0;
+    // this.initialY = this.canvasHeight;
+    this.initialY = 0;
     this.x = this.canvasWidth / 2 - this.#staticWidth / 2;
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
+    this.level = 1;
     this.isShooting = false;
     this.isDestroyed = false;
     this.reloadFrame = 10;
+    this.projectile = PROJECTILE.LEVEL_1;
 
     this.cockpit = new Cockpit(this);
   }
@@ -52,10 +54,11 @@ class Player {
   }
 
   update() {
+    this.launchMissile();
     this.setSize();
-    this.launch();
-    this.cockpit.control(this.#shipSpeed);
+    this.checkLevel();
     this.cockpit.makeShotSound();
+    this.cockpit.control(this.#shipSpeed);
     this.collisionDetector.detectCollision();
     this.missileLauncher.setMissileRoute(
       MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT,
@@ -67,7 +70,7 @@ class Player {
     }
   }
 
-  launch() {
+  launchMissile() {
     if (!this.isShooting) {
       return;
     }
@@ -83,7 +86,7 @@ class Player {
 
   loadMissile() {
     const missileInformation = {
-      projectilePath: PROJECTILE.LEVEL_1,
+      projectilePath: this.projectile,
       x: this.x,
       y: this.y,
       missileWidth: this.#missileWidth,
@@ -107,6 +110,22 @@ class Player {
   setSize() {
     this.width = this.currentDirection.width;
     this.height = this.currentDirection.height;
+  }
+
+  checkLevel() {
+    switch (this.level) {
+      case 2:
+        this.#missileDamage += 1;
+        this.projectile = PROJECTILE.LEVEL_2;
+        this.#missileWidth = 52;
+        break;
+
+      case 3:
+        this.#missileDamage += 1;
+        this.projectile = PROJECTILE.LEVEL_3;
+        this.#missileWidth = 90;
+        break;
+    }
   }
 }
 

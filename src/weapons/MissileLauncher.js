@@ -147,9 +147,29 @@ class MissileLauncher {
   }
 
   getTargetDirection(missile) {
-    const target = this.targetList[0];
-    const targetX = target.x + target.width / 2;
-    const targetY = target.y + target.height / 2;
+    let closestTarget = null;
+    let minDistance = Infinity;
+
+    this.targetList.forEach((target) => {
+      const targetX = target.x + target.width / 2;
+      const targetY = target.y + target.height / 2;
+
+      const dx = targetX - missile.x;
+      const dy = targetY - missile.y;
+      const distance = Math.sqrt(dx ** 2 + dy ** 2);
+
+      if (distance < minDistance) {
+        closestTarget = target;
+        minDistance = distance;
+      }
+    });
+
+    if (closestTarget === null) {
+      return { vx: 0, vy: 0, angle: 0 };
+    }
+
+    const targetX = closestTarget.x + closestTarget.width / 2;
+    const targetY = closestTarget.y + closestTarget.height / 2;
 
     const dx = targetX - missile.x;
     const dy = targetY - missile.y;
