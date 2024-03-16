@@ -38,4 +38,16 @@ const ENEMY_PROJECTILE = {
 
 const ENEMY_EXPLOSION = "src/assets/images/explosion_";
 
-export { SPRITE, IMAGE, AUDIO, PROJECTILE, ENEMY_PROJECTILE, ENEMY_EXPLOSION };
+const ITEMS = {
+  POWER_UP: "src/assets/images/power_up.png",
+};
+
+export {
+  SPRITE,
+  IMAGE,
+  AUDIO,
+  PROJECTILE,
+  ENEMY_PROJECTILE,
+  ENEMY_EXPLOSION,
+  ITEMS,
+};
