@@ -27,6 +27,7 @@ const PROJECTILE = {
   LEVEL_1: "src/assets/images/projectile_1.png",
   LEVEL_2: "src/assets/images/projectile_2.png",
   LEVEL_3: "src/assets/images/projectile_3.png",
+  GUIDED: "src/assets/images/projectile_4.png",
 };
 
 const ENEMY_PROJECTILE = {
