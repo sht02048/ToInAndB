@@ -1,3 +1,5 @@
+import Enemy from "./Enemy";
+
 import PowerUp from "../items/powerUp";
 import Explosion from "../graphics/Explosion";
 import Renderer from "../graphics/Renderer";
@@ -6,15 +8,17 @@ import MissileLauncher from "../weapons/MissileLauncher";
 import { SPRITE, ENEMY_PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
-class Heavy {
+class Heavy extends Enemy {
   #heavyWidth = 44;
   #heavyHeight = 52;
-  #missileWidth = 28;
-  #missileHeight = 58;
+  #missileWidth = 25;
   #missileSpeed = 1.5;
   #heavySpeed = 1;
+  #missileInterval = 100;
 
   constructor(x, y) {
+    super(x, y, 4);
+
     this.powerUp = new PowerUp();
     this.explosion = new Explosion();
     this.ship = new Renderer(SPRITE.ENEMY_HEAVY);
@@ -27,14 +31,8 @@ class Heavy {
       this.missileLauncher.missileList,
     );
 
-    this.x = x;
-    this.y = y;
-    this.isDestroyed = false;
-    this.isVanished = false;
-    this.isHit = false;
-    this.healthPoint = 4;
-    this.hitFrame = 5;
-    this.frame = 0;
+    this.itemX;
+    this.itemY;
   }
 
   setSize() {
@@ -44,7 +42,7 @@ class Heavy {
 
   update() {
     this.collisionDetector.detectCollision();
-    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_GUIDED);
+    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT);
 
     if (this.isDestroyed || this.isVanished) {
       if (this.powerUp.isGained) {
@@ -52,17 +50,19 @@ class Heavy {
       }
 
       this.updateItem();
-      this.powerUp.setItemLocation(this.x, this.y);
+      this.powerUp.setItemLocation(this.itemX, this.itemY);
       this.powerUp.detectItem();
 
       return;
     }
 
-    if (this.frame % 100 === 0) {
+    if (this.frame % this.#missileInterval === 0) {
       this.loadMissile();
     }
 
     this.y += this.#heavySpeed;
+    this.itemX = this.x;
+    this.itemY = this.y;
 
     this.setSize();
     this.checkShipStatus();
@@ -80,7 +80,7 @@ class Heavy {
         return;
       }
 
-      this.powerUp.render(this.x, this.y);
+      this.powerUp.render(this.itemX, this.itemY);
 
       return;
     }
@@ -125,7 +125,7 @@ class Heavy {
       missileSpeed: this.#missileSpeed,
     };
 
-    this.missileLauncher.loadMultipleAmmo(missileInformation);
+    this.missileLauncher.loadSingleAmmo(missileInformation);
   }
 
   setTargetList(targetList) {
@@ -135,19 +135,19 @@ class Heavy {
   }
 
   updateItem() {
-    this.x += this.powerUp.xSpeed;
-    this.y += this.powerUp.ySpeed;
+    this.itemX += this.powerUp.xSpeed;
+    this.itemY += this.powerUp.ySpeed;
 
     if (
-      this.x - this.powerUp.width > this.powerUp.maxX ||
-      this.x < this.powerUp.minX
+      this.itemX - this.powerUp.width > this.powerUp.maxX ||
+      this.itemY < this.powerUp.minX
     ) {
       this.powerUp.xSpeed *= -1;
     }
 
     if (
-      this.y - this.powerUp.height > this.powerUp.maxY ||
-      this.y < this.powerUp.minY
+      this.itemY - this.powerUp.height > this.powerUp.maxY ||
+      this.itemY < this.powerUp.minY
     ) {
       this.powerUp.ySpeed *= -1;
     }
