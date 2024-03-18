@@ -1,12 +1,13 @@
 import Renderer from "../graphics/Renderer";
-import { ITEMS } from "../constants/path";
 import CollisionDetector from "../physics/CollisionDetector";
 
-class PowerUp extends Renderer {
+class Item extends Renderer {
   #itemSpeedLimit = 5;
 
-  constructor() {
-    super(ITEMS.POWER_UP);
+  constructor(itemImage, itemType) {
+    super(itemImage);
+
+    console.log(itemImage);
 
     this.x;
     this.y;
@@ -15,6 +16,7 @@ class PowerUp extends Renderer {
     this.xSpeed = Math.random() * this.#itemSpeedLimit;
     this.ySpeed = this.#itemSpeedLimit - this.xSpeed;
     this.isGained = false;
+    this.type = itemType;
 
     this.collisionDetector = new CollisionDetector([this]);
   }
@@ -54,4 +56,4 @@ class PowerUp extends Renderer {
   }
 }
 
-export default PowerUp;
+export default Item;

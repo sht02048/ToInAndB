@@ -1,7 +1,8 @@
 import Enemy from "./Enemy";
 
-import PowerUp from "../../items/powerUp";
-import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
+import ITEM from "../../constants/item";
+import Item from "../../item/item";
+import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Heavy extends Enemy {
@@ -25,7 +26,7 @@ class Heavy extends Enemy {
       height: 64,
     });
 
-    this.powerUp = new PowerUp();
+    this.powerUp = new Item(ITEM_IMAGE.SPEED_UP, ITEM.SPEED_UP);
 
     this.itemX;
     this.itemY;

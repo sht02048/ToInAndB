@@ -1,3 +1,5 @@
+import ITEM from "../constants/item";
+
 class CollisionDetector {
   constructor(gameObjectList) {
     this.gameObjectList = gameObjectList;
@@ -22,8 +24,18 @@ class CollisionDetector {
           return;
         }
 
+        switch (item.type) {
+          case ITEM.POWER_UP:
+            target.level += 1;
+            break;
+
+          case ITEM.SPEED_UP:
+            target.shipSpeed += 1.5;
+            break;
+        }
+
+        console.log(target.shipSpeed);
         item.isGained = true;
-        target.level += 1;
       });
     });
   }
