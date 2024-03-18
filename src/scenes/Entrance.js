@@ -45,7 +45,6 @@ class Entrance extends Renderer {
     this.bugList.forEach((bug) => {
       if (!bug.isDestroyed && !bug.isVanished) {
         this.#isDone = false;
-        return;
       }
     });
 

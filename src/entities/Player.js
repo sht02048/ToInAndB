@@ -19,7 +19,6 @@ class Player extends SpaceShip {
   #guidedMissileSpeed = 3;
   #guidedMissileReload = 100;
   #missileDamage = 2;
-  #shipSpeed = 3.5;
 
   constructor() {
     super();
@@ -54,6 +53,7 @@ class Player extends SpaceShip {
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
     this.level = 1;
+    this.shipSpeed = 3.5;
     this.isShooting = false;
     this.reloadFrame = 10;
     this.straightProjectile = PROJECTILE.LEVEL_1;
@@ -67,7 +67,7 @@ class Player extends SpaceShip {
     this.setSize();
     this.upgrade();
     this.cockpit.makeShotSound();
-    this.cockpit.control(this.#shipSpeed);
+    this.cockpit.control(this.shipSpeed);
     this.straightCollisionDetector.detectCollision();
     this.guidedCollisionDetector.detectCollision();
     this.straightMissileLauncher.setMissileRoute(
@@ -95,13 +95,13 @@ class Player extends SpaceShip {
   upgrade() {
     switch (this.level) {
       case 2:
-        this.#missileDamage += 1;
+        this.#missileDamage = 3;
         this.straightProjectile = PROJECTILE.LEVEL_2;
         this.#straightMissileWidth = 52;
         break;
 
       case 3:
-        this.#missileDamage += 1;
+        this.#missileDamage = 4;
         this.straightProjectile = PROJECTILE.LEVEL_3;
         this.#straightMissileWidth = 90;
         break;

@@ -1,41 +1,62 @@
-import Intro from "../scenes/Intro";
-import { SPRITE } from "../constants/path";
-import Background from "../scenes/Background";
 import Player from "./Player";
-import Heavy from "./Heavy";
+
+import Intro from "../graphics/Intro";
+import Entrance from "../scenes/Entrance";
+import Hallway from "../scenes/Hallway";
 import Renderer from "../graphics/Renderer";
+import { BACKGROUNDS } from "../constants/path";
+import Background from "../graphics/Background";
 
 class Game extends Renderer {
+  #isHallwayStarted = false;
+
   constructor() {
     super();
     this.player = new Player(this);
     this.intro = new Intro(this);
-    this.block = new Background(SPRITE.BLOCK);
-    this.plate = new Background(SPRITE.PLATE);
-    this.heavy = new Heavy(200, 0);
-
+    this.block = new Background(BACKGROUNDS.BLOCK);
+    this.plate = new Background(BACKGROUNDS.PLATE);
+    this.entrance = new Entrance();
+    this.hallWay = new Hallway();
     this.combat();
-  }
-
-  combat() {
-    this.player.setTargetList([this.heavy]);
-    this.heavy.setTargetList([this.player]);
   }
 
   update() {
     this.intro.out();
     this.plate.update();
     this.block.update();
+    this.entrance.update();
     this.player.update();
-    this.heavy.update();
   }
 
   render() {
     this.intro.render();
     this.plate.render();
     this.block.render();
-    this.heavy.render();
+    this.entrance.render();
     this.player.render();
+  }
+
+  combat() {
+    this.playerTargetList = this.entrance.setSceneTargetList();
+    this.hallWay.setTarget([this.player]);
+    this.entrance.setTarget([this.player]);
+    this.player.setTargetList(this.playerTargetList);
+  }
+
+  controlScene() {
+    if (this.entrance.checkSceneStatus()) {
+      if (!this.#isHallwayStarted) {
+        const hallwayTarget = this.hallWay.setSceneTargetList();
+        this.player.setTargetList(hallwayTarget);
+        this.#isHallwayStarted = true;
+      }
+
+      this.hallWay.update();
+      this.hallWay.render();
+
+      this.#isHallwayStarted = true;
+    }
   }
 
   setUp() {
@@ -53,8 +74,9 @@ class Game extends Renderer {
 
     this.update();
     this.render();
+    this.controlScene();
 
-    requestAnimationFrame(() => this.play());
+    this.playGame = requestAnimationFrame(() => this.play());
   }
 
   handleEvent() {
@@ -70,6 +92,17 @@ class Game extends Renderer {
 
     this.intro.playIntroMusic();
     addEventListener("keydown", handleEnter);
+  }
+
+  endGame() {
+    cancelAnimationFrame(this.playGame);
+    this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+  }
+
+  resetGameState() {
+    this.intro.playBattleMusic();
+    this.play();
   }
 }
 
