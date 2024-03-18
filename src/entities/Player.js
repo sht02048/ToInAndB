@@ -6,7 +6,7 @@ import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
 import TEAM from "../constants/team";
-import { SPRITE, PROJECTILE } from "../constants/path";
+import { PLATER, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Player extends SpaceShip {
@@ -15,8 +15,8 @@ class Player extends SpaceShip {
   #straightMissileWidth = 36;
   #straightMissileSpeed = 5;
   #straightMissileReload = 10;
-  #guidedMissileWidth = 80;
-  #guidedMissileSpeed = 2.5;
+  #guidedMissileGap = 80;
+  #guidedMissileSpeed = 3;
   #guidedMissileReload = 100;
   #missileDamage = 2;
   #shipSpeed = 3.5;
@@ -24,10 +24,10 @@ class Player extends SpaceShip {
   constructor() {
     super();
 
-    this.leftShip = new Renderer(SPRITE.PLATER_LEFT);
-    this.rightShip = new Renderer(SPRITE.PLATER_RIGHT);
-    this.staticShip = new Renderer(SPRITE.PLAYER_STATIC);
-    this.straightShip = new Renderer(SPRITE.PLAYER_STRAIGHT);
+    this.leftShip = new Renderer(PLATER.LEFT);
+    this.rightShip = new Renderer(PLATER.RIGHT);
+    this.staticShip = new Renderer(PLATER.STATIC);
+    this.straightShip = new Renderer(PLATER.STRAIGHT);
     this.straightMissileLauncher = new MissileLauncher(
       this.#staticWidth,
       this.#staticHeight,
@@ -143,8 +143,8 @@ class Player extends SpaceShip {
     const rightX = this.x + this.currentDirection.width / 2;
     const sharedY = this.y + this.currentDirection.height / 2;
 
-    const leftWidth = this.#guidedMissileWidth;
-    const rightWidth = -this.#guidedMissileWidth / 2;
+    const leftWidth = this.#guidedMissileGap;
+    const rightWidth = -this.#guidedMissileGap / 2;
 
     const leftMissileInformation = this.setMissileInformation(
       this.guidedProjectile,

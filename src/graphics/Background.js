@@ -1,4 +1,4 @@
-import Renderer from "../graphics/Renderer";
+import Renderer from "./Renderer";
 
 class Background {
   #isInStarted = true;
@@ -14,7 +14,7 @@ class Background {
 
   update() {
     // ACTIVATE 실제 작업 시 주석해제 필요
-    this.in();
+    // this.in();
     this.circulateDown();
   }
 

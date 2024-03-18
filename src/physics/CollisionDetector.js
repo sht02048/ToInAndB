@@ -1,6 +1,4 @@
 class CollisionDetector {
-  #targetTopModifier = 56;
-
   constructor(gameObjectList) {
     this.gameObjectList = gameObjectList;
   }
@@ -51,7 +49,7 @@ class CollisionDetector {
   isOverLapping(gameObject, target) {
     const targetLeft = target.x;
     const targetRight = target.x + target.width;
-    const targetTop = target.y + this.#targetTopModifier;
+    const targetTop = target.y;
     const targetBottom = target.y + target.height;
 
     const objectLeft = gameObject.x;
