@@ -1,14 +1,24 @@
-const SPRITE = {
+const PLATER = {
+  STATIC: "src/assets/sprites/player/player_static.png",
+  STRAIGHT: "src/assets/sprites/player/player_straight.png",
+  LEFT: "src/assets/sprites/player/player_left.png",
+  RIGHT: "src/assets/sprites/player/player_right.png",
+};
+
+const ENEMIES = {
+  HEAVY: "src/assets/sprites/enemies/heavy.png",
+  HEAVY_HIT: "src/assets/sprites/enemies/heavy_hit.png",
+  BUG: "src/assets/sprites/enemies/bug.png",
+  BUG_HIT: "src/assets/sprites/enemies/bug_hit.png",
+  MINI: "src/assets/sprites/enemies/mini.png",
+  MINI_HIT: "src/assets/sprites/enemies/mini_hit.png",
+};
+
+const BACKGROUNDS = {
   BASE: "src/assets/sprites/backgrounds/base.png",
   BLOCK: "src/assets/sprites/backgrounds/block.png",
   PLATE: "src/assets/sprites/backgrounds/plate.png",
   SPACE: "src/assets/sprites/backgrounds/space.png",
-  PLAYER_STATIC: "src/assets/sprites/aircraft/player_static.png",
-  PLAYER_STRAIGHT: "src/assets/sprites/aircraft/player_straight.png",
-  PLATER_LEFT: "src/assets/sprites/aircraft/player_left.png",
-  PLATER_RIGHT: "src/assets/sprites/aircraft/player_right.png",
-  ENEMY_HEAVY: "src/assets/sprites/aircraft/enemy_1.png",
-  ENEMY_HEAVY_DESTROYED: "src/assets/sprites/aircraft/enemy_1_destroyed.png",
 };
 
 const IMAGE = {
@@ -44,7 +54,9 @@ const ITEMS = {
 };
 
 export {
-  SPRITE,
+  PLATER,
+  ENEMIES,
+  BACKGROUNDS,
   IMAGE,
   AUDIO,
   PROJECTILE,
