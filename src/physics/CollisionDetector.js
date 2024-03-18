@@ -15,7 +15,7 @@ class CollisionDetector {
     this.gameObjectList.forEach((item) => {
       this.targetList.forEach((target) => {
         if (
-          item.isVanished ||
+          item.isGained ||
           target.isDestroyed ||
           !this.isOverLapping(item, target)
         ) {

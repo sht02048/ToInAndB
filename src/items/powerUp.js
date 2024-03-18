@@ -19,6 +19,27 @@ class PowerUp extends Renderer {
     this.collisionDetector = new CollisionDetector([this]);
   }
 
+  renderItem() {
+    this.render(this.x, this.y);
+  }
+
+  update() {
+    if (this.isGained) {
+      return;
+    }
+
+    this.x += this.xSpeed;
+    this.y += this.ySpeed;
+
+    if (this.x - this.width > this.maxX || this.x < this.minX) {
+      this.xSpeed *= -1;
+    }
+
+    if (this.y - this.height > this.maxY || this.y < this.minY) {
+      this.ySpeed *= -1;
+    }
+  }
+
   detectItem() {
     this.collisionDetector.detectItem();
   }

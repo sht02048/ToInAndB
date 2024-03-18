@@ -12,6 +12,7 @@ class Heavy extends Enemy {
   #missileRound = 0;
   #reloadFrame = 20;
   #isHeavyReached = false;
+  #isItemSpawned = false;
 
   constructor(x, y) {
     super({
@@ -31,55 +32,25 @@ class Heavy extends Enemy {
   }
 
   update() {
-    this.collisionDetector.detectCollision();
-    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_AIMED);
+    const launchMissile = this.launchMissile.bind(this);
+    const setRoute = this.setRoute.bind(this);
+    const updateItem = this.updateItem.bind(this);
 
-    if (this.isDestroyed || this.isVanished) {
-      if (this.powerUp.isGained) {
-        return;
-      }
-
-      this.updateItem();
-      this.powerUp.setItemLocation(this.itemX, this.itemY);
-      this.powerUp.detectItem();
-
-      return;
-    }
-
-    this.launchMissile();
-    this.flyInRoute();
-    this.checkShipStatus();
+    this.updateEnemy(
+      launchMissile,
+      setRoute,
+      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+      updateItem,
+    );
 
     this.itemX = this.x;
     this.itemY = this.y;
-    this.frame += 1;
   }
 
   render() {
-    this.missileLauncher.render();
+    const renderItem = this.renderItem.bind(this);
 
-    if (this.isDestroyed) {
-      this.explosion.destroy(this.x, this.y, this.width);
-
-      if (this.powerUp.isGained) {
-        return;
-      }
-
-      this.powerUp.render(this.itemX, this.itemY);
-
-      return;
-    }
-
-    if (this.isVanished) {
-      return;
-    }
-
-    if (this.isHit) {
-      this.renderHit();
-      return;
-    }
-
-    this.ship.render(this.x, this.y);
+    this.renderEnemy(renderItem);
   }
 
   launchMissile() {
@@ -96,7 +67,7 @@ class Heavy extends Enemy {
     }
   }
 
-  flyInRoute() {
+  setRoute() {
     if (this.y > this.ship.canvasHeight / 3) {
       this.#isHeavyReached = true;
     }
@@ -107,23 +78,22 @@ class Heavy extends Enemy {
     }
   }
 
+  renderItem() {
+    if (this.powerUp.isGained) {
+      return;
+    }
+
+    this.powerUp.renderItem();
+  }
+
   updateItem() {
-    this.itemX += this.powerUp.xSpeed;
-    this.itemY += this.powerUp.ySpeed;
-
-    if (
-      this.itemX - this.powerUp.width > this.powerUp.maxX ||
-      this.itemX < this.powerUp.minX
-    ) {
-      this.powerUp.xSpeed *= -1;
+    if (!this.#isItemSpawned) {
+      this.powerUp.setItemLocation(this.x, this.y);
+      this.#isItemSpawned = true;
     }
 
-    if (
-      this.itemY - this.powerUp.height > this.powerUp.maxY ||
-      this.itemY < this.powerUp.minY
-    ) {
-      this.powerUp.ySpeed *= -1;
-    }
+    this.powerUp.update();
+    this.powerUp.detectItem();
   }
 
   setTargetList(targetList) {
