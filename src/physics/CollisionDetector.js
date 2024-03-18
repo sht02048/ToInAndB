@@ -34,7 +34,6 @@ class CollisionDetector {
             break;
         }
 
-        console.log(target.shipSpeed);
         item.isGained = true;
       });
     });
@@ -61,7 +60,7 @@ class CollisionDetector {
   isOverLapping(gameObject, target) {
     const targetLeft = target.x;
     const targetRight = target.x + target.width;
-    const targetTop = target.y;
+    const targetTop = target.y + 10;
     const targetBottom = target.y + target.height;
 
     const objectLeft = gameObject.x;

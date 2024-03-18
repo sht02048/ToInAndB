@@ -8,7 +8,7 @@ import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 class Mini extends Enemy {
   #miniSpeed = 2;
   #missileWidth = 16;
-  #missileSpeed = 1;
+  #missileSpeed = 2;
   #missileInterval = 300;
   #isItemSpawned = false;
   #isMiniReached = false;

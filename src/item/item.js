@@ -7,8 +7,6 @@ class Item extends Renderer {
   constructor(itemImage, itemType) {
     super(itemImage);
 
-    console.log(itemImage);
-
     this.x;
     this.y;
     this.width = 32;
