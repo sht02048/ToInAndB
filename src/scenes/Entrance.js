@@ -4,6 +4,7 @@ import Renderer from "../graphics/Renderer";
 
 class Entrance extends Renderer {
   #heavyWidth = 50;
+  #isDone = true;
 
   constructor() {
     super();
@@ -39,19 +40,20 @@ class Entrance extends Renderer {
   }
 
   checkSceneStatus() {
-    let isDone = true;
+    this.#isDone = true;
 
     this.bugList.forEach((bug) => {
-      if (!bug.isDestroyed || !isVanished) {
-        isDone = false;
+      if (!bug.isDestroyed && !bug.isVanished) {
+        this.#isDone = false;
+        return;
       }
     });
 
-    if (!this.heavy.isDestroyed || !this.heavy.isVanished) {
-      isDone = false;
+    if (!this.heavy.isDestroyed && !this.heavy.isVanished) {
+      this.#isDone = false;
     }
 
-    return isDone;
+    return this.#isDone;
   }
 }
 

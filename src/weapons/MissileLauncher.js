@@ -4,7 +4,7 @@ import TEAM from "../constants/team";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class MissileLauncher {
-  #projectileNumber = 30;
+  #projectileNumber = 15;
   #missileYModifier = 50;
 
   constructor(width, height) {
@@ -111,6 +111,10 @@ class MissileLauncher {
 
   setMissileRoute(missileRoute) {
     this.missileList.forEach((missile) => {
+      if (missile.isVanished) {
+        return;
+      }
+
       switch (missileRoute) {
         case MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT:
           missile.playerStraight(missile.speed);

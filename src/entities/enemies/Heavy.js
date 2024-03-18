@@ -1,9 +1,9 @@
 import Enemy from "./Enemy";
 
-import ITEM from "../../constants/item";
+import ITEM_TYPE from "../../constants/item";
 import Item from "../../item/item";
-import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
+import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 
 class Heavy extends Enemy {
   #missileWidth = 25;
@@ -26,10 +26,7 @@ class Heavy extends Enemy {
       height: 64,
     });
 
-    this.powerUp = new Item(ITEM_IMAGE.SPEED_UP, ITEM.SPEED_UP);
-
-    this.itemX;
-    this.itemY;
+    this.powerUp = new Item(ITEM_IMAGE.POWER_UP, ITEM_TYPE.POWER_UP);
   }
 
   update() {
@@ -43,9 +40,6 @@ class Heavy extends Enemy {
       MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
       updateItem,
     );
-
-    this.itemX = this.x;
-    this.itemY = this.y;
   }
 
   render() {
