@@ -54,13 +54,7 @@ class Renderer {
     this.mainCtx.save();
     this.mainCtx.translate(x, y + 10);
     this.mainCtx.rotate(angle);
-    this.mainCtx.drawImage(
-      this.image,
-      -width / 2 + 10,
-      -height + 20,
-      width,
-      height,
-    );
+    this.mainCtx.drawImage(this.image, -width, -height, width, height);
     this.mainCtx.restore();
   }
 

@@ -31,7 +31,7 @@ class Cockpit {
         this.shotSound.playAudio();
       }
 
-      if (this.shotSound.sound.currentTime > 0.2) {
+      if (this.shotSound.sound.currentTime > 0.5) {
         this.shotSound.sound.currentTime = 0;
       }
     }

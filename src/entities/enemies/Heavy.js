@@ -1,24 +1,27 @@
 import Enemy from "./Enemy";
 
-import PowerUp from "../items/powerUp";
-import { SPRITE, ENEMY_PROJECTILE } from "../constants/path";
-import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
+import PowerUp from "../../items/powerUp";
+import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
+import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Heavy extends Enemy {
   #missileWidth = 25;
   #missileSpeed = 2.5;
   #heavySpeed = 1;
   #missileInterval = 100;
+  #missileRound = 0;
+  #reloadFrame = 20;
+  #isHeavyReached = false;
 
   constructor(x, y) {
     super({
       x,
       y,
-      health: 4,
-      shipImage: SPRITE.ENEMY_HEAVY,
-      destroyedShipImage: SPRITE.ENEMY_HEAVY_DESTROYED,
-      width: 44,
-      height: 52,
+      health: 20,
+      shipImage: ENEMIES.HEAVY,
+      hitShipImage: ENEMIES.HEAVY_HIT,
+      width: 50,
+      height: 64,
     });
 
     this.powerUp = new PowerUp();
@@ -43,18 +46,12 @@ class Heavy extends Enemy {
       return;
     }
 
-    if (this.frame % this.#missileInterval === 0) {
-      const missileInformation = this.setMissileInformation();
-
-      this.loadSingleMissile(missileInformation);
-    }
-
-    this.y += this.#heavySpeed;
-    this.itemX = this.x;
-    this.itemY = this.y;
-
+    this.launchMissile();
+    this.flyInRoute();
     this.checkShipStatus();
 
+    this.itemX = this.x;
+    this.itemY = this.y;
     this.frame += 1;
   }
 
@@ -83,6 +80,31 @@ class Heavy extends Enemy {
     }
 
     this.ship.render(this.x, this.y);
+  }
+
+  launchMissile() {
+    if (this.frame % this.#missileInterval === 0 && this.y + this.height > 0) {
+      this.#missileRound = 3;
+    }
+
+    if (this.#missileRound > 0 && this.frame % this.#reloadFrame === 0) {
+      const missileInformation = this.setMissileInformation();
+
+      this.loadSingleMissile(missileInformation);
+
+      this.#missileRound -= 1;
+    }
+  }
+
+  flyInRoute() {
+    if (this.y > this.ship.canvasHeight / 3) {
+      this.#isHeavyReached = true;
+    }
+
+    if (!this.#isHeavyReached) {
+      this.y += this.#heavySpeed;
+      return;
+    }
   }
 
   updateItem() {

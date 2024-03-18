@@ -37,16 +37,17 @@ class MissileLauncher {
     const shipCenter =
       team === TEAM.PLATER
         ? this.x + this.width / 2 - missileWidth / 2
-        : this.x + this.width / 2 - missileWidth / 4;
+        : this.x + this.width / 2 - missileWidth / 2;
 
     missile.team = team;
     missile.x = shipCenter;
     missile.y =
       team === TEAM.PLATER
         ? this.y - this.#missileYModifier
-        : this.y + this.#missileYModifier;
+        : this.y + this.height - 10;
     missile.damage = missileDamage;
     missile.speed = missileSpeed;
+    missile.width = missileWidth;
 
     if (isAimed) {
       const { vx, vy, angle } = this.getTargetDirection(missile);
@@ -104,12 +105,7 @@ class MissileLauncher {
         return;
       }
 
-      missile.render(
-        missile.x,
-        missile.y,
-        missile.width / 2,
-        missile.height / 2,
-      );
+      missile.render(missile.x, missile.y);
     });
   }
 
@@ -161,47 +157,47 @@ class MissileLauncher {
   }
 
   getTargetDirection(missile) {
-    let closestTarget = null;
     let minDistance = Infinity;
 
+    const missileVector = {
+      vx: 0,
+      vy: 0,
+      angle: 0,
+    };
+
     this.targetList.forEach((target) => {
-      if (target.isDestroyed) {
+      if (target.isDestroyed || target.isVanished) {
         return;
       }
 
       const targetX = target.x + target.width / 2;
       const targetY = target.y + target.height / 2;
+      const missileX = missile.x + missile.width / 2;
 
-      const dx = targetX - missile.x;
+      const dx = targetX - missileX;
       const dy = targetY - missile.y;
       const distance = Math.sqrt(dx ** 2 + dy ** 2);
+      const normalizedDx = dx / distance;
+      const normalizedDy = dy / distance;
+
+      const angle = Math.atan2(dy, dx) + Math.PI / 2;
+      const vx = normalizedDx * missile.speed;
+      const vy = normalizedDy * missile.speed;
 
       if (distance < minDistance) {
-        closestTarget = target;
         minDistance = distance;
+
+        missileVector.vx = vx;
+        missileVector.vy = vy;
+        missileVector.angle = angle;
       }
     });
 
-    if (closestTarget === null) {
-      missile.isLostTarget = true;
-
+    if (missile.isLostTarget) {
       return { vx: 0, vy: 0, angle: 0 };
     }
 
-    const targetX = closestTarget.x + closestTarget.width / 2;
-    const targetY = closestTarget.y + closestTarget.height / 2;
-
-    const dx = targetX - missile.x;
-    const dy = targetY - missile.y;
-    const magnitude = Math.sqrt(dx ** 2 + dy ** 2);
-    const normalizedDx = dx / magnitude;
-    const normalizedDy = dy / magnitude;
-
-    const angle = Math.atan2(dy, dx) + Math.PI / 2;
-    const vx = normalizedDx * missile.speed;
-    const vy = normalizedDy * missile.speed;
-
-    return { vx, vy, angle };
+    return missileVector;
   }
 }
 
