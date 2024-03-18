@@ -12,6 +12,8 @@ const ENEMIES = {
   BUG_HIT: "src/assets/sprites/enemies/bug_hit.png",
   MINI: "src/assets/sprites/enemies/mini.png",
   MINI_HIT: "src/assets/sprites/enemies/mini_hit.png",
+  CANNON: "src/assets/sprites/enemies/cannon.png",
+  CANNON_HIT: "src/assets/sprites/enemies/cannon_hit.png",
 };
 
 const BACKGROUNDS = {
