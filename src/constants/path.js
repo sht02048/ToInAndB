@@ -49,8 +49,9 @@ const ENEMY_PROJECTILE = {
 
 const ENEMY_EXPLOSION = "src/assets/images/explosion_";
 
-const ITEMS = {
+const ITEM_IMAGE = {
   POWER_UP: "src/assets/images/power_up.png",
+  SPEED_UP: "src/assets/images/speed_up.png",
 };
 
 export {
@@ -62,5 +63,5 @@ export {
   PROJECTILE,
   ENEMY_PROJECTILE,
   ENEMY_EXPLOSION,
-  ITEMS,
+  ITEM_IMAGE,
 };
