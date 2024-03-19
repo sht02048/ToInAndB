@@ -4,8 +4,11 @@ import Game from "../entities/Game";
 import { IMAGE } from "../constants/path";
 
 class Paused extends Renderer {
-  constructor() {
+  constructor(endGame, toggleIsPaused) {
     super(IMAGE.PAUSED);
+
+    this.endGame = endGame;
+    this.toggleIsPaused = toggleIsPaused;
 
     this.buttonLeft = 670;
     this.buttonRight = 910;
@@ -14,6 +17,12 @@ class Paused extends Renderer {
     this.replayTop = 500;
     this.replayBottom = 540;
     this.isPaused = false;
+
+    this.handleEvent(endGame, toggleIsPaused);
+  }
+
+  update(isPaused) {
+    this.isPaused = isPaused;
   }
 
   render() {
@@ -25,16 +34,16 @@ class Paused extends Renderer {
       this.canvasHeight,
     );
 
-    this.pauseRendered = requestAnimationFrame(() => this.render());
+    requestAnimationFrame(() => this.render());
   }
 
-  unmount() {
-    cancelAnimationFrame(this.pauseRendered);
-  }
-
-  handleEvent(replay, handleIsPaused) {
+  handleEvent(endGame, handleIsPaused) {
     const checkClick = (event) => {
-      if (event.clientX < this.buttonLeft || event.clientX > this.buttonRight) {
+      if (
+        event.clientX < this.buttonLeft ||
+        event.clientX > this.buttonRight ||
+        !this.isPaused
+      ) {
         return;
       }
 
@@ -42,7 +51,6 @@ class Paused extends Renderer {
         event.clientY >= this.resumeTop &&
         event.clientY <= this.resumeBottom
       ) {
-        this.unmount();
         handleIsPaused();
         return;
       }
@@ -52,10 +60,9 @@ class Paused extends Renderer {
         event.clientY <= this.replayBottom
       ) {
         const replayedGame = new Game();
-        replay();
+        endGame();
         replayedGame.resetGameState();
         this.mainCanvas.removeEventListener("click", checkClick);
-        handleIsPaused();
         return;
       }
     };

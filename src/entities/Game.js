@@ -16,9 +16,8 @@ class Game extends Renderer {
 
     this.isPaused = false;
 
-    this.player = new Player(this);
+    this.player = new Player();
     this.intro = new Intro(this);
-    this.paused = new Paused();
     this.entrance = new Entrance();
     this.hallWay = new Hallway();
     this.block = new Background(BACKGROUNDS.BLOCK);
@@ -26,6 +25,11 @@ class Game extends Renderer {
 
     this.combat();
     this.handlePause();
+
+    const endGame = this.endGame.bind(this);
+    const toggleIsPaused = this.toggleIsPaused.bind(this);
+
+    this.paused = new Paused(endGame, toggleIsPaused);
   }
 
   update() {
@@ -41,7 +45,16 @@ class Game extends Renderer {
     this.plate.render();
     this.block.render();
     this.entrance.render();
+    this.hallWay.render();
     this.player.render();
+  }
+
+  controlPause() {
+    this.paused.update(this.isPaused);
+
+    if (this.isPaused) {
+      this.paused.render(0, 0, this.canvasWidth, this.canvasHeight);
+    }
   }
 
   combat() {
@@ -60,31 +73,31 @@ class Game extends Renderer {
       }
 
       this.hallWay.update();
-      this.hallWay.render();
 
       this.#isHallwayStarted = true;
     }
   }
 
-  setUp() {
+  playIntro() {
     this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     this.intro.float();
     this.intro.render();
 
-    requestAnimationFrame(() => this.setUp());
+    requestAnimationFrame(() => this.playIntro());
   }
 
   play() {
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-    if (!this.isPaused) {
+    if (!this.isPaused && !this.player.isDestroyed) {
       this.update();
+      this.controlScene();
     }
 
     this.render();
-    this.controlScene();
+    this.controlPause();
 
     this.playGame = requestAnimationFrame(() => this.play());
   }
@@ -104,41 +117,29 @@ class Game extends Renderer {
   }
 
   handlePause() {
-    // TODO should pause when replay the game
+    const toggleIsPaused = this.toggleIsPaused.bind(this);
+
     this.activatePause = (event) => {
       if (event.key === "Escape") {
-        this.pause();
+        toggleIsPaused();
       }
     };
 
     addEventListener("keydown", this.activatePause);
   }
 
-  pause() {
-    if (!this.isPaused) {
-      this.paused.render(0, 0, this.canvasWidth, this.canvasHeight);
-    }
-
-    this.isPaused = true;
-
-    const endGame = this.endGame.bind(this);
-    const handleIsPaused = this.handleIsPaused.bind(this);
-
-    this.paused.handleEvent(endGame, handleIsPaused);
-  }
-
-  handleIsPaused() {
-    this.isPaused = false;
+  toggleIsPaused() {
+    this.isPaused = !this.isPaused;
   }
 
   endGame() {
     cancelAnimationFrame(this.playGame);
+    removeEventListener("keydown", this.activatePause);
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 
   resetGameState() {
-    removeEventListener("keydown", this.activatePause);
     this.intro.playBattleMusic();
     this.play();
   }
