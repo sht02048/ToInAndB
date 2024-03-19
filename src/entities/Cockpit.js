@@ -30,6 +30,7 @@ class Cockpit {
     this.speedUpSound.sound.volume = 0.5;
     this.isShotSoundPlaying = false;
     this.currentSoundTime = this.shotSound.sound.currentTime;
+    this.isInvincibleFrame = 200;
     this.frame = 0;
 
     this.addEvent();
@@ -96,6 +97,10 @@ class Cockpit {
   }
 
   checkPlayerStatus(power, speed) {
+    if (this.ship.healthPoint <= 0) {
+      this.ship.isDestroyed = true;
+    }
+
     if (this.#currentPower < power) {
       this.powerUpSound.playAudio();
       this.#currentPower = power;

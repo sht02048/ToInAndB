@@ -13,13 +13,15 @@ class Sound {
     Sound.audioList.push(this);
   }
 
-  static toggleSound(toggleButton) {
+  static toggleSound() {
+    const muteToggle = document.getElementById("mute-toggle");
+
     if (Sound.isPlaying) {
       Sound.audioList.forEach((audio) => {
         audio.sound.muted = true;
       });
 
-      toggleButton.innerHTML =
+      muteToggle.innerHTML =
         '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';
       Sound.isPlaying = false;
 
@@ -30,7 +32,7 @@ class Sound {
       audio.sound.muted = false;
     });
 
-    toggleButton.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
+    muteToggle.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
     Sound.isPlaying = true;
   }
 

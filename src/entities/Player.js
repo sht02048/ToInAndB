@@ -2,6 +2,7 @@ import Cockpit from "./Cockpit";
 import SpaceShip from "./Spaceship";
 
 import Renderer from "../graphics/Renderer";
+import Explosion from "../graphics/Explosion";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
@@ -19,10 +20,13 @@ class Player extends SpaceShip {
   #guidedMissileSpeed = 3;
   #guidedMissileReload = 100;
   #missileDamage = 2;
+  #canControl = false;
+  #isSpawned = false;
 
   constructor() {
     super();
 
+    this.explosion = new Explosion();
     this.leftShip = new Renderer(PLATER.LEFT);
     this.rightShip = new Renderer(PLATER.RIGHT);
     this.staticShip = new Renderer(PLATER.STATIC);
@@ -45,17 +49,22 @@ class Player extends SpaceShip {
     this.currentDirection = this.staticShip;
     this.canvasWidth = this.currentDirection.canvasWidth;
     this.canvasHeight = this.currentDirection.canvasHeight;
+    this.spawnX = this.canvasWidth / 2 - this.#staticWidth / 2;
+    this.spawnY = this.canvasHeight + this.#staticHeight;
 
     // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
     this.initialY = this.canvasHeight;
     // this.initialY = 0;
-    this.x = this.canvasWidth / 2 - this.#staticWidth / 2;
+    this.x = this.spawnX;
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
     this.level = 1;
+    this.healthPoint = 3;
     this.shipSpeed = 3.5;
     this.isShooting = false;
     this.reloadFrame = 10;
+    this.invincibleFrame = 200;
+    this.isInvincible = false;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
 
@@ -63,14 +72,9 @@ class Player extends SpaceShip {
   }
 
   update() {
-    this.launchMissile();
-    this.setSize();
-    this.upgrade();
-    this.cockpit.makeShotSound();
-    this.cockpit.control(this.shipSpeed);
+    this.frame += 1;
+
     this.cockpit.checkPlayerStatus(this.level, this.shipSpeed);
-    this.straightCollisionDetector.detectCollision();
-    this.guidedCollisionDetector.detectCollision();
     this.straightMissileLauncher.setMissileRoute(
       MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT,
       this.#straightMissileSpeed,
@@ -80,17 +84,83 @@ class Player extends SpaceShip {
       this.#guidedMissileSpeed,
     );
 
-    if (this.initialY > 0) {
+    if (!this.#canControl) {
       this.in();
+      return;
     }
 
-    this.frame += 1;
+    if (this.isHit) {
+      this.isInvincible = true;
+      this.updateExplosion();
+      return;
+    }
+
+    if (this.isInvincible) {
+      this.updateSpawn();
+      this.invincibleFrame -= 1;
+
+      if (this.invincibleFrame > 100) {
+        return;
+      }
+    }
+
+    this.launchMissile();
+    this.setSize();
+    this.upgrade();
+    this.cockpit.makeShotSound();
+    this.cockpit.control(this.shipSpeed);
+    this.straightCollisionDetector.detectCollision();
+    this.guidedCollisionDetector.detectCollision();
   }
 
   render() {
     this.guidedMissileLauncher.render();
     this.straightMissileLauncher.render();
+
+    if (this.isHit) {
+      this.explosion.destroy(this.x, this.y, this.#staticWidth);
+      return;
+    }
+
+    if (this.isInvincible) {
+      this.renderSpawn();
+      return;
+    }
+
     this.currentDirection.render(this.x, this.y - this.initialY);
+  }
+
+  updateExplosion() {
+    this.isHit = !this.explosion.isExploded();
+  }
+
+  updateSpawn() {
+    this.#canControl = false;
+  }
+
+  renderSpawn() {
+    this.currentDirection.mainCtx.save();
+    this.currentDirection.mainCtx.globalAlpha = 0.4;
+    this.currentDirection.render(this.x, this.y);
+    this.currentDirection.mainCtx.restore();
+  }
+
+  updateSpawn() {
+    if (!this.#isSpawned) {
+      this.x = this.spawnX;
+      this.y = this.spawnY;
+      this.#isSpawned = true;
+    }
+
+    if (this.invincibleFrame > 100) {
+      this.y -= 2;
+    }
+
+    if (this.invincibleFrame < 0) {
+      this.isInvincible = false;
+      this.#isSpawned = false;
+      this.invincibleFrame = 200;
+    }
   }
 
   upgrade() {
@@ -167,6 +237,10 @@ class Player extends SpaceShip {
   }
 
   in() {
+    if (this.initialY < 0) {
+      this.#canControl = true;
+    }
+
     this.initialY -= this.currentDirection.inAndOutSpeed;
   }
 

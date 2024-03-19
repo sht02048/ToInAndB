@@ -1,5 +1,6 @@
 import Player from "./Player";
 
+import Sound from "../utils/Sound";
 import Hallway from "../scenes/Hallway";
 import Entrance from "../scenes/Entrance";
 import Intro from "../graphics/Intro";
@@ -7,6 +8,7 @@ import Paused from "../graphics/Paused";
 import Renderer from "../graphics/Renderer";
 import Background from "../graphics/Background";
 import { BACKGROUNDS } from "../constants/path";
+import LifeBoard from "../graphics/Life";
 
 class Game extends Renderer {
   #isHallwayStarted = false;
@@ -22,6 +24,7 @@ class Game extends Renderer {
     this.hallWay = new Hallway();
     this.block = new Background(BACKGROUNDS.BLOCK);
     this.plate = new Background(BACKGROUNDS.PLATE);
+    this.lifeBoard = new LifeBoard();
 
     this.combat();
     this.handlePause();
@@ -47,6 +50,7 @@ class Game extends Renderer {
     this.entrance.render();
     this.hallWay.render();
     this.player.render();
+    this.lifeBoard.render(this.player.healthPoint);
   }
 
   controlPause() {
@@ -117,11 +121,10 @@ class Game extends Renderer {
   }
 
   handlePause() {
-    const toggleIsPaused = this.toggleIsPaused.bind(this);
-
     this.activatePause = (event) => {
       if (event.key === "Escape") {
-        toggleIsPaused();
+        this.toggleIsPaused();
+        Sound.toggleSound();
       }
     };
 
@@ -140,7 +143,6 @@ class Game extends Renderer {
   }
 
   resetGameState() {
-    this.intro.playBattleMusic();
     this.play();
   }
 }

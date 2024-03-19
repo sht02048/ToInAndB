@@ -6,6 +6,7 @@ import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 class MissileLauncher {
   #projectileNumber = 15;
   #missileYModifier = 50;
+  #enemyDamage = 1;
 
   constructor(width, height) {
     this.x;
@@ -25,7 +26,7 @@ class MissileLauncher {
     x,
     y,
     missileWidth,
-    missileDamage,
+    missileDamage = this.#enemyDamage,
     team,
     missileSpeed,
     isAimed = false,

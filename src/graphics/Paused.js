@@ -61,7 +61,7 @@ class Paused extends Renderer {
       ) {
         const replayedGame = new Game();
         endGame();
-        replayedGame.resetGameState();
+        replayedGame.play();
         this.mainCanvas.removeEventListener("click", checkClick);
         return;
       }

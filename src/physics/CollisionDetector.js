@@ -45,6 +45,7 @@ class CollisionDetector {
         if (
           missile.isVanished ||
           target.isDestroyed ||
+          target.isInvincible ||
           !this.isOverLapping(missile, target)
         ) {
           return;
@@ -53,6 +54,7 @@ class CollisionDetector {
         missile.isVanished = true;
         target.isHit = true;
         target.healthPoint -= missile.damage;
+        target.explosion.explosionFrame = 0;
       });
     });
   }

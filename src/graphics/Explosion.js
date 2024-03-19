@@ -38,6 +38,18 @@ class Explosion {
     this.explosionFrame += 1;
   }
 
+  isExploded() {
+    if (this.explosionFrame === 44) {
+      return true;
+    }
+
+    return false;
+  }
+
+  resetExplosion() {
+    this.explosionFrame = 0;
+  }
+
   hit(substituteImage, x, y) {
     substituteImage.render(x, y);
   }

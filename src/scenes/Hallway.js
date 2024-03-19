@@ -10,7 +10,7 @@ class Hallway extends Renderer {
   constructor() {
     super();
 
-    this.mini = new Mini(this.canvasWidth / 2 - this.#miniWidth / 2, -20);
+    this.mini = new Mini(this.canvasWidth / 2 - this.#miniWidth / 2, -45);
     this.cannonList = [
       new Cannon({ x: this.minX + 100, y: -100 }),
       new Cannon({ x: this.maxX - 100, y: -100 }),
