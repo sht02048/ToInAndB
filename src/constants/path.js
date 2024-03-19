@@ -3,6 +3,7 @@ const PLATER = {
   STRAIGHT: "src/assets/sprites/player/player_straight.png",
   LEFT: "src/assets/sprites/player/player_left.png",
   RIGHT: "src/assets/sprites/player/player_right.png",
+  SPAWN: "src/assets/sprites/player/player_spawn.png",
 };
 
 const ENEMIES = {
