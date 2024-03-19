@@ -36,6 +36,8 @@ const AUDIO = {
   INTRO: "src/assets/audios/background/battle.mp3",
   EXPLOSION: "src/assets/audios/effects/explosion_1.mp3",
   SHOT: "src/assets/audios/effects/shot_1.mp3",
+  POWER_UP: "src/assets/audios/effects/power_up.mp3",
+  SPEED_UP: "src/assets/audios/effects/speed_up.mp3",
 };
 
 const PROJECTILE = {
