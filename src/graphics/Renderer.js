@@ -2,8 +2,6 @@ class Renderer {
   #leftBlockSize = 100;
   #rightBlockSize = 145;
   #playerShipHeight = 61;
-  #mainCanvas = document.getElementById("main-canvas");
-  #introCanvas = document.getElementById("intro-canvas");
 
   constructor(imagePath) {
     this.imagePath = imagePath;
@@ -12,10 +10,12 @@ class Renderer {
     this.height;
     this.image.src = this.imagePath;
 
-    this.mainCtx = this.#mainCanvas.getContext("2d");
-    this.introCtx = this.#introCanvas.getContext("2d");
-    this.canvasWidth = this.#mainCanvas.width;
-    this.canvasHeight = this.#mainCanvas.height;
+    this.mainCanvas = document.getElementById("main-canvas");
+    this.introCanvas = document.getElementById("intro-canvas");
+    this.mainCtx = this.mainCanvas.getContext("2d");
+    this.introCtx = this.introCanvas.getContext("2d");
+    this.canvasWidth = this.mainCanvas.width;
+    this.canvasHeight = this.mainCanvas.height;
     this.minX = this.#leftBlockSize;
     this.maxX = this.canvasWidth - this.#rightBlockSize;
     this.minY = -10;

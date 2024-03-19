@@ -9,7 +9,7 @@ class Mini extends Enemy {
   #miniSpeed = 2;
   #missileWidth = 16;
   #missileSpeed = 2;
-  #missileInterval = 300;
+  #missileInterval = 200;
   #isItemSpawned = false;
   #isMiniReached = false;
 

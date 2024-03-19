@@ -10,20 +10,26 @@ class Entrance extends Renderer {
     super();
 
     this.bugList = Array.from({ length: 5 }, (_, index) => [
-      new Bug({ x: this.minX + 100, y: index * -150, isLeft: true }),
-      new Bug({ x: this.maxX - 100, y: index * -150, isLeft: false }),
+      new Bug({ x: this.minX + 100, y: index * -150 - 100, isLeft: true }),
+      new Bug({ x: this.maxX - 100, y: index * -150 - 100, isLeft: false }),
     ]).flat();
     this.heavy = new Heavy(this.canvasWidth / 2 - this.#heavyWidth / 2, -200);
   }
 
   update() {
-    this.bugList.forEach((bug) => bug.update());
-    this.heavy.update();
+    if (this.frame > 300) {
+      this.bugList.forEach((bug) => bug.update());
+      this.heavy.update();
+    }
+
+    this.frame += 1;
   }
 
   render() {
-    this.bugList.forEach((bug) => bug.render());
-    this.heavy.render();
+    if (this.frame > 300) {
+      this.bugList.forEach((bug) => bug.render());
+      this.heavy.render();
+    }
   }
 
   setTarget(player) {

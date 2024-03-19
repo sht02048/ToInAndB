@@ -1,24 +1,31 @@
 import Player from "./Player";
 
-import Intro from "../graphics/Intro";
-import Entrance from "../scenes/Entrance";
 import Hallway from "../scenes/Hallway";
+import Entrance from "../scenes/Entrance";
+import Intro from "../graphics/Intro";
+import Paused from "../graphics/Paused";
 import Renderer from "../graphics/Renderer";
-import { BACKGROUNDS } from "../constants/path";
 import Background from "../graphics/Background";
+import { BACKGROUNDS } from "../constants/path";
 
 class Game extends Renderer {
   #isHallwayStarted = false;
 
   constructor() {
     super();
+
+    this.isPaused = false;
+
     this.player = new Player(this);
     this.intro = new Intro(this);
-    this.block = new Background(BACKGROUNDS.BLOCK);
-    this.plate = new Background(BACKGROUNDS.PLATE);
+    this.paused = new Paused();
     this.entrance = new Entrance();
     this.hallWay = new Hallway();
+    this.block = new Background(BACKGROUNDS.BLOCK);
+    this.plate = new Background(BACKGROUNDS.PLATE);
+
     this.combat();
+    this.handlePause();
   }
 
   update() {
@@ -72,7 +79,10 @@ class Game extends Renderer {
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-    this.update();
+    if (!this.isPaused) {
+      this.update();
+    }
+
     this.render();
     this.controlScene();
 
@@ -83,7 +93,6 @@ class Game extends Renderer {
     const handleEnter = (event) => {
       if (event.key === "Enter") {
         this.intro.playBattleMusic();
-        // ACTIVATE 실제 작업 시 주석해제 및 하단 this.player.addEvent 삭제 필요
         this.play();
 
         removeEventListener("keydown", handleEnter);
@@ -94,6 +103,34 @@ class Game extends Renderer {
     addEventListener("keydown", handleEnter);
   }
 
+  handlePause() {
+    // TODO should pause when replay the game
+    this.activatePause = (event) => {
+      if (event.key === "Escape") {
+        this.pause();
+      }
+    };
+
+    addEventListener("keydown", this.activatePause);
+  }
+
+  pause() {
+    if (!this.isPaused) {
+      this.paused.render(0, 0, this.canvasWidth, this.canvasHeight);
+    }
+
+    this.isPaused = true;
+
+    const endGame = this.endGame.bind(this);
+    const handleIsPaused = this.handleIsPaused.bind(this);
+
+    this.paused.handleEvent(endGame, handleIsPaused);
+  }
+
+  handleIsPaused() {
+    this.isPaused = false;
+  }
+
   endGame() {
     cancelAnimationFrame(this.playGame);
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -101,6 +138,7 @@ class Game extends Renderer {
   }
 
   resetGameState() {
+    removeEventListener("keydown", this.activatePause);
     this.intro.playBattleMusic();
     this.play();
   }
