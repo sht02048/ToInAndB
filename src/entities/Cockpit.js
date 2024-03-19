@@ -9,6 +9,8 @@ class Cockpit {
     ArrowRight: false,
     Space: false,
   };
+  #currentPower = 1;
+  #currentSpeed = 3.5;
 
   constructor(ship) {
     this.ship = ship;
@@ -18,9 +20,17 @@ class Cockpit {
     this.maxY = this.ship.currentDirection.maxY;
 
     this.shotSound = new Sound(AUDIO.SHOT);
+    this.powerUpSound = new Sound(AUDIO.POWER_UP);
+    this.speedUpSound = new Sound(AUDIO.SPEED_UP);
     this.shotSound.sound.loop = false;
+    this.powerUpSound.sound.loop = false;
+    this.speedUpSound.sound.loop = false;
+    this.shotSound.sound.volume = 0.2;
+    this.powerUpSound.sound.volume = 0.5;
+    this.speedUpSound.sound.volume = 0.5;
     this.isShotSoundPlaying = false;
     this.currentSoundTime = this.shotSound.sound.currentTime;
+    this.frame = 0;
 
     this.addEvent();
   }
@@ -31,7 +41,7 @@ class Cockpit {
         this.shotSound.playAudio();
       }
 
-      if (this.shotSound.sound.currentTime > 0.5) {
+      if (this.shotSound.sound.currentTime > 0.022) {
         this.shotSound.sound.currentTime = 0;
       }
     }
@@ -68,6 +78,8 @@ class Cockpit {
         this.ship.x += shipSpeed;
       }
     }
+
+    this.frame += 1;
   }
 
   addEvent() {
@@ -81,6 +93,18 @@ class Cockpit {
 
     addEventListener("keydown", (event) => handleControl(event, true));
     addEventListener("keyup", (event) => handleControl(event, false));
+  }
+
+  checkPlayerStatus(power, speed) {
+    if (this.#currentPower < power) {
+      this.powerUpSound.playAudio();
+      this.#currentPower = power;
+    }
+
+    if (this.#currentSpeed < speed) {
+      this.speedUpSound.playAudio();
+      this.#currentSpeed = speed;
+    }
   }
 }
 

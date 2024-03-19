@@ -14,7 +14,7 @@ class Player extends SpaceShip {
   #staticHeight = 61;
   #straightMissileWidth = 36;
   #straightMissileSpeed = 5;
-  #straightMissileReload = 10;
+  #straightMissileReload = 15;
   #guidedMissileGap = 80;
   #guidedMissileSpeed = 3;
   #guidedMissileReload = 100;
@@ -47,8 +47,8 @@ class Player extends SpaceShip {
     this.canvasHeight = this.currentDirection.canvasHeight;
 
     // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
-    // this.initialY = this.canvasHeight;
-    this.initialY = 0;
+    this.initialY = this.canvasHeight;
+    // this.initialY = 0;
     this.x = this.canvasWidth / 2 - this.#staticWidth / 2;
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
@@ -68,6 +68,7 @@ class Player extends SpaceShip {
     this.upgrade();
     this.cockpit.makeShotSound();
     this.cockpit.control(this.shipSpeed);
+    this.cockpit.checkPlayerStatus(this.level, this.shipSpeed);
     this.straightCollisionDetector.detectCollision();
     this.guidedCollisionDetector.detectCollision();
     this.straightMissileLauncher.setMissileRoute(
