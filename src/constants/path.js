@@ -28,6 +28,7 @@ const BACKGROUNDS = {
 const IMAGE = {
   TITLE: "src/assets/images/title.png",
   INSTRUCTION_START: "src/assets/images/instruction_start.png",
+  PAUSED: "src/assets/images/paused.png",
 };
 
 const AUDIO = {
