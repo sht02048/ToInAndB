@@ -11,8 +11,8 @@ import { PLATER, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Player extends SpaceShip {
-  #staticWidth = 41;
-  #staticHeight = 61;
+  #staticWidth = 35;
+  #staticHeight = 49;
   #straightMissileWidth = 36;
   #straightMissileSpeed = 5;
   #straightMissileReload = 15;
