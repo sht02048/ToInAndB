@@ -1,56 +1,74 @@
 import Player from "./Player";
 
-import Sound from "../utils/Sound";
 import Hallway from "../scenes/Hallway";
 import Entrance from "../scenes/Entrance";
 import Intro from "../graphics/Intro";
 import Paused from "../graphics/Paused";
+import LifeBoard from "../graphics/Life";
 import Renderer from "../graphics/Renderer";
 import Background from "../graphics/Background";
 import { BACKGROUNDS } from "../constants/path";
-import LifeBoard from "../graphics/Life";
 
 class Game extends Renderer {
-  #isHallwayStarted = false;
-
   constructor() {
     super();
 
     this.isPaused = false;
 
-    this.player = new Player();
-    this.intro = new Intro(this);
-    this.entrance = new Entrance();
+    this.intro = new Intro();
     this.hallWay = new Hallway();
     this.block = new Background(BACKGROUNDS.BLOCK);
     this.plate = new Background(BACKGROUNDS.PLATE);
     this.lifeBoard = new LifeBoard();
 
-    this.combat();
+    this.backgroundScenes = [
+      this.intro,
+      this.plate,
+      this.block,
+      this.lifeBoard,
+    ];
+
+    this.setUpCombatScenes();
+    this.setTargetList();
     this.handlePause();
 
-    const endGame = this.endGame.bind(this);
     const toggleIsPaused = this.toggleIsPaused.bind(this);
-
-    this.paused = new Paused(endGame, toggleIsPaused);
+    const restart = this.restart.bind(this);
+    this.paused = new Paused(toggleIsPaused, restart);
   }
 
   update() {
-    this.intro.out();
-    this.plate.update();
-    this.block.update();
-    this.entrance.update();
-    this.player.update();
+    this.backgroundScenes.forEach((background, index) => {
+      if (index === 0) {
+        background.out();
+        return;
+      }
+
+      background.update?.();
+    });
+
+    this.combatScenes.forEach((combat) => combat.update());
   }
 
   render() {
-    this.intro.render();
-    this.plate.render();
-    this.block.render();
-    this.entrance.render();
-    this.hallWay.render();
-    this.player.render();
-    this.lifeBoard.render(this.player.healthPoint);
+    this.backgroundScenes.forEach((background, index) => {
+      if (index === 3) {
+        background.render(this.player.healthPoint);
+        return;
+      }
+
+      background.render();
+    });
+
+    this.combatScenes.forEach((combat) => combat.render());
+  }
+
+  setUpCombatScenes() {
+    this.combatScenes = [];
+    this.player = new Player();
+    this.entrance = new Entrance();
+
+    this.combatScenes.push(this.player, this.entrance);
   }
 
   controlPause() {
@@ -61,24 +79,21 @@ class Game extends Renderer {
     }
   }
 
-  combat() {
+  setTargetList() {
     this.playerTargetList = this.entrance.setSceneTargetList();
-    this.hallWay.setTarget([this.player]);
     this.entrance.setTarget([this.player]);
     this.player.setTargetList(this.playerTargetList);
   }
 
   controlScene() {
-    if (this.entrance.checkSceneStatus()) {
-      if (!this.#isHallwayStarted) {
-        const hallwayTarget = this.hallWay.setSceneTargetList();
-        this.player.setTargetList(hallwayTarget);
-        this.#isHallwayStarted = true;
-      }
+    const isEntranceOver = this.entrance.checkSceneStatus();
 
-      this.hallWay.update();
-
-      this.#isHallwayStarted = true;
+    if (isEntranceOver && this.combatScenes.length === 2) {
+      this.hallWay = new Hallway();
+      const hallwayTarget = this.hallWay.setSceneTargetList();
+      this.player.setTargetList(hallwayTarget);
+      this.hallWay.setTarget([this.player]);
+      this.combatScenes.push(this.hallWay);
     }
   }
 
@@ -97,10 +112,10 @@ class Game extends Renderer {
 
     if (!this.isPaused && !this.player.isDestroyed) {
       this.update();
-      this.controlScene();
     }
 
     this.render();
+    this.controlScene();
     this.controlPause();
 
     this.playGame = requestAnimationFrame(() => this.play());
@@ -124,7 +139,6 @@ class Game extends Renderer {
     this.activatePause = (event) => {
       if (event.key === "Escape") {
         this.toggleIsPaused();
-        Sound.toggleSound();
       }
     };
 
@@ -135,15 +149,9 @@ class Game extends Renderer {
     this.isPaused = !this.isPaused;
   }
 
-  endGame() {
-    cancelAnimationFrame(this.playGame);
-    removeEventListener("keydown", this.activatePause);
-    this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-  }
-
-  resetGameState() {
-    this.play();
+  restart() {
+    this.setUpCombatScenes();
+    this.setTargetList();
   }
 }
 

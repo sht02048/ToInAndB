@@ -21,7 +21,6 @@ class Player extends SpaceShip {
   #guidedMissileReload = 100;
   #missileDamage = 2;
   #canControl = false;
-  #isSpawned = false;
 
   constructor() {
     super();
@@ -132,6 +131,11 @@ class Player extends SpaceShip {
 
   updateExplosion() {
     this.isHit = !this.explosion.isExploded();
+
+    if (!this.isHit) {
+      this.x = this.spawnX;
+      this.y = this.spawnY;
+    }
   }
 
   updateSpawn() {
@@ -146,19 +150,12 @@ class Player extends SpaceShip {
   }
 
   updateSpawn() {
-    if (!this.#isSpawned) {
-      this.x = this.spawnX;
-      this.y = this.spawnY;
-      this.#isSpawned = true;
-    }
-
     if (this.invincibleFrame > 100) {
       this.y -= 2;
     }
 
     if (this.invincibleFrame < 0) {
       this.isInvincible = false;
-      this.#isSpawned = false;
       this.invincibleFrame = 200;
     }
   }

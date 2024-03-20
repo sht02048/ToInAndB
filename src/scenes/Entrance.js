@@ -10,8 +10,8 @@ class Entrance extends Renderer {
     super();
 
     this.bugList = Array.from({ length: 5 }, (_, index) => [
-      new Bug({ x: this.minX + 100, y: index * -150 - 100, isLeft: true }),
-      new Bug({ x: this.maxX - 100, y: index * -150 - 100, isLeft: false }),
+      new Bug({ x: this.minX + 100, y: index * -150 - 50, isLeft: true }),
+      new Bug({ x: this.maxX - 100, y: index * -150 - 50, isLeft: false }),
     ]).flat();
     this.heavy = new Heavy(this.canvasWidth / 2 - this.#heavyWidth / 2, -200);
   }
