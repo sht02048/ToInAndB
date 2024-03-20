@@ -5,7 +5,7 @@ import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Danger extends Enemy {
   #missileWidth = 25;
-  #missileSpeed = 4;
+  #missileSpeed = 2;
   #missileInterval = 60;
   #dangerSpeed = 4;
   #isTurningPointReached = false;

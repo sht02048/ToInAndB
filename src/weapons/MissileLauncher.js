@@ -162,6 +162,10 @@ class MissileLauncher {
   }
 
   getTargetDirection(missile) {
+    if (missile.isLockedOn) {
+      return { vx: 0, vy: 0, angle: 0 };
+    }
+
     let minDistance = Infinity;
 
     const missileVector = {
@@ -201,6 +205,8 @@ class MissileLauncher {
     if (missile.isLostTarget) {
       return { vx: 0, vy: 0, angle: 0 };
     }
+
+    missile.isLockedOn = true;
 
     return missileVector;
   }

@@ -4,6 +4,7 @@ class Missile extends Renderer {
   constructor(imagePath) {
     super(imagePath);
 
+    this.isLockedOn = false;
     this.isVanished = false;
     this.damage;
     this.vx;
