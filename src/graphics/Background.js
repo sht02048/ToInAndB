@@ -2,28 +2,39 @@ import Renderer from "./Renderer";
 
 class Background {
   #isInStarted = true;
+  #isOut = false;
 
   constructor(imagePath) {
-    this.background1 = new Renderer(imagePath);
-    this.background2 = new Renderer(imagePath);
-    this.canvasWidth = this.background1.canvasWidth;
-    this.canvasHeight = this.background1.canvasHeight;
+    this.firstBackground = new Renderer(imagePath);
+    this.secondBackground = new Renderer(imagePath);
+    this.canvasWidth = this.firstBackground.canvasWidth;
+    this.canvasHeight = this.firstBackground.canvasHeight;
     this.x = 0;
     this.y = 0;
+
+    this.shouldOut = false;
   }
 
   update() {
+    if (this.#isOut) {
+      return;
+    }
+
     // ACTIVATE 실제 작업 시 주석해제 필요
-    // this.in();
-    this.circulateDown();
+    this.in();
+    this.circulateDown(this.shouldOut);
   }
 
   circulateDown() {
-    this.y += this.background1.inAndOutSpeed;
+    this.y += this.firstBackground.inAndOutSpeed;
 
-    if (this.y > this.canvasHeight) {
+    if (this.y > this.canvasHeight && !this.shouldOut) {
       this.y = 0;
     }
+  }
+
+  alertOut() {
+    this.shouldOut = true;
   }
 
   in() {
@@ -34,13 +45,17 @@ class Background {
   }
 
   render() {
-    this.background1.render(
+    if (this.#isOut) {
+      return;
+    }
+
+    this.firstBackground.render(
       this.x,
       this.y,
       this.canvasWidth,
       this.canvasHeight,
     );
-    this.background2.render(
+    this.secondBackground.render(
       this.x,
       this.y - this.canvasHeight,
       this.canvasWidth,

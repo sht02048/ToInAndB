@@ -89,9 +89,11 @@ class Game extends Renderer {
 
     if (isEntranceOver && this.combatScenes.length === 2) {
       this.hallWay = new Hallway();
+
       const hallwayTarget = this.hallWay.setSceneTargetList();
       this.player.setTargetList(hallwayTarget);
       this.hallWay.setTarget([this.player]);
+
       this.combatScenes.push(this.hallWay);
 
       if (Sound.isPlaying) {
