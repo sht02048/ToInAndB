@@ -8,7 +8,7 @@ class LifeBoard {
     this.healthList = [];
 
     for (let i = 0; i < this.#currentHealth; i += 1) {
-      this.healthList.push(new Renderer(PLATER.SPAWN));
+      this.healthList.push(new Renderer(PLATER.LIFE));
     }
   }
 
