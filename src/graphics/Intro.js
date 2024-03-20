@@ -70,7 +70,12 @@ class Intro {
       event.preventDefault();
 
       this.introMusic.playAudio();
-      Sound.toggleSound();
+
+      if (Sound.isPlaying) {
+        Sound.mute();
+      } else {
+        Sound.unmute();
+      }
     });
   }
 

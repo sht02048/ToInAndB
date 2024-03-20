@@ -1,26 +1,32 @@
 import Player from "./Player";
 
+import Sound from "../utils/Sound";
 import Hallway from "../scenes/Hallway";
 import Entrance from "../scenes/Entrance";
 import Intro from "../graphics/Intro";
-import Paused from "../graphics/Paused";
+import Menu from "../graphics/Menu";
 import LifeBoard from "../graphics/Life";
 import Renderer from "../graphics/Renderer";
 import Background from "../graphics/Background";
 import { BACKGROUNDS } from "../constants/path";
 
 class Game extends Renderer {
+  #isMutedDuringPause = false;
+
   constructor() {
     super();
 
-    this.isPaused = false;
+    const toggleIsPaused = this.toggleIsPaused.bind(this);
+    const restart = this.restart.bind(this);
 
     this.intro = new Intro();
     this.hallWay = new Hallway();
     this.block = new Background(BACKGROUNDS.BLOCK);
     this.plate = new Background(BACKGROUNDS.PLATE);
     this.lifeBoard = new LifeBoard();
+    this.menu = new Menu(toggleIsPaused, restart);
 
+    this.isPaused = false;
     this.backgroundScenes = [
       this.intro,
       this.plate,
@@ -31,10 +37,6 @@ class Game extends Renderer {
     this.setUpCombatScenes();
     this.setTargetList();
     this.handlePause();
-
-    const toggleIsPaused = this.toggleIsPaused.bind(this);
-    const restart = this.restart.bind(this);
-    this.paused = new Paused(toggleIsPaused, restart);
   }
 
   update() {
@@ -61,6 +63,10 @@ class Game extends Renderer {
     });
 
     this.combatScenes.forEach((combat) => combat.render());
+
+    if (this.isPaused || this.player.healthPoint === 0) {
+      this.menu.render();
+    }
   }
 
   setUpCombatScenes() {
@@ -69,14 +75,6 @@ class Game extends Renderer {
     this.entrance = new Entrance();
 
     this.combatScenes.push(this.player, this.entrance);
-  }
-
-  controlPause() {
-    this.paused.update(this.isPaused);
-
-    if (this.isPaused) {
-      this.paused.render(0, 0, this.canvasWidth, this.canvasHeight);
-    }
   }
 
   setTargetList() {
@@ -116,7 +114,7 @@ class Game extends Renderer {
 
     this.render();
     this.controlScene();
-    this.controlPause();
+    this.menu.update(this.isPaused, this.player.healthPoint);
 
     this.playGame = requestAnimationFrame(() => this.play());
   }
@@ -139,6 +137,20 @@ class Game extends Renderer {
     this.activatePause = (event) => {
       if (event.key === "Escape") {
         this.toggleIsPaused();
+
+        if (this.#isMutedDuringPause) {
+          Sound.unmute();
+          this.#isMutedDuringPause = false;
+        }
+
+        if (!this.isPaused) {
+          return;
+        }
+
+        if (Sound.isPlaying) {
+          Sound.mute();
+          this.#isMutedDuringPause = true;
+        }
       }
     };
 
@@ -152,6 +164,7 @@ class Game extends Renderer {
   restart() {
     this.setUpCombatScenes();
     this.setTargetList();
+    Sound.unmute();
   }
 }
 

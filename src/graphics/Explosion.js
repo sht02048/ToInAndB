@@ -40,6 +40,7 @@ class Explosion {
 
   isExploded() {
     if (this.explosionFrame === 44) {
+      this.isExplosionSoundPlaying = false;
       return true;
     }
 

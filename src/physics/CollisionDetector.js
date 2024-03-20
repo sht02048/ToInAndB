@@ -1,6 +1,8 @@
 import ITEM from "../constants/item";
 
 class CollisionDetector {
+  #hitBoxModifier = 10;
+
   constructor(gameObjectList) {
     this.gameObjectList = gameObjectList;
   }
@@ -62,8 +64,8 @@ class CollisionDetector {
   isOverLapping(gameObject, target) {
     const targetLeft = target.x;
     const targetRight = target.x + target.width;
-    const targetTop = target.y + 10;
-    const targetBottom = target.y + target.height;
+    const targetTop = target.y + this.#hitBoxModifier;
+    const targetBottom = target.y + target.height - this.#hitBoxModifier;
 
     const objectLeft = gameObject.x;
     const objectRight = gameObject.x + gameObject.width;
