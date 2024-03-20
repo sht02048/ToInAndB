@@ -30,6 +30,9 @@ const IMAGE = {
   TITLE: "src/assets/images/title.png",
   INSTRUCTION_START: "src/assets/images/instruction_start.png",
   PAUSED: "src/assets/images/paused.png",
+  RESUME: "src/assets/images/resume.png",
+  REPLAY: "src/assets/images/replay.png",
+  GAME_OVER: "src/assets/images/game_over.png",
 };
 
 const AUDIO = {
