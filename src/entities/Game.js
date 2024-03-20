@@ -12,6 +12,7 @@ import { BACKGROUNDS } from "../constants/path";
 
 class Game extends Renderer {
   #isMutedDuringPause = false;
+  #isGameStarted = false;
 
   constructor() {
     super();
@@ -92,6 +93,10 @@ class Game extends Renderer {
       this.player.setTargetList(hallwayTarget);
       this.hallWay.setTarget([this.player]);
       this.combatScenes.push(this.hallWay);
+
+      if (Sound.isPlaying) {
+        Sound.unmute();
+      }
     }
   }
 
@@ -122,10 +127,28 @@ class Game extends Renderer {
   handleEvent() {
     const handleEnter = (event) => {
       if (event.key === "Enter") {
+        if (this.#isGameStarted && this.player.healthPoint === 0) {
+          this.restart();
+        }
+
+        if (this.#isGameStarted) {
+          return;
+        }
+
         this.intro.playBattleMusic();
         this.play();
+        this.#isGameStarted = true;
+      }
 
-        removeEventListener("keydown", handleEnter);
+      console.log(event.key);
+
+      if (event.key === "m") {
+        if (Sound.isPlaying) {
+          Sound.mute();
+          return;
+        }
+
+        Sound.unmute();
       }
     };
 

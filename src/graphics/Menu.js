@@ -36,7 +36,12 @@ class Menu {
     this.ctx.fillRect(0, 0, this.paused.canvasWidth, this.paused.canvasHeight);
     this.ctx.restore();
 
-    if (this.isPaused) {
+    if (this.isGameOver) {
+      this.gameOver.render(
+        this.canvasWidth / 2 - this.#gameOverWidth / 2,
+        this.#titleTextTop,
+      );
+    } else if (this.isPaused) {
       this.paused.render(
         this.canvasWidth / 2 - this.#pausedWidth / 2,
         this.#titleTextTop,
@@ -44,11 +49,6 @@ class Menu {
       this.resume.render(
         this.canvasWidth / 2 - this.#resumeWidth / 2,
         this.#resumeTop,
-      );
-    } else if (this.isGameOver) {
-      this.gameOver.render(
-        this.canvasWidth / 2 - this.#gameOverWidth / 2,
-        this.#titleTextTop,
       );
     }
 
@@ -65,6 +65,10 @@ class Menu {
       this.isGameOver = true;
     } else {
       this.isGameOver = false;
+    }
+
+    if (this.isGameOver) {
+      this.isPaused = false;
     }
   }
 
