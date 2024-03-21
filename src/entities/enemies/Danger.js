@@ -44,7 +44,12 @@ class Danger extends Enemy {
       return;
     }
 
-    const missileInformation = this.setMissileInformation();
+    const missileInformation = this.setMissileInformation({
+      projectilePath: ENEMY_PROJECTILE.AIMED,
+      missileWidth: this.#missileWidth,
+      missileSpeed: this.#missileSpeed,
+      isAimed: true,
+    });
 
     this.loadSingleMissile(missileInformation);
   }
@@ -91,19 +96,6 @@ class Danger extends Enemy {
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-  }
-
-  setMissileInformation() {
-    const missileInformation = {
-      projectilePath: ENEMY_PROJECTILE.AIMED,
-      x: this.x,
-      y: this.y,
-      missileWidth: this.#missileWidth,
-      missileSpeed: this.#missileSpeed,
-      isAimed: true,
-    };
-
-    return missileInformation;
   }
 }
 

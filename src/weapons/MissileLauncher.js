@@ -101,11 +101,6 @@ class MissileLauncher {
         return;
       }
 
-      if (missile.team === TEAM.PLATER) {
-        missile.render(missile.x, missile.y);
-        return;
-      }
-
       missile.render(missile.x, missile.y);
     });
   }

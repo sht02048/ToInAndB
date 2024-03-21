@@ -102,6 +102,26 @@ class Enemy extends SpaceShip {
     this.missileLauncher.loadMultipleAmmo(missileInformation);
   }
 
+  setMissileInformation({
+    projectilePath,
+    x = this.x,
+    y = this.y,
+    missileWidth,
+    missileSpeed,
+    isAimed,
+  }) {
+    const missileInformation = {
+      projectilePath,
+      x,
+      y,
+      missileWidth,
+      missileSpeed,
+      isAimed,
+    };
+
+    return missileInformation;
+  }
+
   noop() {
     return;
   }

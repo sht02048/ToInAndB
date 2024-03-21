@@ -44,7 +44,12 @@ class Bug extends Enemy {
       return;
     }
 
-    const missileInformation = this.setMissileInformation();
+    const missileInformation = this.setMissileInformation({
+      projectilePath: ENEMY_PROJECTILE.NORMAL,
+      missileWidth: this.#missileWidth,
+      missileSpeed: this.#missileSpeed,
+      isAimed: false,
+    });
 
     this.loadSingleMissile(missileInformation);
   }
@@ -69,19 +74,6 @@ class Bug extends Enemy {
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-  }
-
-  setMissileInformation() {
-    const missileInformation = {
-      projectilePath: ENEMY_PROJECTILE.NORMAL,
-      x: this.x,
-      y: this.y,
-      missileWidth: this.#missileWidth,
-      missileSpeed: this.#missileSpeed,
-      isAimed: false,
-    };
-
-    return missileInformation;
   }
 }
 

@@ -54,7 +54,12 @@ class Heavy extends Enemy {
     }
 
     if (this.#missileRound > 0 && this.frame % this.#reloadFrame === 0) {
-      const missileInformation = this.setMissileInformation();
+      const missileInformation = this.setMissileInformation({
+        projectilePath: ENEMY_PROJECTILE.AIMED,
+        missileWidth: this.#missileWidth,
+        missileSpeed: this.#missileSpeed,
+        isAimed: true,
+      });
 
       this.loadSingleMissile(missileInformation);
 
@@ -95,19 +100,6 @@ class Heavy extends Enemy {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
     this.powerUp.setTargetList(targetList);
-  }
-
-  setMissileInformation() {
-    const missileInformation = {
-      projectilePath: ENEMY_PROJECTILE.AIMED,
-      x: this.x,
-      y: this.y,
-      missileWidth: this.#missileWidth,
-      missileSpeed: this.#missileSpeed,
-      isAimed: true,
-    };
-
-    return missileInformation;
   }
 }
 
