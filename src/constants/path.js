@@ -19,6 +19,8 @@ const ENEMIES = {
   DANGER_HIT: "src/assets/sprites/enemies/danger_hit.png",
   WINGS: "src/assets/sprites/enemies/wings.png",
   WINGS_HIT: "src/assets/sprites/enemies/wings_hit.png",
+  CROSS: "src/assets/sprites/enemies/cross.png",
+  CROSS_HIT: "src/assets/sprites/enemies/cross_hit.png",
 };
 
 const BACKGROUNDS = {
