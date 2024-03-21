@@ -223,11 +223,15 @@ class Game extends Renderer {
   }
 
   restart() {
+    if (this.backgroundScenes.length > 4) {
+      this.backgroundScenes.splice(2, 1);
+    }
+
     this.setUpCombatScenes();
     this.setTargetList();
-    this.backgroundScenes.splice(2, 1);
     this.plate.reset();
-    Sound.unmute();
+    this.lounge = null;
+    this.guardChamber = null;
   }
 }
 
