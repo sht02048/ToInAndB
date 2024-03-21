@@ -21,6 +21,10 @@ const ENEMIES = {
   WINGS_HIT: "src/assets/sprites/enemies/wings_hit.png",
   CROSS: "src/assets/sprites/enemies/cross.png",
   CROSS_HIT: "src/assets/sprites/enemies/cross_hit.png",
+  COW: "src/assets/sprites/enemies/cow.png",
+  COW_HIT: "src/assets/sprites/enemies/cow_hit.png",
+  EMPEROR: "src/assets/sprites/enemies/emperor.png",
+  EMPEROR_HIT: "src/assets/sprites/enemies/emperor_hit.png",
 };
 
 const BACKGROUNDS = {
@@ -59,7 +63,7 @@ const ENEMY_PROJECTILE = {
   NORMAL: "src/assets/images/projectile_1_enemy.png",
   AIMED: "src/assets/images/projectile_2_enemy.png",
   GUIDED: "src/assets/images/projectile_3_enemy.png",
-  ENHANCED: "src/assets/images/projectile_5.png",
+  BOOMERANG: "src/assets/images/projectile_4_enemy.png",
 };
 
 const ENEMY_EXPLOSION = "src/assets/images/explosion_";
