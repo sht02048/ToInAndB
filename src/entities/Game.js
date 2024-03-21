@@ -1,15 +1,16 @@
 import Player from "./Player";
 
 import Sound from "../utils/Sound";
+import Lounge from "../scenes/Lounge";
 import Hallway from "../scenes/Hallway";
 import Entrance from "../scenes/Entrance";
+import GuardChamber from "../scenes/GuardChamber";
 import Intro from "../graphics/Intro";
 import Menu from "../graphics/Menu";
 import LifeBoard from "../graphics/Life";
 import Renderer from "../graphics/Renderer";
 import Background from "../graphics/Background";
 import { BACKGROUNDS } from "../constants/path";
-import Lounge from "../scenes/Lounge";
 
 class Game extends Renderer {
   #isMutedDuringPause = false;
@@ -118,15 +119,24 @@ class Game extends Renderer {
 
         this.backgroundScenes.splice(2, 0, this.base);
         this.combatScenes.push(this.lounge);
-
-        if (Sound.isPlaying) {
-          Sound.unmute();
-        }
       }
 
       const loungeTarget = this.lounge.setSceneTargetList();
       this.player.setTargetList(loungeTarget);
       this.lounge.setTarget([this.player]);
+
+      return;
+    }
+
+    if (isLoungeOver && this.combatScenes.length === 4) {
+      this.guardChamber = new GuardChamber();
+      this.combatScenes.push(this.guardChamber);
+
+      const guardChamberTarget = this.guardChamber.setSceneTargetList();
+      this.player.setTargetList(guardChamberTarget);
+      this.guardChamber.setTarget([this.player]);
+
+      return;
     }
   }
 
