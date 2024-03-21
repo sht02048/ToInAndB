@@ -25,6 +25,10 @@ class Explosion {
       return;
     }
 
+    if (Sound.isPlaying) {
+      Sound.unmute();
+    }
+
     if (!this.isExplosionSoundPlaying) {
       this.explosionSound.playAudio();
     }

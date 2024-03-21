@@ -59,7 +59,7 @@ class Player extends SpaceShip {
 
     this.level = 1;
     this.healthPoint = 3;
-    this.shipSpeed = 3.5;
+    this.shipSpeed = 2;
     this.isShooting = false;
     this.reloadFrame = 10;
     this.invincibleFrame = 200;

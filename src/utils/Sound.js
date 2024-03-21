@@ -19,6 +19,10 @@ class Sound {
       audio.sound.muted = false;
     });
 
+    if (Sound.isPlaying) {
+      return;
+    }
+
     Sound.muteToggle.innerHTML = `<i class="fa-solid fa-volume-high fa-2xl" style="color: #fbeb2b;"></i>`;
     Sound.isPlaying = true;
   }
@@ -27,6 +31,10 @@ class Sound {
     Sound.audioList.forEach((audio) => {
       audio.sound.muted = true;
     });
+
+    if (!Sound.isPlaying) {
+      return;
+    }
 
     Sound.muteToggle.innerHTML =
       '<i class="fa-solid fa-volume-xmark fa-2xl" style="color: #f8eb2b;"></i>';

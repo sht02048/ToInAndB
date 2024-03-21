@@ -9,6 +9,7 @@ import LifeBoard from "../graphics/Life";
 import Renderer from "../graphics/Renderer";
 import Background from "../graphics/Background";
 import { BACKGROUNDS } from "../constants/path";
+import Lounge from "../scenes/Lounge";
 
 class Game extends Renderer {
   #isMutedDuringPause = false;
@@ -21,7 +22,6 @@ class Game extends Renderer {
     const restart = this.restart.bind(this);
 
     this.intro = new Intro();
-    this.hallWay = new Hallway();
     this.block = new Background(BACKGROUNDS.BLOCK);
     this.plate = new Background(BACKGROUNDS.PLATE);
     this.lifeBoard = new LifeBoard();
@@ -86,6 +86,12 @@ class Game extends Renderer {
 
   controlScene() {
     const isEntranceOver = this.entrance.checkSceneStatus();
+    const isHallwayOver = this.hallWay?.checkSceneStatus();
+    const isLoungeOver = this.lounge?.checkSceneStatus();
+
+    if (!isEntranceOver) {
+      return;
+    }
 
     if (isEntranceOver && this.combatScenes.length === 2) {
       this.hallWay = new Hallway();
@@ -99,6 +105,23 @@ class Game extends Renderer {
       if (Sound.isPlaying) {
         Sound.unmute();
       }
+
+      return;
+    }
+
+    if (isHallwayOver && !isLoungeOver && this.combatScenes.length > 2) {
+      if (this.combatScenes.length === 3) {
+        this.lounge = new Lounge();
+        this.combatScenes.push(this.lounge);
+
+        if (Sound.isPlaying) {
+          Sound.unmute();
+        }
+      }
+
+      const loungeTarget = this.lounge.setSceneTargetList();
+      this.player.setTargetList(loungeTarget);
+      this.lounge.setTarget([this.player]);
     }
   }
 
@@ -141,8 +164,6 @@ class Game extends Renderer {
         this.play();
         this.#isGameStarted = true;
       }
-
-      console.log(event.key);
 
       if (event.key === "m") {
         if (Sound.isPlaying) {

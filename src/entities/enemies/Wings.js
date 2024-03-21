@@ -8,7 +8,7 @@ import CollisionDetector from "../../physics/CollisionDetector";
 class Wings extends Enemy {
   #missileWidth = 16;
   #missileSpeed = 1;
-  #wingsSpeed = 1;
+  #wingsSpeed = 0.7;
   #missileInterval = 200;
   #missileRound = 0;
   #reloadFrame = 50;
@@ -19,11 +19,11 @@ class Wings extends Enemy {
   #isWingsReachedMaxX = false;
   #isWingSReachedMinY = false;
 
-  constructor(x, y) {
+  constructor({ x, y }) {
     super({
       x,
       y,
-      health: 40,
+      health: 200,
       shipImage: ENEMIES.WINGS,
       hitShipImage: ENEMIES.WINGS_HIT,
       width: 72,

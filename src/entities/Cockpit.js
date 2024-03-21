@@ -10,7 +10,7 @@ class Cockpit {
     Space: false,
   };
   #currentPower = 1;
-  #currentSpeed = 3.5;
+  #currentSpeed = 2;
 
   constructor(ship) {
     this.ship = ship;
