@@ -23,6 +23,26 @@ class Background {
     // ACTIVATE 실제 작업 시 주석해제 필요
     this.in();
     this.circulateDown(this.shouldOut);
+    this.checkIsOut();
+  }
+
+  render() {
+    if (this.#isOut) {
+      return;
+    }
+
+    this.firstBackground.render(
+      this.x,
+      this.y,
+      this.canvasWidth,
+      this.canvasHeight,
+    );
+    this.secondBackground.render(
+      this.x,
+      this.y - this.canvasHeight,
+      this.canvasWidth,
+      this.canvasHeight,
+    );
   }
 
   circulateDown() {
@@ -44,23 +64,15 @@ class Background {
     }
   }
 
-  render() {
-    if (this.#isOut) {
-      return;
+  checkIsOut() {
+    if (this.y > this.canvasHeight * 2) {
+      this.#isOut = true;
     }
+  }
 
-    this.firstBackground.render(
-      this.x,
-      this.y,
-      this.canvasWidth,
-      this.canvasHeight,
-    );
-    this.secondBackground.render(
-      this.x,
-      this.y - this.canvasHeight,
-      this.canvasWidth,
-      this.canvasHeight,
-    );
+  reset() {
+    this.shouldOut = false;
+    this.#isOut = false;
   }
 }
 

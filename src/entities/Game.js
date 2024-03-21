@@ -215,6 +215,8 @@ class Game extends Renderer {
   restart() {
     this.setUpCombatScenes();
     this.setTargetList();
+    this.backgroundScenes.splice(2, 1);
+    this.plate.reset();
     Sound.unmute();
   }
 }
