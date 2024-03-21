@@ -111,7 +111,12 @@ class Game extends Renderer {
 
     if (isHallwayOver && !isLoungeOver && this.combatScenes.length > 2) {
       if (this.combatScenes.length === 3) {
+        this.base = new Background(BACKGROUNDS.BASE);
         this.lounge = new Lounge();
+
+        this.plate.alertOut();
+
+        this.backgroundScenes.splice(2, 0, this.base);
         this.combatScenes.push(this.lounge);
 
         if (Sound.isPlaying) {
