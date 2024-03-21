@@ -63,8 +63,6 @@ class Mini extends Enemy {
     });
 
     this.loadMultipleMissile(missileInformation);
-
-    this.#missileInterval = 300;
   }
 
   setRoute() {
