@@ -171,7 +171,7 @@ class Player extends SpaceShip {
       case 3:
         this.#missileDamage = 4;
         this.straightProjectile = PROJECTILE.LEVEL_3;
-        this.#straightMissileWidth = 90;
+        this.#straightMissileWidth = 106;
         break;
     }
 
