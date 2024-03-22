@@ -1,4 +1,5 @@
 class Sound {
+  static hasIntroPlayed = false;
   static isPlaying = false;
   static audioList = [];
   static muteToggle = document.getElementById("mute-toggle");

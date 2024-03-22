@@ -69,7 +69,10 @@ class Intro {
     muteToggle.addEventListener("mousedown", (event) => {
       event.preventDefault();
 
-      this.introMusic.playAudio();
+      if (!Sound.hasIntroPlayed) {
+        this.introMusic.playAudio();
+        Sound.hasIntroPlayed = true;
+      }
 
       if (Sound.isPlaying) {
         Sound.mute();

@@ -181,6 +181,11 @@ class Game extends Renderer {
       }
 
       if (event.key === "m") {
+        if (!Sound.hasIntroPlayed) {
+          this.intro.introMusic.playAudio();
+          Sound.hasIntroPlayed = true;
+        }
+
         if (Sound.isPlaying) {
           Sound.mute();
           return;
@@ -232,6 +237,10 @@ class Game extends Renderer {
     this.plate.reset();
     this.lounge = null;
     this.guardChamber = null;
+
+    if (Sound.isPlaying) {
+      Sound.unmute();
+    }
   }
 }
 
