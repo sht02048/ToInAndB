@@ -108,7 +108,8 @@ class Enemy extends SpaceShip {
     y = this.y,
     missileWidth,
     missileSpeed,
-    isAimed,
+    isAimed = false,
+    shouldTilt = false,
   }) {
     const missileInformation = {
       projectilePath,
@@ -117,6 +118,7 @@ class Enemy extends SpaceShip {
       missileWidth,
       missileSpeed,
       isAimed,
+      shouldTilt,
     };
 
     return missileInformation;

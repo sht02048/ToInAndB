@@ -106,6 +106,11 @@ class Cockpit {
       this.#currentPower = power;
     }
 
+    if (this.#currentPower === 3) {
+      this.minX = 0;
+      this.maxX = this.ship.canvasWidth - this.ship.width;
+    }
+
     if (this.#currentSpeed < speed) {
       this.speedUpSound.playAudio();
       this.#currentSpeed = speed;

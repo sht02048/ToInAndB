@@ -1,9 +1,11 @@
 import Missile from "./Missile";
 
 import TEAM from "../constants/team";
+import Enemy from "../entities/enemies/Enemy";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class MissileLauncher {
+  #multipleAngle = 0.1;
   #projectileNumber = 15;
   #missileYModifier = 50;
   #enemyDamage = 1;
@@ -71,7 +73,7 @@ class MissileLauncher {
     const radiansPerProjectile = (Math.PI * 2) / this.#projectileNumber;
 
     for (let i = 0; i < this.#projectileNumber; i += 1) {
-      const angle = radiansPerProjectile * i;
+      const angle = radiansPerProjectile * i + this.#multipleAngle;
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
 
@@ -81,6 +83,10 @@ class MissileLauncher {
       missile.vy = dy * missile.speed;
 
       this.missileList.push(missile);
+    }
+
+    if (missileInformation.shouldTilt) {
+      this.#multipleAngle += 0.02;
     }
   }
 
@@ -138,7 +144,7 @@ class MissileLauncher {
             return;
           }
 
-          if (missile.frame < 120) {
+          if (missile.frame < 160) {
             missile.vx = vx;
             missile.vy = vy;
             missile.angle = angle;
@@ -195,13 +201,11 @@ class MissileLauncher {
         missileVector.vy = vy;
         missileVector.angle = angle;
       }
+
+      if (target instanceof Enemy) {
+        missile.isLockedOn = true;
+      }
     });
-
-    if (missile.isLostTarget) {
-      return { vx: 0, vy: 0, angle: 0 };
-    }
-
-    missile.isLockedOn = true;
 
     return missileVector;
   }

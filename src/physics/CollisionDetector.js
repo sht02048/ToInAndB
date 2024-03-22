@@ -32,7 +32,7 @@ class CollisionDetector {
             break;
 
           case ITEM.SPEED_UP:
-            target.shipSpeed += 1.5;
+            target.shipSpeed += 2;
             break;
         }
 
