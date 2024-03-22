@@ -9,7 +9,7 @@ class Wings extends Enemy {
   #missileWidth = 16;
   #missileSpeed = 1;
   #wingsSpeed = 0.7;
-  #missileInterval = 120;
+  #missileInterval = 250;
   #missileRound = 0;
   #reloadFrame = 50;
   #wingsWidth = 72;

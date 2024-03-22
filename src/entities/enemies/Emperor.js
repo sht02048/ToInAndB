@@ -1,6 +1,8 @@
 import Enemy from "./Enemy";
 
-import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
+import ITEM_TYPE from "../../constants/item";
+import Item from "../../item/item";
+import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Emperor extends Enemy {
@@ -14,6 +16,7 @@ class Emperor extends Enemy {
   #isEmperorReachedMaxX = false;
   #isEmperorReachedMinY = false;
   #isEmperorReachedMaxY = false;
+  #isItemSpawned = false;
 
   constructor({ x, y }) {
     super({
@@ -25,23 +28,29 @@ class Emperor extends Enemy {
       width: 71,
       height: 71,
     });
+
+    this.powerUp = new Item(ITEM_IMAGE.POWER_UP, ITEM_TYPE.POWER_UP);
   }
 
   update() {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
+    const updateItem = this.updateItem.bind(this);
 
     this.updateEnemy(
       launchMissile,
       setRoute,
       MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
+      updateItem,
     );
 
     this.frame += 1;
   }
 
   render() {
-    this.renderEnemy();
+    const renderItem = this.renderItem.bind(this);
+
+    this.renderEnemy(renderItem);
   }
 
   launchMissile() {
@@ -123,9 +132,28 @@ class Emperor extends Enemy {
     }
   }
 
+  updateItem() {
+    if (!this.#isItemSpawned) {
+      this.powerUp.setItemLocation(this.x, this.y);
+      this.#isItemSpawned = true;
+    }
+
+    this.powerUp.update();
+    this.powerUp.detectItem();
+  }
+
+  renderItem() {
+    if (this.powerUp.isGained) {
+      return;
+    }
+
+    this.powerUp.renderItem();
+  }
+
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
+    this.powerUp.setTargetList(targetList);
   }
 }
 
