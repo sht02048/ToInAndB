@@ -25,13 +25,15 @@ const ENEMIES = {
   COW_HIT: "/sprites/enemies/cow_hit.png",
   EMPEROR: "/sprites/enemies/emperor.png",
   EMPEROR_HIT: "/sprites/enemies/emperor_hit.png",
+  BOSS: "/sprites/enemies/boss.png",
+  BOSS_HIT: "/sprites/enemies/boss_hit.png",
 };
 
 const BACKGROUNDS = {
   BASE: "/sprites/backgrounds/base.png",
   BLOCK: "/sprites/backgrounds/block.png",
   PLATE: "/sprites/backgrounds/plate.png",
-  SPACE: "/sprites/backgrounds/space.png",
+  SPACE_BOSS: "/sprites/backgrounds/space_boss.png",
 };
 
 const IMAGE = {
@@ -64,6 +66,7 @@ const ENEMY_PROJECTILE = {
   AIMED: "/images/projectile_2_enemy.png",
   GUIDED: "/images/projectile_3_enemy.png",
   BOOMERANG: "/images/projectile_4_enemy.png",
+  BOSS_GUIDED: "/images/projectile_5_enemy.png",
 };
 
 const ENEMY_EXPLOSION = "/images/explosion_";
