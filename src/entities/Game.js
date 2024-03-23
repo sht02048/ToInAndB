@@ -4,6 +4,7 @@ import Sound from "../utils/Sound";
 import Lounge from "../scenes/Lounge";
 import Hallway from "../scenes/Hallway";
 import Entrance from "../scenes/Entrance";
+import ThroneRoom from "../scenes/ThroneRoom";
 import GuardChamber from "../scenes/GuardChamber";
 import Intro from "../graphics/Intro";
 import Menu from "../graphics/Menu";
@@ -15,6 +16,8 @@ import { BACKGROUNDS } from "../constants/path";
 class Game extends Renderer {
   #isMutedDuringPause = false;
   #isGameStarted = false;
+  #bossAppearanceFrame = 300;
+  #hasEnteredSpace = false;
 
   constructor() {
     super();
@@ -89,6 +92,7 @@ class Game extends Renderer {
     const isEntranceOver = this.entrance.checkSceneStatus();
     const isHallwayOver = this.hallWay?.checkSceneStatus();
     const isLoungeOver = this.lounge?.checkSceneStatus();
+    const isGuardChamberOver = this.guardChamber?.checkSceneStatus();
 
     if (!isEntranceOver) {
       return;
@@ -137,6 +141,34 @@ class Game extends Renderer {
       this.guardChamber.setTarget([this.player]);
 
       return;
+    }
+
+    if (isGuardChamberOver && this.#bossAppearanceFrame > 0) {
+      this.#bossAppearanceFrame -= 1;
+
+      if (this.#hasEnteredSpace) {
+        return;
+      }
+
+      this.space = new Background(BACKGROUNDS.SPACE_BOSS);
+      this.block.alertOut();
+      this.base.alertOut();
+      this.backgroundScenes.push(this.space);
+
+      this.#hasEnteredSpace = true;
+
+      return;
+    }
+
+    if (isGuardChamberOver && this.combatScenes.length > 4) {
+      if (this.combatScenes.length === 5) {
+        this.throneRoom = new ThroneRoom();
+        this.combatScenes.push(this.throneRoom);
+      }
+
+      const throneRoomTarget = this.throneRoom.setSceneTargetList();
+      this.player.setTargetList(throneRoomTarget);
+      this.throneRoom.setTarget([this.player]);
     }
   }
 
