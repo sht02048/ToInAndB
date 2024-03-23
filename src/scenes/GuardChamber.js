@@ -1,5 +1,5 @@
 import Renderer from "../graphics/Renderer";
-import Emperor from "../entities/enemies/Emperor";
+import Guard from "../entities/enemies/Guard";
 import Cow from "../entities/enemies/Cow";
 
 class GuardChamber extends Renderer {
@@ -9,7 +9,7 @@ class GuardChamber extends Renderer {
   constructor() {
     super();
 
-    this.emperor = new Emperor({
+    this.guard = new Guard({
       x: this.canvasWidth / 2 - this.#emperorWidth / 2,
       y: -100,
     });
@@ -36,35 +36,35 @@ class GuardChamber extends Renderer {
   }
 
   update() {
-    this.emperor.update();
+    this.guard.update();
     this.cowLeftList.forEach((cow, index) =>
       cow.update(
-        this.emperor.x - (index + 1) * 100,
-        this.emperor.y - (index + 1) * 50,
+        this.guard.x - (index + 1) * 100,
+        this.guard.y - (index + 1) * 50,
       ),
     );
     this.cowRightList.forEach((cow, index) =>
       cow.update(
-        this.emperor.x + (index + 1) * 100,
-        this.emperor.y - (index + 1) * 50,
+        this.guard.x + (index + 1) * 100,
+        this.guard.y - (index + 1) * 50,
       ),
     );
   }
 
   render() {
-    this.emperor.render();
+    this.guard.render();
     this.cowLeftList.forEach((cow) => cow.render());
     this.cowRightList.forEach((cow) => cow.render());
   }
 
   setTarget(player) {
-    this.emperor.setTargetList(player);
+    this.guard.setTargetList(player);
     this.cowLeftList.forEach((cow) => cow.setTargetList(player));
     this.cowRightList.forEach((cow) => cow.setTargetList(player));
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.emperor];
+    const sceneTargetList = [this.guard];
 
     this.cowLeftList.forEach((cow) => sceneTargetList.push(cow));
     this.cowRightList.forEach((cow) => sceneTargetList.push(cow));
@@ -75,7 +75,7 @@ class GuardChamber extends Renderer {
   checkSceneStatus() {
     this.#isDone = true;
 
-    if (!this.emperor.isDestroyed && !this.emperor.isVanished) {
+    if (!this.guard.isDestroyed && !this.guard.isVanished) {
       this.#isDone = false;
     }
 

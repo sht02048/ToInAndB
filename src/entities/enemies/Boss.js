@@ -1,10 +1,6 @@
 import Enemy from "./Enemy";
 
-import {
-  ENEMIES,
-  ENEMY_PROJECTILE,
-  ENEMY_EXPLOSION,
-} from "../../constants/path";
+import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
@@ -46,6 +42,7 @@ class Boss extends Enemy {
     });
 
     this.#setWeapon();
+    this.shouldSpawnBot = false;
   }
 
   update() {
@@ -72,11 +69,11 @@ class Boss extends Enemy {
     if (this.#guidedHaltFrame > 0) {
       this.#guidedHaltFrame -= 1;
       this.launchGuided();
-
       return;
     }
 
     if (this.#shouldMoveForward) {
+      this.shouldSpawnBot = true;
       this.moveForward();
       return;
     }
@@ -158,7 +155,7 @@ class Boss extends Enemy {
     }
 
     const leftMissile = this.setMissileInformation({
-      projectilePath: ENEMY_PROJECTILE.BOSS_LEFT,
+      projectilePath: ENEMY_PROJECTILE.BOSS_GUIDED,
       x: this.x - this.#bossWidth / 3,
       y: this.y - this.#bossHeight / 4,
       missileWidth: this.#straightWidth,
@@ -166,7 +163,7 @@ class Boss extends Enemy {
       isAimed: true,
     });
     const rightMissile = this.setMissileInformation({
-      projectilePath: ENEMY_PROJECTILE.BOSS_LEFT,
+      projectilePath: ENEMY_PROJECTILE.BOSS_GUIDED,
       x: this.x + this.#bossWidth / 3,
       y: this.y - this.#bossHeight / 4,
       missileWidth: this.#straightWidth,
@@ -182,6 +179,7 @@ class Boss extends Enemy {
     if (this.y > 400) {
       this.#isAtInitial = false;
       this.#shouldMoveForward = false;
+      this.shouldSpawnBot = false;
     }
 
     this.y += this.#bossSpeed;

@@ -5,7 +5,7 @@ import Item from "../../item/item";
 import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
-class Emperor extends Enemy {
+class Guard extends Enemy {
   #missileWidth = 45;
   #missileSpeed = 2;
   #diagonalSpeed = 0.2;
@@ -157,4 +157,4 @@ class Emperor extends Enemy {
   }
 }
 
-export default Emperor;
+export default Guard;
