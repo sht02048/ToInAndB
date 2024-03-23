@@ -25,6 +25,8 @@ const ENEMIES = {
   COW_HIT: "/sprites/enemies/cow_hit.png",
   EMPEROR: "/sprites/enemies/emperor.png",
   EMPEROR_HIT: "/sprites/enemies/emperor_hit.png",
+  BOT: "/sprites/enemies/bot.png",
+  BOT_HIT: "/sprites/enemies/bot_hit.png",
   BOSS: "/sprites/enemies/boss.png",
   BOSS_HIT: "/sprites/enemies/boss_hit.png",
 };
