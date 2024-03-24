@@ -1,6 +1,6 @@
 import Sound from "../utils/Sound";
 import { IMAGE, AUDIO } from "../constants/path";
-import Renderer from "./Renderer";
+import Renderer from "../graphics/Renderer";
 
 class Intro {
   #floatSpeed = 0.1;

@@ -1,18 +1,24 @@
-import Player from "./Player";
+import "@fortawesome/fontawesome-free/js/all.js";
 
-import Sound from "../utils/Sound";
-import Lounge from "../scenes/Lounge";
-import Hallway from "../scenes/Hallway";
-import Entrance from "../scenes/Entrance";
-import ThroneRoom from "../scenes/ThroneRoom";
-import GuardChamber from "../scenes/GuardChamber";
-import Intro from "../graphics/Intro";
-import Menu from "../graphics/Menu";
-import LifeBoard from "../graphics/Life";
-import Renderer from "../graphics/Renderer";
-import Background from "../graphics/Background";
-import { BACKGROUNDS } from "../constants/path";
-import Outro from "../scenes/Outro";
+import Player from "./entities/Player";
+
+import "./style.css";
+import Sound from "./utils/Sound";
+import resizeCanvas from "./utils/resizeCanvas";
+
+import Intro from "./scenes/Intro";
+import Outro from "./scenes/Outro";
+import Lounge from "./scenes/Lounge";
+import Hallway from "./scenes/Hallway";
+import Entrance from "./scenes/Entrance";
+import ThroneRoom from "./scenes/ThroneRoom";
+import GuardChamber from "./scenes/GuardChamber";
+
+import Menu from "./graphics/Menu";
+import LifeBoard from "./graphics/Life";
+import Renderer from "./graphics/Renderer";
+import Background from "./graphics/Background";
+import { BACKGROUNDS } from "./constants/path";
 
 class Game extends Renderer {
   #isMutedDuringPause = false;
@@ -36,6 +42,8 @@ class Game extends Renderer {
     this.setUpCombatScenes();
     this.setTargetList();
     this.handlePause();
+    this.playIntro();
+    this.handleEvent();
   }
 
   update() {
@@ -338,4 +346,5 @@ class Game extends Renderer {
   }
 }
 
-export default Game;
+resizeCanvas();
+new Game();
