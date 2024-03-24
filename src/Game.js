@@ -31,19 +31,10 @@ class Game extends Renderer {
   constructor() {
     super();
 
-    const toggleIsPaused = this.toggleIsPaused.bind(this);
-    const restart = this.restart.bind(this);
-
-    this.player = new Player();
-    this.menu = new Menu(toggleIsPaused, restart);
-
     this.isPaused = false;
 
-    this.setUpBackgroundScenes();
-    this.setUpCombatScenes();
-    this.setTargetList();
+    this.start();
     this.handlePause();
-    this.playIntro();
     this.handleEvent();
   }
 
@@ -76,6 +67,10 @@ class Game extends Renderer {
     this.backgroundScenes.forEach((background) => {
       if (!background.shouldBeDisplayed) {
         return;
+      }
+
+      if (background instanceof LifeBoard) {
+        background.render(this.player.healthPoint);
       }
 
       if (Array.isArray(background?.healthList)) {
@@ -246,16 +241,17 @@ class Game extends Renderer {
       this.outro.shouldBeDisplayed = true;
       this.#isOutroDisplayed = true;
       this.space.shouldBeDisplayed = false;
+      this.throneRoom.shouldBeDisplayed = false;
     }
   }
 
-  playIntro() {
+  displayIntro() {
     this.introCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     this.intro.float();
     this.intro.render();
 
-    requestAnimationFrame(() => this.playIntro());
+    this.playIntro = requestAnimationFrame(() => this.displayIntro());
   }
 
   play() {
@@ -288,6 +284,7 @@ class Game extends Renderer {
           return;
         }
 
+        cancelAnimationFrame(this.playIntro);
         this.intro.playBattleMusic();
         this.play();
         this.#isGameStarted = true;
@@ -341,29 +338,44 @@ class Game extends Renderer {
   }
 
   afterEnding() {
+    this.outro.pauseOutroMusic();
     cancelAnimationFrame(this.playGame);
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.#isGameStarted = false;
-    this.playIntro();
+    this.start();
+  }
+
+  start(isReplay = false) {
+    const toggleIsPaused = this.toggleIsPaused.bind(this);
+    const restart = this.restart.bind(this);
+
+    this.#isOutroDisplayed = false;
+    this.#bossAppearanceFrame = 13 * 120;
+    this.#endingFrame = 400;
+    this.#hasEnteredSpace = false;
+
+    this.player = new Player();
+    this.menu = new Menu(toggleIsPaused, restart);
+
+    this.setUpBackgroundScenes(isReplay);
+    this.setUpCombatScenes();
+    this.setTargetList();
+    this.displayIntro();
   }
 
   restart() {
+    this.#isOutroDisplayed = false;
+    this.#bossAppearanceFrame = 13 * 120;
+    this.#endingFrame = 400;
+    this.#hasEnteredSpace = false;
+
+    this.outro.pauseOutroMusic();
+    this.player = new Player();
     this.setUpBackgroundScenes(true);
     this.setUpCombatScenes();
-    this.player = new Player();
     this.setTargetList();
-    this.base.shouldBeDisplayed = false;
-    this.space.shouldBeDisplayed = false;
-    this.outro.shouldBeDisplayed = false;
     this.plate.replay();
     this.block.replay();
-    this.lounge = null;
-    this.guardChamber = null;
-    this.throneRoom = null;
-
-    if (Sound.isPlaying) {
-      Sound.unmute();
-    }
   }
 }
 

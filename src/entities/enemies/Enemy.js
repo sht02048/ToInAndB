@@ -32,7 +32,10 @@ class Enemy extends SpaceShip {
   }
 
   updateEnemy(launchMissile, setRoute, command, updateItem = this.noop) {
-    this.collisionDetector.detectCollision();
+    if (!this.isDestroyed && !this.isVanished) {
+      this.collisionDetector.detectCollision();
+    }
+
     this.missileLauncher.setMissileRoute(command);
 
     if (this.isDestroyed || this.isVanished) {

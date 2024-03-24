@@ -181,10 +181,6 @@ class Player extends SpaceShip {
         this.#straightMissileWidth = 106;
         break;
     }
-
-    if (this.reloadFrame % this.#guidedMissileReload === 0 && this.level > 1) {
-      this.loadGuidedMissile();
-    }
   }
 
   launchMissile() {
@@ -194,11 +190,13 @@ class Player extends SpaceShip {
 
     this.reloadFrame += 1;
 
-    if (this.reloadFrame % this.#straightMissileReload !== 0) {
-      return;
+    if (this.reloadFrame % this.#straightMissileReload === 0) {
+      this.loadStraightMissile();
     }
 
-    this.loadStraightMissile();
+    if (this.reloadFrame % this.#guidedMissileReload === 0 && this.level > 1) {
+      this.loadGuidedMissile();
+    }
   }
 
   loadStraightMissile() {

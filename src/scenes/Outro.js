@@ -6,7 +6,7 @@ class Outro {
   #outSpeed = 1;
   #titleWidth = 795;
   #messageWidth = 772;
-  #haltFrame = 15.5 * 60;
+  #haltFrame = 15.5 * 120;
   #hasMusicStarted = false;
 
   constructor() {
@@ -49,6 +49,10 @@ class Outro {
   playOutroMusic() {
     this.outroMusic.playAudio();
     this.#hasMusicStarted = true;
+  }
+
+  pauseOutroMusic() {
+    this.outroMusic.pauseAudio();
   }
 }
 

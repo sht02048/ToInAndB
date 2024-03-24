@@ -55,10 +55,13 @@ class Boss extends Enemy {
       this.adjustBossAudio();
     }
 
-    const setRoute = this.setRoute.bind(this);
-    this.setMissileRoute();
-    this.detectCollision();
+    if (!this.isDestroyed) {
+      this.detectCollision();
+    }
 
+    this.setMissileRoute();
+
+    const setRoute = this.setRoute.bind(this);
     this.updateEnemy(this.noop, setRoute, MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY);
   }
 

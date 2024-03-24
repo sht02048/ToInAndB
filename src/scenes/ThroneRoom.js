@@ -21,7 +21,14 @@ class ThroneRoom extends Renderer {
 
   update() {
     this.boss.update();
-    this.botList.forEach((bot) => bot.update());
+    this.botList.forEach((bot) => {
+      if (this.boss.isDestroyed) {
+        bot.isDestroyed = true;
+      }
+
+      bot.update();
+    });
+
     this.spawnBot();
 
     this.frame += 1;
@@ -33,7 +40,11 @@ class ThroneRoom extends Renderer {
   }
 
   spawnBot() {
-    if (!this.boss.shouldSpawnBot || this.frame % this.#spawnInterval !== 0) {
+    if (
+      !this.boss.shouldSpawnBot ||
+      this.frame % this.#spawnInterval !== 0 ||
+      this.boss.isDestroyed
+    ) {
       return;
     }
 
