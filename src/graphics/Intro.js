@@ -23,6 +23,7 @@ class Intro {
 
     this.isUp = true;
     this.amplitude = 0;
+    this.shouldBeDisplayed = false;
 
     this.introMusic = new Sound(AUDIO.INTRO);
     this.battleMusic = new Sound(AUDIO.BATTLE);

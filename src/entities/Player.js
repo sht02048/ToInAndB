@@ -20,7 +20,8 @@ class Player extends SpaceShip {
   #guidedMissileSpeed = 3;
   #guidedMissileReload = 100;
   #missileDamage = 2;
-  #canControl = false;
+  #isPlayerIn = false;
+  #outSpeed = 1.5;
 
   constructor() {
     super();
@@ -51,9 +52,7 @@ class Player extends SpaceShip {
     this.spawnX = this.canvasWidth / 2 - this.#staticWidth / 2;
     this.spawnY = this.canvasHeight + this.#staticHeight;
 
-    // ACTIVATE 배포 및 플로우 점검시 주석해제 후 하단에 있는 initialY 삭제 필요
     this.initialY = this.canvasHeight;
-    // this.initialY = 0;
     this.x = this.spawnX;
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
@@ -66,6 +65,8 @@ class Player extends SpaceShip {
     this.isInvincible = false;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
+    this.shouldOut = false;
+    this.isOut = false;
 
     this.cockpit = new Cockpit(this);
   }
@@ -83,7 +84,12 @@ class Player extends SpaceShip {
       this.#guidedMissileSpeed,
     );
 
-    if (!this.#canControl) {
+    if (this.shouldOut) {
+      this.out();
+      return;
+    }
+
+    if (!this.#isPlayerIn) {
       this.in();
       return;
     }
@@ -126,6 +132,11 @@ class Player extends SpaceShip {
       return;
     }
 
+    if (this.shouldOut) {
+      this.straightShip.render(this.x, this.y);
+      return;
+    }
+
     this.currentDirection.render(this.x, this.y - this.initialY);
   }
 
@@ -136,10 +147,6 @@ class Player extends SpaceShip {
       this.x = this.spawnX;
       this.y = this.spawnY;
     }
-  }
-
-  updateSpawn() {
-    this.#canControl = false;
   }
 
   renderSpawn() {
@@ -235,10 +242,18 @@ class Player extends SpaceShip {
 
   in() {
     if (this.initialY < 0) {
-      this.#canControl = true;
+      this.#isPlayerIn = true;
     }
 
     this.initialY -= this.currentDirection.inAndOutSpeed;
+  }
+
+  out() {
+    if (this.y < 0) {
+      this.isOut = true;
+    }
+
+    this.y -= this.#outSpeed;
   }
 
   setTargetList(targetList) {

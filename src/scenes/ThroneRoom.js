@@ -65,7 +65,7 @@ class ThroneRoom extends Renderer {
     return sceneTargetList;
   }
 
-  cheekSceneStatus() {
+  checkSceneStatus() {
     this.isDone = true;
 
     if (!this.boss.isDestroyed) {

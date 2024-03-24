@@ -2,7 +2,6 @@ import Renderer from "./Renderer";
 
 class Background {
   #isInStarted = true;
-  #isOut = false;
 
   constructor(imagePath) {
     this.firstBackground = new Renderer(imagePath);
@@ -13,10 +12,12 @@ class Background {
     this.y = 0;
 
     this.shouldOut = false;
+    this.isOut = false;
+    this.shouldBeDisplayed = false;
   }
 
   update() {
-    if (this.#isOut) {
+    if (this.isOut) {
       return;
     }
 
@@ -27,7 +28,7 @@ class Background {
   }
 
   render() {
-    if (this.#isOut) {
+    if (this.isOut) {
       return;
     }
 
@@ -53,10 +54,6 @@ class Background {
     }
   }
 
-  alertOut() {
-    this.shouldOut = true;
-  }
-
   in() {
     if (this.#isInStarted) {
       this.#isInStarted = false;
@@ -66,13 +63,12 @@ class Background {
 
   checkIsOut() {
     if (this.y > this.canvasHeight * 2) {
-      this.#isOut = true;
+      this.isOut = true;
     }
   }
 
-  reset() {
-    this.shouldOut = false;
-    this.#isOut = false;
+  replay() {
+    this.#isInStarted = false;
   }
 }
 

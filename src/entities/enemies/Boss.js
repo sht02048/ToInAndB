@@ -34,7 +34,7 @@ class Boss extends Enemy {
     super({
       x,
       y,
-      health: 300,
+      health: 500,
       shipImage: ENEMIES.BOSS,
       hitShipImage: ENEMIES.BOSS_HIT,
       width: 228,

@@ -7,7 +7,7 @@ class Sound {
   constructor(soundPath) {
     this.sound = new Audio(soundPath);
     this.sound.loop = true;
-    this.sound.muted = true;
+    this.sound.muted = Sound.isPlaying ? false : true;
     this.path = soundPath;
     this.isPaused = false;
     this.index = Sound.audioList.length;
