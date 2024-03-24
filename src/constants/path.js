@@ -57,6 +57,7 @@ const AUDIO = {
   POWER_UP: "/audios/effects/power_up.mp3",
   SPEED_UP: "/audios/effects/speed_up.mp3",
   OUTRO: "/audios/background/outro.mp4",
+  BOSS: "/audios/background/boss.mp3",
 };
 
 const PROJECTILE = {
