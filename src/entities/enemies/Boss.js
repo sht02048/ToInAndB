@@ -1,9 +1,11 @@
 import Enemy from "./Enemy";
 
-import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
-import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
+import Sound from "../../utils/Sound";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
+
+import { AUDIO, ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
+import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Boss extends Enemy {
   #bossWidth = 228;
@@ -27,6 +29,7 @@ class Boss extends Enemy {
   #straightWidth = 12;
   #straightSpeed = 3;
   #resetFrame = 400;
+  #AudioVolume = 0.7;
   #missileLaunchers = {};
   #collisionDetectors = {};
 
@@ -34,18 +37,24 @@ class Boss extends Enemy {
     super({
       x,
       y,
-      health: 500,
+      health: 100,
       shipImage: ENEMIES.BOSS,
       hitShipImage: ENEMIES.BOSS_HIT,
       width: 228,
       height: 218,
     });
 
+    this.backgroundMusic = new Sound(AUDIO.BOSS);
+    this.backgroundMusic.sound.volume = this.#AudioVolume;
     this.#setWeapon();
     this.shouldSpawnBot = false;
   }
 
   update() {
+    if (this.backgroundMusic.sound.currentTime > 52) {
+      this.adjustBossAudio();
+    }
+
     const setRoute = this.setRoute.bind(this);
     this.setMissileRoute();
     this.detectCollision();
@@ -222,7 +231,7 @@ class Boss extends Enemy {
     const dx = initialX - this.x;
     const dy = initialY - this.y;
 
-    if (Math.abs(dx) < 5 && Math.abs(dy) < 5) {
+    if (Math.abs(dx) < 4.5 && Math.abs(dy) < 4.5) {
       return true;
     }
 
@@ -275,6 +284,26 @@ class Boss extends Enemy {
       this.#missileLaunchers[weapon] = launcher;
       this.#collisionDetectors[weapon] = detector;
     });
+  }
+
+  playBossAudio() {
+    this.backgroundMusic.playAudio();
+  }
+
+  adjustBossAudio() {
+    this.backgroundMusic.sound.currentTime = 16;
+  }
+
+  fadeOutAudio() {
+    if (this.backgroundMusic.sound.volume <= this.#AudioVolume / 200) {
+      return;
+    }
+
+    this.backgroundMusic.sound.volume -= this.#AudioVolume / 200;
+
+    if (this.backgroundMusic.sound.volume === 0) {
+      this.backgroundMusic.pauseAudio();
+    }
   }
 }
 

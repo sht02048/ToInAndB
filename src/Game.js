@@ -24,7 +24,7 @@ class Game extends Renderer {
   #isMutedDuringPause = false;
   #isGameStarted = false;
   #isOutroDisplayed = false;
-  #bossAppearanceFrame = 300;
+  #bossAppearanceFrame = 13 * 120;
   #endingFrame = 400;
   #hasEnteredSpace = false;
 
@@ -204,6 +204,11 @@ class Game extends Renderer {
     }
 
     if (isGuardChamberOver && this.#bossAppearanceFrame > 0) {
+      if (this.#bossAppearanceFrame === 13 * 120) {
+        this.throneRoom.boss.playBossAudio();
+        this.intro.battleMusic.pauseAudio();
+      }
+
       this.#bossAppearanceFrame -= 1;
 
       if (this.#hasEnteredSpace) {
@@ -231,6 +236,7 @@ class Game extends Renderer {
     }
 
     if (isThroneRoomOver && this.#endingFrame > 0) {
+      this.throneRoom.boss.fadeOutAudio();
       this.#endingFrame -= 1;
       return;
     }
@@ -240,7 +246,6 @@ class Game extends Renderer {
       this.outro.shouldBeDisplayed = true;
       this.#isOutroDisplayed = true;
       this.space.shouldBeDisplayed = false;
-      this.intro.battleMusic.pauseAudio();
     }
   }
 
@@ -345,8 +350,8 @@ class Game extends Renderer {
   restart() {
     this.setUpBackgroundScenes(true);
     this.setUpCombatScenes();
-    this.setTargetList();
     this.player = new Player();
+    this.setTargetList();
     this.base.shouldBeDisplayed = false;
     this.space.shouldBeDisplayed = false;
     this.outro.shouldBeDisplayed = false;
