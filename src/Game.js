@@ -4,7 +4,7 @@ import Player from "./entities/Player";
 
 import "./style.css";
 import Sound from "./utils/Sound";
-import resizeCanvas from "./utils/resizeCanvas";
+import CanvasResizer from "./utils/DisplayOptimizer";
 
 import Intro from "./scenes/Intro";
 import Outro from "./scenes/Outro";
@@ -18,14 +18,17 @@ import Menu from "./graphics/Menu";
 import LifeBoard from "./graphics/Life";
 import Renderer from "./graphics/Renderer";
 import Background from "./graphics/Background";
-import { BACKGROUNDS, PLATER } from "./constants/path";
+
+import MODIFIER from "./constants/modifier";
+import { BACKGROUNDS } from "./constants/path";
 
 class Game extends Renderer {
+  #fps = MODIFIER.SPEED === 1 ? 120 : 60;
   #isMutedDuringPause = false;
   #isGameStarted = false;
   #isOutroDisplayed = false;
-  #bossAppearanceFrame = 13 * 120;
-  #endingFrame = 400;
+  #bossAppearanceFrame = 13 * this.#fps;
+  #endingFrame = 400 * MODIFIER.FRAME;
   #hasEnteredSpace = false;
 
   constructor() {
@@ -199,7 +202,7 @@ class Game extends Renderer {
     }
 
     if (isGuardChamberOver && this.#bossAppearanceFrame > 0) {
-      if (this.#bossAppearanceFrame === 13 * 120) {
+      if (this.#bossAppearanceFrame === 13 * this.#fps) {
         this.throneRoom.boss.playBossAudio();
         this.intro.battleMusic.pauseAudio();
       }
@@ -238,10 +241,11 @@ class Game extends Renderer {
 
     if (isThroneRoomOver && !this.#isOutroDisplayed) {
       this.player.shouldOut = true;
-      this.outro.shouldBeDisplayed = true;
       this.#isOutroDisplayed = true;
+      this.outro.shouldBeDisplayed = true;
       this.space.shouldBeDisplayed = false;
       this.throneRoom.shouldBeDisplayed = false;
+      this.lifeBoard.shouldBeDisplayed = false;
     }
   }
 
@@ -350,8 +354,8 @@ class Game extends Renderer {
     const restart = this.restart.bind(this);
 
     this.#isOutroDisplayed = false;
-    this.#bossAppearanceFrame = 13 * 120;
-    this.#endingFrame = 400;
+    this.#bossAppearanceFrame = 13 * this.#fps;
+    this.#endingFrame = 400 * MODIFIER.FRAME;
     this.#hasEnteredSpace = false;
 
     this.player = new Player();
@@ -365,8 +369,8 @@ class Game extends Renderer {
 
   restart() {
     this.#isOutroDisplayed = false;
-    this.#bossAppearanceFrame = 13 * 120;
-    this.#endingFrame = 400;
+    this.#bossAppearanceFrame = 13 * this.#fps;
+    this.#endingFrame = 400 * MODIFIER.FRAME;
     this.#hasEnteredSpace = false;
 
     this.outro.pauseOutroMusic();
@@ -379,5 +383,5 @@ class Game extends Renderer {
   }
 }
 
-resizeCanvas();
+CanvasResizer.resize();
 new Game();

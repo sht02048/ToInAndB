@@ -1,10 +1,11 @@
 import Renderer from "../graphics/Renderer";
+import MODIFIER from "../constants/modifier";
 import Boss from "../entities/enemies/Boss";
 import Bot from "../entities/enemies/Bot";
 
 class ThroneRoom extends Renderer {
   #bossWidth = 228;
-  #spawnInterval = 60;
+  #spawnInterval = 60 * MODIFIER.FRAME;
 
   constructor() {
     super();
@@ -24,6 +25,7 @@ class ThroneRoom extends Renderer {
     this.botList.forEach((bot) => {
       if (this.boss.isDestroyed) {
         bot.isDestroyed = true;
+        bot.makeExplosionSound = false;
       }
 
       bot.update();

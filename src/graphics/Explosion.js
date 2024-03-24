@@ -1,6 +1,7 @@
 import Renderer from "./Renderer";
 import Sound from "../utils/Sound";
 import { ENEMY_EXPLOSION, AUDIO } from "../constants/path";
+import MODIFIER from "../constants/modifier";
 
 class Explosion {
   #enemyExplosionList = [];
@@ -20,22 +21,18 @@ class Explosion {
     }
   }
 
-  destroy(x, y, width) {
-    if (this.explosionFrame === 44) {
+  destroy(x, y, width, makeExplosionSound = true) {
+    if (this.explosionFrame === 22) {
       return;
     }
 
-    if (Sound.isPlaying) {
-      Sound.unmute();
-    }
-
-    if (!this.isExplosionSoundPlaying) {
+    if (!this.isExplosionSoundPlaying && makeExplosionSound) {
       this.explosionSound.playAudio();
     }
 
     this.isExplosionSoundPlaying = true;
 
-    const currentFrame = Math.floor(this.explosionFrame / 4);
+    const currentFrame = Math.floor(this.explosionFrame / (4 * MODIFIER.FRAME));
 
     this.#enemyExplosionList[currentFrame].render(x, y, width, width);
 
@@ -43,7 +40,7 @@ class Explosion {
   }
 
   isExploded() {
-    if (this.explosionFrame === 44) {
+    if (this.explosionFrame === 22) {
       this.isExplosionSoundPlaying = false;
       return true;
     }

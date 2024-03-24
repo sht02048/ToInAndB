@@ -1,8 +1,9 @@
+import MODIFIER from "../constants/modifier";
 import Renderer from "../graphics/Renderer";
 import CollisionDetector from "../physics/CollisionDetector";
 
 class Item extends Renderer {
-  #itemSpeedLimit = 5;
+  #itemSpeedLimit = MODIFIER.SPEED === 1 ? 5 : 10;
 
   constructor(itemImage, itemType) {
     super(itemImage);

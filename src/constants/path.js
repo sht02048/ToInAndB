@@ -1,4 +1,4 @@
-const PLATER = {
+const PLAYER = {
   STATIC: "/sprites/player/player_static.png",
   STRAIGHT: "/sprites/player/player_straight.png",
   LEFT: "/sprites/player/player_left.png",
@@ -83,7 +83,7 @@ const ITEM_IMAGE = {
 };
 
 export {
-  PLATER,
+  PLAYER,
   ENEMIES,
   BACKGROUNDS,
   IMAGE,

@@ -1,36 +1,38 @@
 import Cockpit from "./Cockpit";
 import SpaceShip from "./Spaceship";
 
-import Renderer from "../graphics/Renderer";
-import Explosion from "../graphics/Explosion";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
+import Renderer from "../graphics/Renderer";
+import Explosion from "../graphics/Explosion";
+
+import MODIFIER from "../constants/modifier";
 import TEAM from "../constants/team";
-import { PLATER, PROJECTILE } from "../constants/path";
+import { PLAYER, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class Player extends SpaceShip {
   #staticWidth = 35;
   #staticHeight = 49;
   #straightMissileWidth = 36;
-  #straightMissileSpeed = 5;
-  #straightMissileReload = 15;
+  #straightMissileSpeed = 5 * MODIFIER.SPEED;
+  #straightMissileReload = 16 * MODIFIER.FRAME;
   #guidedMissileGap = 80;
-  #guidedMissileSpeed = 3;
-  #guidedMissileReload = 100;
+  #guidedMissileSpeed = 3 * MODIFIER.SPEED;
+  #guidedMissileReload = 100 * MODIFIER.FRAME;
   #missileDamage = 2;
   #isPlayerIn = false;
-  #outSpeed = 1.5;
+  #outSpeed = 1.5 * MODIFIER.SPEED;
 
   constructor() {
     super();
 
     this.explosion = new Explosion();
-    this.leftShip = new Renderer(PLATER.LEFT);
-    this.rightShip = new Renderer(PLATER.RIGHT);
-    this.staticShip = new Renderer(PLATER.STATIC);
-    this.straightShip = new Renderer(PLATER.STRAIGHT);
+    this.leftShip = new Renderer(PLAYER.LEFT);
+    this.rightShip = new Renderer(PLAYER.RIGHT);
+    this.staticShip = new Renderer(PLAYER.STATIC);
+    this.straightShip = new Renderer(PLAYER.STRAIGHT);
     this.straightMissileLauncher = new MissileLauncher(
       this.#staticWidth,
       this.#staticHeight,
@@ -58,10 +60,10 @@ class Player extends SpaceShip {
 
     this.level = 1;
     this.healthPoint = 3;
-    this.shipSpeed = 2;
+    this.shipSpeed = 2 * MODIFIER.SPEED;
     this.isShooting = false;
-    this.reloadFrame = 10;
-    this.invincibleFrame = 200;
+    this.reloadFrame = 10 * MODIFIER.FRAME;
+    this.invincibleFrame = 200 * MODIFIER.FRAME;
     this.isInvincible = false;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
@@ -76,7 +78,7 @@ class Player extends SpaceShip {
 
     this.cockpit.checkPlayerStatus(this.level, this.shipSpeed);
     this.straightMissileLauncher.setMissileRoute(
-      MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT,
+      MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT,
       this.#straightMissileSpeed,
     );
     this.guidedMissileLauncher.setMissileRoute(
@@ -104,7 +106,7 @@ class Player extends SpaceShip {
       this.updateSpawn();
       this.invincibleFrame -= 1;
 
-      if (this.invincibleFrame > 100) {
+      if (this.invincibleFrame > 100 * MODIFIER.FRAME) {
         return;
       }
     }
@@ -150,20 +152,20 @@ class Player extends SpaceShip {
   }
 
   renderSpawn() {
-    this.currentDirection.mainCtx.save();
-    this.currentDirection.mainCtx.globalAlpha = 0.4;
-    this.currentDirection.render(this.x, this.y);
-    this.currentDirection.mainCtx.restore();
+    this.straightShip.mainCtx.save();
+    this.straightShip.mainCtx.globalAlpha = 0.4;
+    this.straightShip.render(this.x, this.y - this.initialY);
+    this.straightShip.mainCtx.restore();
   }
 
   updateSpawn() {
-    if (this.invincibleFrame > 100) {
-      this.y -= 2;
+    if (this.invincibleFrame > 100 * MODIFIER.FRAME) {
+      this.y -= 2 * MODIFIER.SPEED;
     }
 
     if (this.invincibleFrame < 0) {
       this.isInvincible = false;
-      this.invincibleFrame = 200;
+      this.invincibleFrame = 200 * MODIFIER.FRAME;
     }
   }
 
@@ -280,7 +282,7 @@ class Player extends SpaceShip {
       missileWidth: missileWidth,
       missileDamage: this.#missileDamage,
       missileSpeed: missileSpeed,
-      team: TEAM.PLATER,
+      team: TEAM.PLAYER,
     };
 
     return missileInformation;

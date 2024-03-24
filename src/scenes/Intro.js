@@ -1,9 +1,10 @@
 import Sound from "../utils/Sound";
 import { IMAGE, AUDIO } from "../constants/path";
 import Renderer from "../graphics/Renderer";
+import MODIFIER from "../constants/modifier";
 
 class Intro {
-  #floatSpeed = 0.1;
+  #floatSpeed = 0.1 * MODIFIER.SPEED;
   #titleWidth = 1158;
   #titleHeight = 951;
   #instructionWidth = 934;

@@ -21,7 +21,6 @@ class Background {
       return;
     }
 
-    // ACTIVATE 실제 작업 시 주석해제 필요
     this.in();
     this.circulateDown(this.shouldOut);
     this.checkIsOut();

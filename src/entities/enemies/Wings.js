@@ -4,14 +4,15 @@ import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
+import MODIFIER from "../../constants/modifier";
 
 class Wings extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 1;
-  #wingsSpeed = 0.7;
-  #missileInterval = 250;
+  #missileSpeed = 1 * MODIFIER.SPEED;
+  #wingsSpeed = 0.7 * MODIFIER.SPEED;
+  #missileInterval = 250 * MODIFIER.FRAME;
   #missileRound = 0;
-  #reloadFrame = 50;
+  #reloadFrame = 50 * MODIFIER.FRAME;
   #wingsWidth = 72;
   #wingsHeight = 71;
   #isWingsAppeared = false;
@@ -23,7 +24,7 @@ class Wings extends Enemy {
     super({
       x,
       y,
-      health: 200,
+      health: 20,
       shipImage: ENEMIES.WINGS,
       hitShipImage: ENEMIES.WINGS_HIT,
       width: 72,

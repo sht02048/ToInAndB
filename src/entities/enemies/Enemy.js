@@ -4,6 +4,7 @@ import Explosion from "../../graphics/Explosion";
 import Renderer from "../../graphics/Renderer";
 import CollisionDetector from "../../physics/CollisionDetector";
 import MissileLauncher from "../../weapons/MissileLauncher";
+import MODIFIER from "../../constants/modifier";
 
 class Enemy extends SpaceShip {
   constructor({
@@ -26,6 +27,7 @@ class Enemy extends SpaceShip {
       this.missileLauncher.missileList,
     );
 
+    this.makeExplosionSound = true;
     this.width = width;
     this.height = height;
     this.projectile = projectileImage;
@@ -54,7 +56,12 @@ class Enemy extends SpaceShip {
     this.missileLauncher.render();
 
     if (this.isDestroyed) {
-      this.explosion.destroy(this.x, this.y, this.width);
+      this.explosion.destroy(
+        this.x,
+        this.y,
+        this.width,
+        this.makeExplosionSound,
+      );
 
       renderItem();
 
@@ -79,7 +86,7 @@ class Enemy extends SpaceShip {
 
     if (this.hitFrame === 0) {
       this.isHit = false;
-      this.hitFrame = 5;
+      this.hitFrame = 6 * MODIFIER.FRAME;
     }
   }
 

@@ -1,5 +1,5 @@
 const TEAM = {
-  PLATER: "PLAYER",
+  PLAYER: "PLAYER",
   ENEMY: "ENEMY",
 };
 

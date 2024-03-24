@@ -1,13 +1,14 @@
 import Enemy from "./Enemy";
 
+import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Cross extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 2;
-  #missileInterval = 200;
-  #crossSpeed = 0.8;
+  #missileSpeed = 2 * MODIFIER.SPEED;
+  #missileInterval = 200 * MODIFIER.FRAME;
+  #crossSpeed = 0.8 * MODIFIER.SPEED;
 
   constructor({ x, y }) {
     super({

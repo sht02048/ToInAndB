@@ -1,3 +1,5 @@
+import MODIFIER from "../constants/modifier";
+
 class SpaceShip {
   constructor(x, y, health) {
     this.x = x;
@@ -6,7 +8,7 @@ class SpaceShip {
     this.isVanished = false;
     this.isHit = false;
     this.healthPoint = health;
-    this.hitFrame = 5;
+    this.hitFrame = 6 * MODIFIER.FRAME;
     this.frame = 0;
   }
 }

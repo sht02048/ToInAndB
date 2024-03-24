@@ -12,12 +12,12 @@ class Missile extends Renderer {
     this.angle;
   }
 
-  checkVanished() {
+  #checkVanished() {
     if (
-      this.x < this.minX ||
-      this.x > this.maxX + 50 ||
-      this.y < this.minY - 50 ||
-      this.y > this.maxY
+      this.x < 0 ||
+      this.x > this.canvasWidth ||
+      this.y < this.minY ||
+      this.y > this.maxY + 40
     ) {
       this.isVanished = true;
     }
@@ -25,15 +25,18 @@ class Missile extends Renderer {
 
   playerStraight(missileSpeed) {
     this.y -= missileSpeed;
+    this.#checkVanished();
   }
 
   enemyStraight(missileSpeed) {
     this.y += missileSpeed;
+    this.#checkVanished();
   }
 
   enemyTargetMove() {
     this.x += this.vx;
     this.y += this.vy;
+    this.#checkVanished();
   }
 }
 

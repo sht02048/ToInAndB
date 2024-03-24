@@ -1,13 +1,14 @@
 import Enemy from "./Enemy";
 
+import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Bug extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 5;
-  #missileInterval = 60;
-  #bugSpeed = 2;
+  #missileSpeed = 5 * MODIFIER.SPEED;
+  #missileInterval = 60 * MODIFIER.FRAME;
+  #bugSpeed = 2 * MODIFIER.SPEED;
   #bugAngle = 1;
 
   constructor({ x, y, isLeft }) {
@@ -57,7 +58,7 @@ class Bug extends Enemy {
   setRoute() {
     this.y += this.#bugSpeed;
 
-    if (this.frame > 300) {
+    if (this.frame > 300 * MODIFIER.FRAME) {
       if (this.isLeft) {
         this.x += this.#bugSpeed;
         return;

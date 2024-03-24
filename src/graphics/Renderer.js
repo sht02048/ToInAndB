@@ -1,3 +1,5 @@
+import MODIFIER from "../constants/modifier";
+
 class Renderer {
   #leftBlockSize = 100;
   #rightBlockSize = 145;
@@ -20,7 +22,7 @@ class Renderer {
     this.maxX = this.canvasWidth - this.#rightBlockSize;
     this.minY = -10;
     this.maxY = this.canvasHeight - this.#playerShipHeight + 5;
-    this.inAndOutSpeed = 4;
+    this.inAndOutSpeed = 4 * MODIFIER.SPEED;
     this.frame = 0;
 
     this.isImageOnload = false;

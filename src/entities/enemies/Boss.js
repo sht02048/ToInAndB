@@ -4,32 +4,34 @@ import Sound from "../../utils/Sound";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
 
+import MODIFIER from "../../constants/modifier";
 import { AUDIO, ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Boss extends Enemy {
   #bossWidth = 228;
   #bossHeight = 218;
-  #bossSpeed = 1;
+  #bossSpeed = 1 * MODIFIER.SPEED;
   #isAtInitial = false;
   #shouldMoveForward = true;
   #shouldMoveSide = true;
   #isAtMinX = false;
   #isAtMaxX = false;
   #sideCycle = 3;
-  #allWayFrame = 600;
-  #allWayInterval = 10;
+  #allWayFrame = 600 * MODIFIER.FRAME;
+  #allWayInterval = 10 * MODIFIER.FRAME;
   #allWayWidth = 16;
-  #allWaySpeed = 1;
-  #guidedHaltFrame = 300;
-  #guidedInterval = 50;
+  #allWaySpeed = 1 * MODIFIER.SPEED;
+  #guidedHaltFrame = 300 * MODIFIER.FRAME;
+  #guidedInterval = 50 * MODIFIER.FRAME;
   #guidedWidth = 23;
-  #guidedSpeed = 2;
-  #straightInterval = 30;
+  #guidedSpeed = 2 * MODIFIER.SPEED;
+  #straightInterval = 30 * MODIFIER.FRAME;
   #straightWidth = 12;
-  #straightSpeed = 3;
-  #resetFrame = 400;
+  #straightSpeed = 3 * MODIFIER.SPEED;
+  #resetFrame = 400 * MODIFIER.FRAME;
   #AudioVolume = 0.7;
+  #AudioFadeOutFrame = 200 * MODIFIER.FRAME;
   #missileLaunchers = {};
   #collisionDetectors = {};
 
@@ -109,9 +111,9 @@ class Boss extends Enemy {
       return;
     }
 
-    this.#guidedHaltFrame = 300;
-    this.#allWayFrame = 400;
-    this.#resetFrame = 400;
+    this.#guidedHaltFrame = 300 * MODIFIER.FRAME;
+    this.#allWayFrame = 400 * MODIFIER.FRAME;
+    this.#resetFrame = 400 * MODIFIER.FRAME;
     this.#shouldMoveForward = true;
     this.#sideCycle = 3;
     this.#shouldMoveSide = true;
@@ -238,8 +240,8 @@ class Boss extends Enemy {
       return true;
     }
 
-    this.x += dx * 0.01;
-    this.y += dy * 0.01;
+    this.x += dx * 0.01 * MODIFIER.SPEED;
+    this.y += dy * 0.01 * MODIFIER.SPEED;
 
     return false;
   }
@@ -298,11 +300,15 @@ class Boss extends Enemy {
   }
 
   fadeOutAudio() {
-    if (this.backgroundMusic.sound.volume <= this.#AudioVolume / 200) {
+    if (
+      this.backgroundMusic.sound.volume <=
+      this.#AudioVolume / this.#AudioFadeOutFrame
+    ) {
       return;
     }
 
-    this.backgroundMusic.sound.volume -= this.#AudioVolume / 200;
+    this.backgroundMusic.sound.volume -=
+      this.#AudioVolume / this.#AudioFadeOutFrame;
 
     if (this.backgroundMusic.sound.volume === 0) {
       this.backgroundMusic.pauseAudio();

@@ -1,13 +1,15 @@
 import Enemy from "./Enemy";
 
+import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Bot extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 2;
-  #missileInterval = 80;
-  #botSpeed = 2;
+  #missileSpeed = 2 * MODIFIER.SPEED;
+  #missileInterval = 80 * MODIFIER.FRAME;
+  #botInSpeed = 2 * MODIFIER.SPEED;
+  #botOutSpeed = 0.5 * MODIFIER.SPEED;
   #hasReachedPoint = false;
 
   constructor({ x, y, isLeft }) {
@@ -60,19 +62,19 @@ class Bot extends Enemy {
     }
 
     if (!this.#hasReachedPoint) {
-      this.y -= this.#botSpeed;
+      this.y -= this.#botInSpeed;
       return;
     }
 
     if (this.isLeft) {
-      this.x -= Math.sqrt(8) * 0.5;
-      this.y += Math.sqrt(2) * 0.5;
+      this.x -= Math.sqrt(8) * this.#botOutSpeed;
+      this.y += Math.sqrt(2) * this.#botOutSpeed;
 
       return;
     }
 
-    this.x += Math.sqrt(8) * 0.5;
-    this.y += Math.sqrt(2) * 0.5;
+    this.x += Math.sqrt(8) * this.#botOutSpeed;
+    this.y += Math.sqrt(2) * this.#botOutSpeed;
   }
 
   setTargetList(targetList) {

@@ -1,7 +1,8 @@
 import Missile from "./Missile";
+import Enemy from "../entities/enemies/Enemy";
 
 import TEAM from "../constants/team";
-import Enemy from "../entities/enemies/Enemy";
+import MODIFIER from "../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class MissileLauncher {
@@ -38,14 +39,14 @@ class MissileLauncher {
     this.y = y;
 
     const shipCenter =
-      team === TEAM.PLATER
+      team === TEAM.PLAYER
         ? this.x + this.width / 2 - missileWidth / 2
         : this.x + this.width / 2 - missileWidth / 2;
 
     missile.team = team;
     missile.x = shipCenter;
     missile.y =
-      team === TEAM.PLATER
+      team === TEAM.PLAYER
         ? this.y - this.#missileYModifier
         : this.y + this.height - 10;
     missile.damage = missileDamage;
@@ -118,7 +119,7 @@ class MissileLauncher {
       }
 
       switch (missileRoute) {
-        case MISSILE_ROUTE_COMMAND.PLATER_STRAIGHT:
+        case MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT:
           missile.playerStraight(missile.speed);
           break;
 
@@ -144,7 +145,7 @@ class MissileLauncher {
             return;
           }
 
-          if (missile.frame < 160) {
+          if (missile.frame < 160 * MODIFIER.FRAME) {
             missile.vx = vx;
             missile.vy = vy;
             missile.angle = angle;

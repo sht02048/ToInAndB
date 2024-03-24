@@ -1,8 +1,10 @@
 import Bug from "../entities/enemies/Bug";
 import Heavy from "../entities/enemies/Heavy";
+import MODIFIER from "../constants/modifier";
 import Renderer from "../graphics/Renderer";
 
 class Entrance extends Renderer {
+  #appearanceFrame = 300 * MODIFIER.FRAME;
   #heavyWidth = 50;
   #isDone = true;
 
@@ -20,7 +22,7 @@ class Entrance extends Renderer {
   }
 
   update() {
-    if (this.frame > 300) {
+    if (this.frame > this.#appearanceFrame) {
       this.bugList.forEach((bug) => bug.update());
       this.heavy.update();
     }
@@ -29,7 +31,7 @@ class Entrance extends Renderer {
   }
 
   render() {
-    if (this.frame > 300) {
+    if (this.frame > this.#appearanceFrame) {
       this.bugList.forEach((bug) => bug.render());
       this.heavy.render();
     }

@@ -1,14 +1,15 @@
 import Renderer from "./Renderer";
-import { PLATER } from "../constants/path";
+import { PLAYER } from "../constants/path";
 
 class LifeBoard {
   #currentHealth = 2;
 
   constructor() {
     this.healthList = [];
+    this.shouldBeDisplayed = true;
 
     for (let i = 0; i < this.#currentHealth; i += 1) {
-      this.healthList.push(new Renderer(PLATER.LIFE));
+      this.healthList.push(new Renderer(PLAYER.LIFE));
     }
   }
 
