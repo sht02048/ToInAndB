@@ -45,6 +45,8 @@ const IMAGE = {
   RESUME: "/images/resume.png",
   REPLAY: "/images/replay.png",
   GAME_OVER: "/images/game_over.png",
+  OUTRO_TITLE: "/images/outro_title.png",
+  OUTRO_MESSAGE: "/images/outro_message.png",
 };
 
 const AUDIO = {
@@ -54,6 +56,7 @@ const AUDIO = {
   SHOT: "/audios/effects/shot_1.mp3",
   POWER_UP: "/audios/effects/power_up.mp3",
   SPEED_UP: "/audios/effects/speed_up.mp3",
+  OUTRO: "/audios/background/outro.mp4",
 };
 
 const PROJECTILE = {
