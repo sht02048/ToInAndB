@@ -27,6 +27,9 @@ class Hallway extends Renderer {
         isLeft: false,
       }),
     ]).flat();
+
+    this.shouldBeDisplayed = false;
+    this.hasStarted = false;
   }
 
   update() {

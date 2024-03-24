@@ -14,6 +14,9 @@ class Entrance extends Renderer {
       new Bug({ x: this.maxX - 100, y: index * -150 - 50, isLeft: false }),
     ]).flat();
     this.heavy = new Heavy(this.canvasWidth / 2 - this.#heavyWidth / 2, -200);
+
+    this.shouldBeDisplayed = false;
+    this.hasStarted = false;
   }
 
   update() {

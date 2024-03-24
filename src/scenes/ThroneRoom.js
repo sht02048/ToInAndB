@@ -14,6 +14,9 @@ class ThroneRoom extends Renderer {
       y: -300,
     });
     this.botList = [];
+
+    this.shouldBeDisplayed = false;
+    this.hasStarted = false;
   }
 
   update() {

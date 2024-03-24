@@ -6,7 +6,7 @@ class Outro {
   #outSpeed = 1;
   #titleWidth = 795;
   #messageWidth = 772;
-  #haltFrame = 15 * 120;
+  #haltFrame = 15.5 * 60;
   #hasMusicStarted = false;
 
   constructor() {

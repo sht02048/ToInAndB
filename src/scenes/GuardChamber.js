@@ -33,6 +33,9 @@ class GuardChamber extends Renderer {
         y: -200,
       }),
     ];
+
+    this.shouldBeDisplayed = false;
+    this.hasStarted = false;
   }
 
   update() {

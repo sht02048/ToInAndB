@@ -18,14 +18,14 @@ import Menu from "./graphics/Menu";
 import LifeBoard from "./graphics/Life";
 import Renderer from "./graphics/Renderer";
 import Background from "./graphics/Background";
-import { BACKGROUNDS } from "./constants/path";
+import { BACKGROUNDS, PLATER } from "./constants/path";
 
 class Game extends Renderer {
   #isMutedDuringPause = false;
   #isGameStarted = false;
   #isOutroDisplayed = false;
   #bossAppearanceFrame = 300;
-  #endingFrame = 300;
+  #endingFrame = 400;
   #hasEnteredSpace = false;
 
   constructor() {
@@ -34,6 +34,7 @@ class Game extends Renderer {
     const toggleIsPaused = this.toggleIsPaused.bind(this);
     const restart = this.restart.bind(this);
 
+    this.player = new Player();
     this.menu = new Menu(toggleIsPaused, restart);
 
     this.isPaused = false;
@@ -60,7 +61,15 @@ class Game extends Renderer {
       background.update?.();
     });
 
-    this.combatScenes.forEach((combat) => combat.update());
+    this.combatScenes.forEach((combat) => {
+      if (!combat.shouldBeDisplayed) {
+        return;
+      }
+
+      combat.update();
+    });
+
+    this.player.update();
   }
 
   render() {
@@ -77,7 +86,15 @@ class Game extends Renderer {
       background.render();
     });
 
-    this.combatScenes.forEach((combat) => combat.render());
+    this.combatScenes.forEach((combat) => {
+      if (!combat.shouldBeDisplayed) {
+        return;
+      }
+
+      combat.render();
+    });
+
+    this.player.render();
 
     if (this.isPaused || this.player.healthPoint === 0) {
       this.menu.render();
@@ -86,10 +103,21 @@ class Game extends Renderer {
 
   setUpCombatScenes() {
     this.combatScenes = [];
-    this.player = new Player();
     this.entrance = new Entrance();
+    this.hallWay = new Hallway();
+    this.lounge = new Lounge();
+    this.guardChamber = new GuardChamber();
+    this.throneRoom = new ThroneRoom();
 
-    this.combatScenes.push(this.player, this.entrance);
+    this.entrance.shouldBeDisplayed = true;
+
+    this.combatScenes.push(
+      this.entrance,
+      this.hallWay,
+      this.lounge,
+      this.guardChamber,
+      this.throneRoom,
+    );
   }
 
   setUpBackgroundScenes(isReplay = false) {
@@ -138,30 +166,23 @@ class Game extends Renderer {
       return;
     }
 
-    if (isEntranceOver && this.combatScenes.length === 2) {
-      this.hallWay = new Hallway();
+    if (isEntranceOver && !this.hallWay.hasStarted) {
+      this.hallWay.shouldBeDisplayed = true;
+      this.hallWay.hasStarted = true;
+      this.hallWay.setTarget([this.player]);
 
       const hallwayTarget = this.hallWay.setSceneTargetList();
       this.player.setTargetList(hallwayTarget);
-      this.hallWay.setTarget([this.player]);
-
-      this.combatScenes.push(this.hallWay);
-
-      if (Sound.isPlaying) {
-        Sound.unmute();
-      }
 
       return;
     }
 
-    if (isHallwayOver && !isLoungeOver && this.combatScenes.length > 2) {
-      if (this.combatScenes.length === 3) {
-        this.lounge = new Lounge();
-
+    if (isHallwayOver && !isLoungeOver) {
+      if (!this.lounge.hasStarted) {
+        this.lounge.shouldBeDisplayed = true;
+        this.lounge.hasStarted = true;
         this.base.shouldBeDisplayed = true;
         this.plate.shouldOut = true;
-
-        this.combatScenes.push(this.lounge);
       }
 
       const loungeTarget = this.lounge.setSceneTargetList();
@@ -171,13 +192,13 @@ class Game extends Renderer {
       return;
     }
 
-    if (isLoungeOver && this.combatScenes.length === 4) {
-      this.guardChamber = new GuardChamber();
-      this.combatScenes.push(this.guardChamber);
+    if (isLoungeOver && !this.guardChamber.hasStarted) {
+      this.guardChamber.shouldBeDisplayed = true;
+      this.guardChamber.hasStarted = true;
+      this.guardChamber.setTarget([this.player]);
 
       const guardChamberTarget = this.guardChamber.setSceneTargetList();
       this.player.setTargetList(guardChamberTarget);
-      this.guardChamber.setTarget([this.player]);
 
       return;
     }
@@ -198,10 +219,10 @@ class Game extends Renderer {
       return;
     }
 
-    if (isGuardChamberOver && this.combatScenes.length > 4) {
-      if (this.combatScenes.length === 5) {
-        this.throneRoom = new ThroneRoom();
-        this.combatScenes.push(this.throneRoom);
+    if (isGuardChamberOver) {
+      if (!this.throneRoom.hasStarted) {
+        this.throneRoom.shouldBeDisplayed = true;
+        this.throneRoom.hasStarted = true;
       }
 
       const throneRoomTarget = this.throneRoom.setSceneTargetList();
@@ -216,16 +237,10 @@ class Game extends Renderer {
 
     if (isThroneRoomOver && !this.#isOutroDisplayed) {
       this.player.shouldOut = true;
-
-      if (this.player.isOut) {
-        this.space.shouldOut = true;
-      }
-
-      if (this.space.isOut) {
-        this.outro.shouldBeDisplayed = true;
-        this.#isOutroDisplayed = true;
-        this.intro.battleMusic.pauseAudio();
-      }
+      this.outro.shouldBeDisplayed = true;
+      this.#isOutroDisplayed = true;
+      this.space.shouldBeDisplayed = false;
+      this.intro.battleMusic.pauseAudio();
     }
   }
 
@@ -331,6 +346,7 @@ class Game extends Renderer {
     this.setUpBackgroundScenes(true);
     this.setUpCombatScenes();
     this.setTargetList();
+    this.player = new Player();
     this.base.shouldBeDisplayed = false;
     this.space.shouldBeDisplayed = false;
     this.outro.shouldBeDisplayed = false;

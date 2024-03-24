@@ -13,6 +13,9 @@ class Lounge extends Renderer {
       new Cross({ x: 100, y: -100 }),
       new Cross({ x: 600, y: -150 }),
     ];
+
+    this.shouldBeDisplayed = false;
+    this.hasStarted = false;
   }
 
   update() {
