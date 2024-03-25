@@ -125,7 +125,7 @@ class Player extends SpaceShip {
     this.straightMissileLauncher.render();
 
     if (this.isHit) {
-      this.explosion.destroy(this.x, this.y, this.#staticWidth);
+      this.explosion.render(this.x, this.y, this.#staticWidth);
       return;
     }
 

@@ -49,6 +49,7 @@ class Boss extends Enemy {
 
     this.backgroundMusic = new Sound(AUDIO.BOSS);
     this.backgroundMusic.sound.volume = this.#AudioVolume;
+    this.hasBackgroundMusicPlayed = false;
     this.#setWeapon();
     this.shouldSpawnBot = false;
   }
@@ -294,6 +295,7 @@ class Boss extends Enemy {
 
   playBossAudio() {
     this.backgroundMusic.playAudio();
+    this.hasBackgroundMusicPlayed = true;
   }
 
   adjustBossAudio() {

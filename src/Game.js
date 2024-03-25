@@ -373,6 +373,12 @@ class Game extends Renderer {
     this.#endingFrame = 400 * MODIFIER.FRAME;
     this.#hasEnteredSpace = false;
 
+    if (this.throneRoom.boss.hasBackgroundMusicPlayed) {
+      this.throneRoom.boss.backgroundMusic.pauseAudio();
+      this.intro.battleMusic.isPaused = false;
+      this.intro.battleMusic.playAudio();
+    }
+
     this.outro.pauseOutroMusic();
     this.player = new Player();
     this.setUpBackgroundScenes(true);
