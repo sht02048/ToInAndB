@@ -15,7 +15,7 @@ import ThroneRoom from "./scenes/ThroneRoom";
 import GuardChamber from "./scenes/GuardChamber";
 
 import Menu from "./graphics/Menu";
-import LifeBoard from "./graphics/Life";
+import LifeBoard from "./graphics/LifeBoard";
 import Renderer from "./graphics/Renderer";
 import Background from "./graphics/Background";
 

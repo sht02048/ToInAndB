@@ -5,7 +5,7 @@ import MODIFIER from "../constants/modifier";
 
 class Outro {
   #fps = MODIFIER.SPEED === 1 ? 120 : 60;
-  #outSpeed = 1;
+  #outSpeed = 1 * MODIFIER.SPEED;
   #titleWidth = 795;
   #messageWidth = 772;
   #haltFrame = 15.5 * this.#fps;
