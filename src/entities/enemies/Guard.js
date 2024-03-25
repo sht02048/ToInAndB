@@ -23,7 +23,7 @@ class Guard extends Enemy {
     super({
       x,
       y,
-      health: 20,
+      health: 200,
       shipImage: ENEMIES.EMPEROR,
       hitShipImage: ENEMIES.EMPEROR_HIT,
       width: 71,

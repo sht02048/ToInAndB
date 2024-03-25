@@ -16,10 +16,11 @@ class Enemy extends SpaceShip {
     projectileImage,
     width,
     height,
+    isBoss = false,
   }) {
     super(x, y, health);
 
-    this.explosion = new Explosion();
+    this.explosion = new Explosion(isBoss);
     this.ship = new Renderer(shipImage);
     this.hitShip = new Renderer(hitShipImage);
     this.missileLauncher = new MissileLauncher(width, height);
@@ -56,7 +57,7 @@ class Enemy extends SpaceShip {
     this.missileLauncher.render();
 
     if (this.isDestroyed) {
-      this.explosion.destroy(
+      this.explosion.render(
         this.x,
         this.y,
         this.width,

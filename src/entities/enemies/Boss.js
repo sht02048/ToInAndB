@@ -39,11 +39,12 @@ class Boss extends Enemy {
     super({
       x,
       y,
-      health: 100,
+      health: 600,
       shipImage: ENEMIES.BOSS,
       hitShipImage: ENEMIES.BOSS_HIT,
       width: 228,
       height: 218,
+      isBoss: true,
     });
 
     this.backgroundMusic = new Sound(AUDIO.BOSS);
@@ -304,15 +305,12 @@ class Boss extends Enemy {
       this.backgroundMusic.sound.volume <=
       this.#AudioVolume / this.#AudioFadeOutFrame
     ) {
+      this.backgroundMusic.pauseAudio();
       return;
     }
 
     this.backgroundMusic.sound.volume -=
       this.#AudioVolume / this.#AudioFadeOutFrame;
-
-    if (this.backgroundMusic.sound.volume === 0) {
-      this.backgroundMusic.pauseAudio();
-    }
   }
 }
 
