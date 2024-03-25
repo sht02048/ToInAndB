@@ -25,20 +25,13 @@ class Renderer {
     this.inAndOutSpeed = 4 * MODIFIER.SPEED;
     this.frame = 0;
 
-    this.isImageOnload = false;
-
     this.image.onload = () => {
       this.width = this.image.width;
       this.height = this.image.height;
-      this.isImageOnload = true;
     };
   }
 
   render(x, y, width, height) {
-    if (!this.isImageOnload) {
-      return;
-    }
-
     if (width !== undefined && height !== undefined) {
       this.mainCtx.drawImage(this.image, x, y, width, height);
 
@@ -49,10 +42,6 @@ class Renderer {
   }
 
   renderAngle(x, y, width, height, angle) {
-    if (!this.isImageOnload) {
-      return;
-    }
-
     this.mainCtx.save();
     this.mainCtx.translate(x, y + 10);
     this.mainCtx.rotate(angle);
