@@ -170,7 +170,7 @@ class Game extends Renderer {
       this.hallWay.setTarget([this.player]);
 
       const hallwayTarget = this.hallWay.setSceneTargetList();
-      this.player.setTargetList(hallwayTarget);
+      this.playerTargetList.push(...hallwayTarget);
 
       return;
     }
@@ -184,7 +184,7 @@ class Game extends Renderer {
       }
 
       const loungeTarget = this.lounge.setSceneTargetList();
-      this.player.setTargetList(loungeTarget);
+      this.playerTargetList.push(...loungeTarget);
       this.lounge.setTarget([this.player]);
 
       return;
@@ -196,7 +196,7 @@ class Game extends Renderer {
       this.guardChamber.setTarget([this.player]);
 
       const guardChamberTarget = this.guardChamber.setSceneTargetList();
-      this.player.setTargetList(guardChamberTarget);
+      this.playerTargetList.push(...guardChamberTarget);
 
       return;
     }
@@ -229,7 +229,7 @@ class Game extends Renderer {
       }
 
       const throneRoomTarget = this.throneRoom.setSceneTargetList();
-      this.player.setTargetList(throneRoomTarget);
+      this.playerTargetList.push(...throneRoomTarget);
       this.throneRoom.setTarget([this.player]);
     }
 
