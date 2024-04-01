@@ -5,7 +5,7 @@ import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
 class SpaceShip {
-  constructor({ x, y, width, height, health, isBoss = false }) {
+  constructor({ x, y, width, height, health, isBoss }) {
     this.x = x;
     this.y = y;
     this.isDestroyed = false;

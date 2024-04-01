@@ -131,7 +131,7 @@ class Boss extends Enemy {
 
     const allWayMissile = this.setMissileInformation({
       projectilePath: ENEMY_PROJECTILE.NORMAL,
-      y: this.y - this.#bossHeight / 2,
+      y: this.y + this.#bossHeight / 2,
       missileWidth: this.#allWayWidth,
       missileSpeed: this.#allWaySpeed,
       shouldTilt: true,

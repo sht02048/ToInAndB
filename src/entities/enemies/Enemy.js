@@ -2,9 +2,10 @@ import SpaceShip from "../Spaceship";
 
 import Explosion from "../../graphics/Explosion";
 import Renderer from "../../graphics/Renderer";
-import CollisionDetector from "../../physics/CollisionDetector";
-import MissileLauncher from "../../weapons/MissileLauncher";
+
 import MODIFIER from "../../constants/modifier";
+import MissileLauncher from "../../weapons/MissileLauncher";
+import CollisionDetector from "../../physics/CollisionDetector";
 
 class Enemy extends SpaceShip {
   constructor({
@@ -16,7 +17,7 @@ class Enemy extends SpaceShip {
     projectileImage,
     width,
     height,
-    isBoss,
+    isBoss = false,
   }) {
     super({
       x,
@@ -39,10 +40,11 @@ class Enemy extends SpaceShip {
     this.width = width;
     this.height = height;
     this.projectile = projectileImage;
+    this.isBoss = isBoss;
   }
 
   updateEnemy(launchMissile, setRoute, command, updateItem = this.noop) {
-    if (!this.isDestroyed && !this.isVanished) {
+    if (!this.isBoss || (this.isBoss && !this.isDestroyed)) {
       this.collisionDetector.detectCollision();
     }
 
