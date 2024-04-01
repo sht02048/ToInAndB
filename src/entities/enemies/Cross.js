@@ -49,7 +49,7 @@ class Cross extends Enemy {
       isAimed: false,
     });
 
-    this.loadSingleMissile(missileInformation);
+    this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
   seRoute() {

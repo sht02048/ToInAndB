@@ -140,10 +140,10 @@ class Wings extends Enemy {
         isAimed: true,
       });
 
-      this.leftMissileLauncher.loadSingleAmmo(leftMissile);
-      this.rightMissileLauncher.loadSingleAmmo(rightMissile);
+      this.leftMissileLauncher.loadSingleMissile(leftMissile);
+      this.rightMissileLauncher.loadSingleMissile(rightMissile);
 
-      this.loadSingleMissile(middleMissile);
+      this.missileLauncher.loadSingleMissile(middleMissile);
 
       this.#missileRound -= 1;
     }

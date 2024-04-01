@@ -52,7 +52,7 @@ class Bug extends Enemy {
       isAimed: false,
     });
 
-    this.loadSingleMissile(missileInformation);
+    this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
   setRoute() {

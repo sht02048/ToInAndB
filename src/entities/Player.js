@@ -26,23 +26,23 @@ class Player extends SpaceShip {
   #outSpeed = 1.5 * MODIFIER.SPEED;
 
   constructor() {
-    super();
+    super({
+      width: 35,
+      height: 49,
+      health: PLAYER_HEALTH,
+    });
 
     this.explosion = new Explosion();
     this.leftShip = new Renderer(PLAYER.LEFT);
     this.rightShip = new Renderer(PLAYER.RIGHT);
     this.staticShip = new Renderer(PLAYER.STATIC);
     this.straightShip = new Renderer(PLAYER.STRAIGHT);
-    this.straightMissileLauncher = new MissileLauncher(
-      this.#staticWidth,
-      this.#staticHeight,
-    );
     this.guidedMissileLauncher = new MissileLauncher(
       this.#staticWidth,
       this.#staticHeight,
     );
     this.straightCollisionDetector = new CollisionDetector(
-      this.straightMissileLauncher.missileList,
+      this.missileLauncher.missileList,
     );
     this.guidedCollisionDetector = new CollisionDetector(
       this.guidedMissileLauncher.missileList,
@@ -59,7 +59,6 @@ class Player extends SpaceShip {
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
     this.level = 1;
-    this.healthPoint = PLAYER_HEALTH;
     this.shipSpeed = 2 * MODIFIER.SPEED;
     this.isShooting = false;
     this.reloadFrame = 10 * MODIFIER.FRAME;
@@ -77,7 +76,7 @@ class Player extends SpaceShip {
     this.frame += 1;
 
     this.cockpit.checkPlayerStatus(this.level, this.shipSpeed);
-    this.straightMissileLauncher.setMissileRoute(
+    this.missileLauncher.setMissileRoute(
       MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT,
       this.#straightMissileSpeed,
     );
@@ -122,7 +121,7 @@ class Player extends SpaceShip {
 
   render() {
     this.guidedMissileLauncher.render();
-    this.straightMissileLauncher.render();
+    this.missileLauncher.render();
 
     if (this.isHit) {
       this.explosion.render(this.x, this.y, this.#staticWidth);
@@ -202,15 +201,16 @@ class Player extends SpaceShip {
   }
 
   loadStraightMissile() {
-    const missileInformation = this.setMissileInformation(
-      this.straightProjectile,
-      this.x,
-      this.y - this.#staticHeight,
-      this.#straightMissileWidth,
-      this.#straightMissileSpeed,
-    );
+    const missileInformation = this.setMissileInformation({
+      projectilePath: this.straightProjectile,
+      x: this.x,
+      y: this.y - this.#staticHeight,
+      missileWidth: this.#straightMissileWidth,
+      missileSpeed: this.#straightMissileSpeed,
+      missileDamage: this.#missileDamage,
+    });
 
-    this.straightMissileLauncher.loadSingleAmmo(missileInformation);
+    this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
   loadGuidedMissile() {
@@ -221,23 +221,25 @@ class Player extends SpaceShip {
     const leftWidth = this.#guidedMissileGap;
     const rightWidth = -this.#guidedMissileGap / 2;
 
-    const leftMissileInformation = this.setMissileInformation(
-      this.guidedProjectile,
-      leftX,
-      sharedY,
-      leftWidth,
-      this.#guidedMissileSpeed,
-    );
-    const rightMissileInformation = this.setMissileInformation(
-      this.guidedProjectile,
-      rightX,
-      sharedY,
-      rightWidth,
-      this.#guidedMissileSpeed,
-    );
+    const leftMissileInformation = this.setMissileInformation({
+      projectilePath: this.guidedProjectile,
+      x: leftX,
+      y: sharedY,
+      missileWidth: leftWidth,
+      missileSpeed: this.#guidedMissileSpeed,
+      missileDamage: this.#missileDamage,
+    });
+    const rightMissileInformation = this.setMissileInformation({
+      projectilePath: this.guidedProjectile,
+      x: rightX,
+      y: sharedY,
+      missileWidth: rightWidth,
+      missileSpeed: this.#guidedMissileSpeed,
+      missileDamage: this.#missileDamage,
+    });
 
-    this.guidedMissileLauncher.loadSingleAmmo(leftMissileInformation);
-    this.guidedMissileLauncher.loadSingleAmmo(rightMissileInformation);
+    this.guidedMissileLauncher.loadSingleMissile(leftMissileInformation);
+    this.guidedMissileLauncher.loadSingleMissile(rightMissileInformation);
   }
 
   in() {
@@ -259,32 +261,13 @@ class Player extends SpaceShip {
   setTargetList(targetList) {
     this.straightCollisionDetector.setTargetList(targetList);
     this.guidedCollisionDetector.setTargetList(targetList);
-    this.straightMissileLauncher.setTargetList(targetList);
+    this.missileLauncher.setTargetList(targetList);
     this.guidedMissileLauncher.setTargetList(targetList);
   }
 
   setSize() {
     this.width = this.currentDirection.width;
     this.height = this.currentDirection.height;
-  }
-
-  setMissileInformation(
-    projectilePath,
-    positionX,
-    positionY,
-    missileWidth,
-    missileSpeed,
-  ) {
-    const missileInformation = {
-      projectilePath: projectilePath,
-      x: positionX,
-      y: positionY,
-      missileWidth: missileWidth,
-      missileDamage: this.#missileDamage,
-      missileSpeed: missileSpeed,
-    };
-
-    return missileInformation;
   }
 }
 

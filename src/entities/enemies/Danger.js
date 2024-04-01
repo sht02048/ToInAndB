@@ -52,7 +52,7 @@ class Danger extends Enemy {
       isAimed: true,
     });
 
-    this.loadSingleMissile(missileInformation);
+    this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
   setRoute() {

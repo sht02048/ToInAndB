@@ -63,7 +63,7 @@ class Mini extends Enemy {
       isAimed: false,
     });
 
-    this.loadMultipleMissile(missileInformation);
+    this.missileLauncher.loadMultipleMissile(missileInformation);
   }
 
   setRoute() {

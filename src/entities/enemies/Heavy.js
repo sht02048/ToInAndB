@@ -63,7 +63,7 @@ class Heavy extends Enemy {
         isAimed: true,
       });
 
-      this.loadSingleMissile(missileInformation);
+      this.missileLauncher.loadSingleMissile(missileInformation);
 
       this.#missileRound -= 1;
     }

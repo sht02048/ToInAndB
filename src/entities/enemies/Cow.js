@@ -61,7 +61,7 @@ class Cow extends Enemy {
       isAimed: true,
     });
 
-    this.loadSingleMissile(missileInformation);
+    this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
   setRoute() {

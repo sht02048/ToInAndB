@@ -53,7 +53,7 @@ class Bot extends Enemy {
       isAimed: true,
     });
 
-    this.loadSingleMissile(guidedMissile);
+    this.missileLauncher.loadSingleMissile(guidedMissile);
   }
 
   setRoute() {

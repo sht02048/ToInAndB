@@ -136,7 +136,7 @@ class Boss extends Enemy {
       shouldTilt: true,
     });
 
-    this.loadMultipleMissile(allWayMissile);
+    this.missileLauncher.loadMultipleMissile(allWayMissile);
   }
 
   launchGuided() {
@@ -161,8 +161,8 @@ class Boss extends Enemy {
       isAimed: true,
     });
 
-    this.#missileLaunchers.leftGuided.loadSingleAmmo(leftMissile);
-    this.#missileLaunchers.rightGuided.loadSingleAmmo(rightMissile);
+    this.#missileLaunchers.leftGuided.loadSingleMissile(leftMissile);
+    this.#missileLaunchers.rightGuided.loadSingleMissile(rightMissile);
   }
 
   launchStraight() {
@@ -187,8 +187,8 @@ class Boss extends Enemy {
       isAimed: true,
     });
 
-    this.#missileLaunchers.leftStraight.loadSingleAmmo(leftMissile);
-    this.#missileLaunchers.rightStraight.loadSingleAmmo(rightMissile);
+    this.#missileLaunchers.leftStraight.loadSingleMissile(leftMissile);
+    this.#missileLaunchers.rightStraight.loadSingleMissile(rightMissile);
   }
 
   moveForward() {

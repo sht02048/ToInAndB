@@ -16,9 +16,16 @@ class Enemy extends SpaceShip {
     projectileImage,
     width,
     height,
-    isBoss = false,
+    isBoss,
   }) {
-    super(x, y, health);
+    super({
+      x,
+      y,
+      width,
+      height,
+      health,
+      isBoss,
+    });
 
     this.explosion = new Explosion(isBoss);
     this.ship = new Renderer(shipImage);
@@ -103,40 +110,6 @@ class Enemy extends SpaceShip {
     ) {
       this.isVanished = true;
     }
-  }
-
-  loadSingleMissile(missileInformation) {
-    this.missileLauncher.loadSingleAmmo(missileInformation);
-  }
-
-  loadMultipleMissile(missileInformation) {
-    this.missileLauncher.loadMultipleAmmo(missileInformation);
-  }
-
-  setMissileInformation({
-    projectilePath,
-    x = this.x,
-    y = this.y + this.width,
-    missileWidth,
-    missileSpeed,
-    isAimed = false,
-    shouldTilt = false,
-  }) {
-    const missileInformation = {
-      projectilePath,
-      x,
-      y,
-      missileWidth,
-      missileSpeed,
-      isAimed,
-      shouldTilt,
-    };
-
-    return missileInformation;
-  }
-
-  noop() {
-    return;
   }
 }
 
