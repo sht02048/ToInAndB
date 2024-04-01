@@ -1,6 +1,6 @@
 const MODIFIER = {
-  SPEED: 1,
-  FRAME: 1,
+  SPEED: 2,
+  FRAME: 0.5,
 };
 
 export default MODIFIER;
