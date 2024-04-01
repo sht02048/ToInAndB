@@ -7,7 +7,6 @@ import CollisionDetector from "../physics/CollisionDetector";
 import Renderer from "../graphics/Renderer";
 import Explosion from "../graphics/Explosion";
 
-import TEAM from "../constants/team";
 import MODIFIER from "../constants/modifier";
 import PLAYER_HEALTH from "../constants/playerHealth";
 import { PLAYER, PROJECTILE } from "../constants/path";
@@ -206,7 +205,7 @@ class Player extends SpaceShip {
     const missileInformation = this.setMissileInformation(
       this.straightProjectile,
       this.x,
-      this.y,
+      this.y - this.#staticHeight,
       this.#straightMissileWidth,
       this.#straightMissileSpeed,
     );
@@ -283,7 +282,6 @@ class Player extends SpaceShip {
       missileWidth: missileWidth,
       missileDamage: this.#missileDamage,
       missileSpeed: missileSpeed,
-      team: TEAM.PLAYER,
     };
 
     return missileInformation;

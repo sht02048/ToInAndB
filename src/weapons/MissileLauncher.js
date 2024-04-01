@@ -1,7 +1,6 @@
 import Missile from "./Missile";
 import Enemy from "../entities/enemies/Enemy";
 
-import TEAM from "../constants/team";
 import MODIFIER from "../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
@@ -30,7 +29,6 @@ class MissileLauncher {
     y,
     missileWidth,
     missileDamage = this.#enemyDamage,
-    team,
     missileSpeed,
     isAimed = false,
   }) {
@@ -38,17 +36,10 @@ class MissileLauncher {
     this.x = x;
     this.y = y;
 
-    const shipCenter =
-      team === TEAM.PLAYER
-        ? this.x + this.width / 2 - missileWidth / 2
-        : this.x + this.width / 2 - missileWidth / 2;
+    const shipCenter = this.x + this.width / 2 - missileWidth / 2;
 
-    missile.team = team;
     missile.x = shipCenter;
-    missile.y =
-      team === TEAM.PLAYER
-        ? this.y - this.#missileYModifier
-        : this.y + this.height - 10;
+    missile.y = y;
     missile.damage = missileDamage;
     missile.speed = missileSpeed;
     missile.width = missileWidth;

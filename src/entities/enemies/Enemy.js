@@ -116,7 +116,7 @@ class Enemy extends SpaceShip {
   setMissileInformation({
     projectilePath,
     x = this.x,
-    y = this.y,
+    y = this.y + this.width,
     missileWidth,
     missileSpeed,
     isAimed = false,
