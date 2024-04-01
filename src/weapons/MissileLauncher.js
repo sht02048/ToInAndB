@@ -1,5 +1,4 @@
 import Missile from "./Missile";
-import Enemy from "../entities/enemies/Enemy";
 
 import MODIFIER from "../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
@@ -7,7 +6,6 @@ import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 class MissileLauncher {
   #multipleAngle = 0.1;
   #projectileNumber = 15;
-  #missileYModifier = 50;
   #enemyDamage = 1;
 
   constructor(width, height) {
@@ -45,23 +43,24 @@ class MissileLauncher {
     missile.width = missileWidth;
 
     if (isAimed) {
-      const { vx, vy, angle } = this.getTargetDirection(missile);
+      const { vx, vy, angle, targetIndex } = this.#lockOn(missile);
 
       missile.vx = vx;
       missile.vy = vy;
       missile.angle = angle;
+      missile.targetIndex = targetIndex;
     }
 
     return missile;
   }
 
-  loadSingleAmmo(missileInformation) {
+  loadSingleMissile(missileInformation) {
     const missile = this.makeMissile(missileInformation);
 
     this.missileList.push(missile);
   }
 
-  loadMultipleAmmo(missileInformation) {
+  loadMultipleMissile(missileInformation) {
     const radiansPerProjectile = (Math.PI * 2) / this.#projectileNumber;
 
     for (let i = 0; i < this.#projectileNumber; i += 1) {
@@ -123,7 +122,9 @@ class MissileLauncher {
           break;
 
         case MISSILE_ROUTE_COMMAND.GUIDED:
-          const { vx, vy, angle } = this.getTargetDirection(missile);
+          const { vx, vy, angle, targetIndex } = this.#lockOn(missile);
+
+          missile.targetIndex = targetIndex;
 
           if (vx === 0 && vy === 0) {
             if (missile.vx && missile.vy) {
@@ -154,37 +155,36 @@ class MissileLauncher {
     });
   }
 
-  getTargetDirection(missile) {
-    if (missile.isLockedOn) {
-      return { vx: 0, vy: 0, angle: 0 };
-    }
-
-    let minDistance = Infinity;
-
+  #lockOn(missile) {
     const missileVector = {
       vx: 0,
       vy: 0,
       angle: 0,
+      targetIndex: null,
     };
 
-    this.targetList.forEach((target) => {
+    if (missile.targetIndex !== null) {
+      const target = this.targetList[missile.targetIndex];
+      missileVector.targetIndex = missile.targetIndex;
+
+      if (target.isDestroyed || target.isVanished) {
+        return missileVector;
+      }
+
+      return this.#getTargetDirection(target, missile);
+    }
+
+    let minDistance = Infinity;
+
+    this.targetList.forEach((target, index) => {
       if (target.isDestroyed || target.isVanished) {
         return;
       }
 
-      const targetX = target.x + target.width / 2;
-      const targetY = target.y + target.height / 2;
-      const missileX = missile.x + missile.width / 2;
-
-      const dx = targetX - missileX;
-      const dy = targetY - missile.y;
-      const distance = Math.sqrt(dx ** 2 + dy ** 2);
-      const normalizedDx = dx / distance;
-      const normalizedDy = dy / distance;
-
-      const angle = Math.atan2(dy, dx) + Math.PI / 2;
-      const vx = normalizedDx * missile.speed;
-      const vy = normalizedDy * missile.speed;
+      const { vx, vy, angle, distance } = this.#getTargetDirection(
+        target,
+        missile,
+      );
 
       if (distance < minDistance) {
         minDistance = distance;
@@ -192,14 +192,35 @@ class MissileLauncher {
         missileVector.vx = vx;
         missileVector.vy = vy;
         missileVector.angle = angle;
-      }
-
-      if (target instanceof Enemy) {
-        missile.isLockedOn = true;
+        missileVector.targetIndex = index;
       }
     });
 
     return missileVector;
+  }
+
+  #getTargetDirection(target, missile) {
+    const targetX = target.x + target.width / 2;
+    const targetY = target.y + target.height / 2;
+    const missileX = missile.x + missile.width / 2;
+
+    const dx = targetX - missileX;
+    const dy = targetY - missile.y;
+    const distance = Math.sqrt(dx ** 2 + dy ** 2);
+    const normalizedDx = dx / distance;
+    const normalizedDy = dy / distance;
+
+    const angle = Math.atan2(dy, dx) + Math.PI / 2;
+    const vx = normalizedDx * missile.speed;
+    const vy = normalizedDy * missile.speed;
+
+    return {
+      vx,
+      vy,
+      angle,
+      targetIndex: missile.targetIndex,
+      distance,
+    };
   }
 }
 

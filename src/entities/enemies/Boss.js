@@ -11,6 +11,7 @@ import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 class Boss extends Enemy {
   #bossWidth = 228;
   #bossHeight = 218;
+  #guidedYModifier = 30;
   #bossSpeed = 1 * MODIFIER.SPEED;
   #isAtInitial = false;
   #shouldMoveForward = true;
@@ -146,16 +147,16 @@ class Boss extends Enemy {
 
     const leftMissile = this.setMissileInformation({
       projectilePath: ENEMY_PROJECTILE.GUIDED,
-      x: this.x - this.#bossWidth / 2,
-      y: this.y - this.#bossHeight / 2,
+      x: this.x - this.#bossWidth / 3,
+      y: this.y + this.#bossHeight - this.#guidedYModifier,
       missileWidth: this.#guidedWidth,
       missileSpeed: this.#guidedSpeed,
       isAimed: true,
     });
     const rightMissile = this.setMissileInformation({
       projectilePath: ENEMY_PROJECTILE.GUIDED,
-      x: this.x + this.#bossWidth / 2,
-      y: this.y - this.#bossHeight / 2,
+      x: this.x + this.#bossWidth / 3,
+      y: this.y + this.#bossHeight - this.#guidedYModifier,
       missileWidth: this.#guidedWidth,
       missileSpeed: this.#guidedSpeed,
       isAimed: true,
@@ -173,7 +174,7 @@ class Boss extends Enemy {
     const leftMissile = this.setMissileInformation({
       projectilePath: ENEMY_PROJECTILE.BOSS_GUIDED,
       x: this.x - this.#bossWidth / 3,
-      y: this.y - this.#bossHeight / 4,
+      y: this.y + (this.#bossHeight * 3) / 4,
       missileWidth: this.#straightWidth,
       missileSpeed: this.#straightSpeed,
       isAimed: true,
@@ -181,7 +182,7 @@ class Boss extends Enemy {
     const rightMissile = this.setMissileInformation({
       projectilePath: ENEMY_PROJECTILE.BOSS_GUIDED,
       x: this.x + this.#bossWidth / 3,
-      y: this.y - this.#bossHeight / 4,
+      y: this.y + (this.#bossHeight * 3) / 4,
       missileWidth: this.#straightWidth,
       missileSpeed: this.#straightSpeed,
       isAimed: true,

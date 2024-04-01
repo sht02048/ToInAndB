@@ -4,12 +4,12 @@ class Missile extends Renderer {
   constructor(imagePath) {
     super(imagePath);
 
-    this.isLockedOn = false;
     this.isVanished = false;
     this.damage;
     this.vx;
     this.vy;
     this.angle;
+    this.targetIndex = null;
   }
 
   #checkVanished() {
