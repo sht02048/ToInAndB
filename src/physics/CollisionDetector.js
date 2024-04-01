@@ -48,6 +48,7 @@ class CollisionDetector {
         if (
           missile.isVanished ||
           target.isDestroyed ||
+          target.isVanished ||
           target.isInvincible ||
           !this.isOverLapping(missile, target)
         ) {

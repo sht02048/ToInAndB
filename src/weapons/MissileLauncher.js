@@ -167,7 +167,7 @@ class MissileLauncher {
       const target = this.targetList[missile.targetIndex];
       missileVector.targetIndex = missile.targetIndex;
 
-      if (target.isDestroyed || target.isVanished) {
+      if (target === undefined || target.isDestroyed || target.isVanished) {
         return missileVector;
       }
 
