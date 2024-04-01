@@ -7,8 +7,9 @@ import CollisionDetector from "../physics/CollisionDetector";
 import Renderer from "../graphics/Renderer";
 import Explosion from "../graphics/Explosion";
 
-import MODIFIER from "../constants/modifier";
 import TEAM from "../constants/team";
+import MODIFIER from "../constants/modifier";
+import PLAYER_HEALTH from "../constants/playerHealth";
 import { PLAYER, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
@@ -59,7 +60,7 @@ class Player extends SpaceShip {
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
     this.level = 1;
-    this.healthPoint = 3;
+    this.healthPoint = PLAYER_HEALTH;
     this.shipSpeed = 2 * MODIFIER.SPEED;
     this.isShooting = false;
     this.reloadFrame = 10 * MODIFIER.FRAME;

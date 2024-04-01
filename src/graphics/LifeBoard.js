@@ -1,8 +1,10 @@
 import Renderer from "./Renderer";
+
 import { PLAYER } from "../constants/path";
+import PLAYER_HEALTH from "../constants/playerHealth";
 
 class LifeBoard {
-  #currentHealth = 2;
+  #currentHealth = PLAYER_HEALTH - 1;
 
   constructor() {
     this.healthList = [];
