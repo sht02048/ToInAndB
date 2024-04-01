@@ -1,3 +1,13 @@
+import {
+  PLAYER,
+  ENEMIES,
+  BACKGROUNDS,
+  IMAGE,
+  PROJECTILE,
+  ENEMY_PROJECTILE,
+  ITEM_IMAGE,
+} from "../constants/path";
+
 class DisplayOptimizer {
   static canvasWidth = window.innerWidth * 0.6;
   static canvasHeight = window.innerHeight;
@@ -29,6 +39,27 @@ class DisplayOptimizer {
       }
 
       requestAnimationFrame(countFrames);
+    });
+  }
+
+  static preloadImages() {
+    const imageTypes = [
+      PLAYER,
+      ENEMIES,
+      BACKGROUNDS,
+      IMAGE,
+      PROJECTILE,
+      ENEMY_PROJECTILE,
+      ITEM_IMAGE,
+    ];
+
+    imageTypes.forEach((images) => {
+      const paths = Object.values(images);
+
+      paths.forEach((path) => {
+        const image = new Image();
+        image.src = path;
+      });
     });
   }
 }

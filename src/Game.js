@@ -1,10 +1,10 @@
 import "@fortawesome/fontawesome-free/js/all.js";
 
+import "./style.css";
 import Player from "./entities/Player";
 
-import "./style.css";
 import Sound from "./utils/Sound";
-import CanvasResizer from "./utils/DisplayOptimizer";
+import DisplayOptimizer from "./utils/DisplayOptimizer";
 
 import Intro from "./scenes/Intro";
 import Outro from "./scenes/Outro";
@@ -389,5 +389,6 @@ class Game extends Renderer {
   }
 }
 
-CanvasResizer.resize();
+DisplayOptimizer.preloadImages();
+DisplayOptimizer.resize();
 new Game();
