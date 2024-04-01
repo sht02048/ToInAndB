@@ -8,8 +8,8 @@ import MODIFIER from "../../constants/modifier";
 
 class Wings extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 1 * MODIFIER.SPEED;
-  #wingsSpeed = 0.7 * MODIFIER.SPEED;
+  #missileSpeed = 1.5 * MODIFIER.SPEED;
+  #wingsSpeed = 1 * MODIFIER.SPEED;
   #missileInterval = 250 * MODIFIER.FRAME;
   #missileRound = 0;
   #reloadFrame = 50 * MODIFIER.FRAME;

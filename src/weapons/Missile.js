@@ -14,9 +14,9 @@ class Missile extends Renderer {
 
   #checkVanished() {
     if (
-      this.x < 0 ||
+      this.x < -100 ||
       this.x > this.canvasWidth ||
-      this.y < this.minY ||
+      this.y < this.minY - 40 ||
       this.y > this.maxY + 40
     ) {
       this.isVanished = true;
