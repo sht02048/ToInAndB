@@ -1,6 +1,4 @@
 import Missile from "./Missile";
-
-import MODIFIER from "../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
 
 class MissileLauncher {
@@ -137,7 +135,7 @@ class MissileLauncher {
             return;
           }
 
-          if (missile.frame < 160 * MODIFIER.FRAME) {
+          if (missile.frame < 160) {
             missile.vx = vx;
             missile.vy = vy;
             missile.angle = angle;

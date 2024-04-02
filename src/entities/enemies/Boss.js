@@ -4,7 +4,6 @@ import Sound from "../../utils/Sound";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
 
-import MODIFIER from "../../constants/modifier";
 import { AUDIO, ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
@@ -12,27 +11,28 @@ class Boss extends Enemy {
   #bossWidth = 228;
   #bossHeight = 218;
   #guidedYModifier = 30;
-  #bossSpeed = 1 * MODIFIER.SPEED;
+  #bossSpeed = 1;
+  #bossVariableSpeed = 0.01;
   #isAtInitial = false;
   #shouldMoveForward = true;
   #shouldMoveSide = true;
   #isAtMinX = false;
   #isAtMaxX = false;
   #sideCycle = 3;
-  #allWayFrame = 600 * MODIFIER.FRAME;
-  #allWayInterval = 10 * MODIFIER.FRAME;
+  #allWayFrame = 600;
+  #allWayInterval = 10;
   #allWayWidth = 16;
-  #allWaySpeed = 1 * MODIFIER.SPEED;
-  #guidedHaltFrame = 300 * MODIFIER.FRAME;
-  #guidedInterval = 50 * MODIFIER.FRAME;
+  #allWaySpeed = 1;
+  #guidedHaltFrame = 300;
+  #guidedInterval = 50;
   #guidedWidth = 23;
-  #guidedSpeed = 2 * MODIFIER.SPEED;
-  #straightInterval = 30 * MODIFIER.FRAME;
+  #guidedSpeed = 2;
+  #straightInterval = 30;
   #straightWidth = 12;
-  #straightSpeed = 3 * MODIFIER.SPEED;
-  #resetFrame = 400 * MODIFIER.FRAME;
+  #straightSpeed = 3;
+  #resetFrame = 400;
   #AudioVolume = 0.7;
-  #AudioFadeOutFrame = 200 * MODIFIER.FRAME;
+  #AudioFadeOutFrame = 200;
   #missileLaunchers = {};
   #collisionDetectors = {};
 
@@ -114,9 +114,9 @@ class Boss extends Enemy {
       return;
     }
 
-    this.#guidedHaltFrame = 300 * MODIFIER.FRAME;
-    this.#allWayFrame = 400 * MODIFIER.FRAME;
-    this.#resetFrame = 400 * MODIFIER.FRAME;
+    this.#guidedHaltFrame = 300;
+    this.#allWayFrame = 400;
+    this.#resetFrame = 400;
     this.#shouldMoveForward = true;
     this.#sideCycle = 3;
     this.#shouldMoveSide = true;
@@ -243,8 +243,8 @@ class Boss extends Enemy {
       return true;
     }
 
-    this.x += dx * 0.01 * MODIFIER.SPEED;
-    this.y += dy * 0.01 * MODIFIER.SPEED;
+    this.x += dx * this.#bossVariableSpeed;
+    this.y += dy * this.#bossVariableSpeed;
 
     return false;
   }

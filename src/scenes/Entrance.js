@@ -1,10 +1,10 @@
-import Bug from "../entities/enemies/Bug";
-import Heavy from "../entities/enemies/Heavy";
-import MODIFIER from "../constants/modifier";
 import Renderer from "../graphics/Renderer";
 
+import Bug from "../entities/enemies/Bug";
+import Heavy from "../entities/enemies/Heavy";
+
 class Entrance extends Renderer {
-  #appearanceFrame = 300 * MODIFIER.FRAME;
+  #appearanceFrame = 300;
   #heavyWidth = 50;
   #isDone = true;
 

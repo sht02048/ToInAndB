@@ -1,11 +1,11 @@
 import Renderer from "../graphics/Renderer";
-import MODIFIER from "../constants/modifier";
+
 import Boss from "../entities/enemies/Boss";
 import Bot from "../entities/enemies/Bot";
 
 class ThroneRoom extends Renderer {
   #bossWidth = 228;
-  #spawnInterval = 60 * MODIFIER.FRAME;
+  #spawnInterval = 60;
 
   constructor() {
     super();

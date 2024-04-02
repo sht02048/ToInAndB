@@ -1,17 +1,17 @@
 import Enemy from "./Enemy";
 
-import ITEM_TYPE from "../../constants/item";
 import Item from "../../item/item";
+
+import ITEM_TYPE from "../../constants/item";
 import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
-import MODIFIER from "../../constants/modifier";
 
 class Guard extends Enemy {
   #missileWidth = 45;
-  #missileSpeed = 2 * MODIFIER.SPEED;
-  #diagonalSpeed = 0.2 * MODIFIER.SPEED;
-  #missileInterval = 160 * MODIFIER.FRAME;
-  #emperorSpeed = 1 * MODIFIER.SPEED;
+  #missileSpeed = 2;
+  #diagonalSpeed = 0.2;
+  #missileInterval = 160;
+  #emperorSpeed = 1;
   #isEmperorReachedStartPoint = false;
   #isEmperorReachedMinX = false;
   #isEmperorReachedMaxX = false;

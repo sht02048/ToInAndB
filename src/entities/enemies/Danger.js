@@ -1,14 +1,13 @@
 import Enemy from "./Enemy";
 
-import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Danger extends Enemy {
   #missileWidth = 25;
-  #missileSpeed = 2 * MODIFIER.SPEED;
-  #missileInterval = 60 * MODIFIER.FRAME;
-  #dangerSpeed = 4 * MODIFIER.SPEED;
+  #missileSpeed = 2;
+  #missileInterval = 60;
+  #dangerSpeed = 4;
   #isTurningPointReached = false;
 
   constructor({ x, y, isLeft }) {

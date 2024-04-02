@@ -1,6 +1,5 @@
 import Sound from "../utils/Sound";
 import { AUDIO } from "../constants/path";
-import MODIFIER from "../constants/modifier";
 
 class Cockpit {
   #keyPresses = {
@@ -11,7 +10,7 @@ class Cockpit {
     Space: false,
   };
   #currentPower = 1;
-  #currentSpeed = 2 * MODIFIER.SPEED;
+  #currentSpeed = 2;
 
   constructor(ship) {
     this.ship = ship;
@@ -31,7 +30,7 @@ class Cockpit {
     this.speedUpSound.sound.volume = 0.5;
     this.isShotSoundPlaying = false;
     this.currentSoundTime = this.shotSound.sound.currentTime;
-    this.isInvincibleFrame = 200 * MODIFIER.FRAME;
+    this.isInvincibleFrame = 200;
     this.frame = 0;
 
     this.addEvent();

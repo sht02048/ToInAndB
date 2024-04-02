@@ -1,14 +1,13 @@
 import Enemy from "./Enemy";
 
-import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Cannon extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 5 * MODIFIER.SPEED;
-  #missileInterval = 60 * MODIFIER.FRAME;
-  #cannonSpeed = 2 * MODIFIER.SPEED;
+  #missileSpeed = 5;
+  #missileInterval = 60;
+  #cannonSpeed = 2;
 
   constructor({ x, y }) {
     super({

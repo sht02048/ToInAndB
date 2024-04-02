@@ -1,18 +1,18 @@
 import Enemy from "./Enemy";
 
-import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
-import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
-import MODIFIER from "../../constants/modifier";
+
+import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
+import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Wings extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 1.5 * MODIFIER.SPEED;
-  #wingsSpeed = 1 * MODIFIER.SPEED;
-  #missileInterval = 250 * MODIFIER.FRAME;
+  #missileSpeed = 1.5;
+  #wingsSpeed = 1;
+  #missileInterval = 250;
   #missileRound = 0;
-  #reloadFrame = 50 * MODIFIER.FRAME;
+  #reloadFrame = 50;
   #wingsWidth = 72;
   #wingsHeight = 71;
   #isWingsAppeared = false;

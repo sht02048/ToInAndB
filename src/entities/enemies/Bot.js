@@ -1,15 +1,14 @@
 import Enemy from "./Enemy";
 
-import MODIFIER from "../../constants/modifier";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
 class Bot extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 2 * MODIFIER.SPEED;
-  #missileInterval = 80 * MODIFIER.FRAME;
-  #botInSpeed = 2 * MODIFIER.SPEED;
-  #botOutSpeed = 0.5 * MODIFIER.SPEED;
+  #missileSpeed = 2;
+  #missileInterval = 80;
+  #botInSpeed = 2;
+  #botOutSpeed = 0.5;
   #hasReachedPoint = false;
 
   constructor({ x, y, isLeft }) {

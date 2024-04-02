@@ -3,17 +3,16 @@ import Enemy from "./Enemy";
 import Item from "../../item/item";
 
 import ITEM_TYPE from "../../constants/item";
-import MODIFIER from "../../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 
 class Heavy extends Enemy {
   #missileWidth = 25;
-  #missileSpeed = 2.5 * MODIFIER.SPEED;
+  #missileSpeed = 2.5;
   #heavySpeed = 1;
-  #missileInterval = 100 * MODIFIER.FRAME;
+  #missileInterval = 100;
   #missileRound = 0;
-  #reloadFrame = 20 * MODIFIER.FRAME;
+  #reloadFrame = 20;
   #isHeavyReached = false;
   #isItemSpawned = false;
 

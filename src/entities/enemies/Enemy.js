@@ -3,7 +3,6 @@ import SpaceShip from "../Spaceship";
 import Explosion from "../../graphics/Explosion";
 import Renderer from "../../graphics/Renderer";
 
-import MODIFIER from "../../constants/modifier";
 import MissileLauncher from "../../weapons/MissileLauncher";
 import CollisionDetector from "../../physics/CollisionDetector";
 
@@ -96,7 +95,7 @@ class Enemy extends SpaceShip {
 
     if (this.hitFrame === 0) {
       this.isHit = false;
-      this.hitFrame = 6 * MODIFIER.FRAME;
+      this.hitFrame = 6;
     }
   }
 

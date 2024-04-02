@@ -19,16 +19,17 @@ import Renderer from "./graphics/Renderer";
 import LifeBoard from "./graphics/LifeBoard";
 import Background from "./graphics/Background";
 
-import MODIFIER from "./constants/modifier";
+import FPS from "./constants/fps";
 import { BACKGROUNDS } from "./constants/path";
 
 class Game extends Renderer {
-  #fps = MODIFIER.SPEED === 1 ? 120 : 60;
+  #fps = FPS;
   #isMutedDuringPause = false;
   #isGameStarted = false;
   #isOutroDisplayed = false;
-  #bossAppearanceFrame = 13 * this.#fps;
-  #endingFrame = 400 * MODIFIER.FRAME;
+  #bossAppearanceFrame = 13.5 * this.#fps;
+  #hasBossMusicStarted = false;
+  #endingFrame = 400;
   #hasEnteredSpace = false;
 
   constructor() {
@@ -202,7 +203,7 @@ class Game extends Renderer {
     }
 
     if (isGuardChamberOver && this.#bossAppearanceFrame > 0) {
-      if (this.#bossAppearanceFrame === 13 * this.#fps) {
+      if (this.#hasBossMusicStarted) {
         this.throneRoom.boss.playBossAudio();
         this.intro.battleMusic.pauseAudio();
       }
@@ -213,6 +214,7 @@ class Game extends Renderer {
         return;
       }
 
+      this.#hasBossMusicStarted = true;
       this.space.shouldBeDisplayed = true;
       this.block.shouldOut = true;
       this.base.shouldOut = true;
@@ -254,8 +256,10 @@ class Game extends Renderer {
 
     this.intro.float();
     this.intro.render();
+  }
 
-    this.playIntro = requestAnimationFrame(() => this.displayIntro());
+  startIntro() {
+    this.playIntro = setInterval(() => this.displayIntro(), 1000 / 120);
   }
 
   play() {
@@ -270,11 +274,13 @@ class Game extends Renderer {
     this.controlScene();
     this.menu.update(this.isPaused, this.player.healthPoint);
 
-    this.playGame = requestAnimationFrame(() => this.play());
-
     if (this.outro.isOut) {
       this.afterEnding();
     }
+  }
+
+  startPlay() {
+    this.playGame = setInterval(() => this.play(), 1000 / 120);
   }
 
   handleEvent() {
@@ -288,9 +294,9 @@ class Game extends Renderer {
           return;
         }
 
-        cancelAnimationFrame(this.playIntro);
+        clearInterval(this.playIntro);
         this.intro.playBattleMusic();
-        this.play();
+        this.startPlay();
         this.#isGameStarted = true;
       }
 
@@ -343,7 +349,7 @@ class Game extends Renderer {
 
   afterEnding() {
     this.outro.pauseOutroMusic();
-    cancelAnimationFrame(this.playGame);
+    clearInterval(this.playGame);
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.#isGameStarted = false;
     this.start();
@@ -353,39 +359,40 @@ class Game extends Renderer {
     const toggleIsPaused = this.toggleIsPaused.bind(this);
     const restart = this.restart.bind(this);
 
-    this.#isOutroDisplayed = false;
-    this.#bossAppearanceFrame = 13 * this.#fps;
-    this.#endingFrame = 400 * MODIFIER.FRAME;
-    this.#hasEnteredSpace = false;
+    this.primarySetup();
 
-    this.player = new Player();
     this.menu = new Menu(toggleIsPaused, restart);
 
     this.setUpBackgroundScenes(isReplay);
-    this.setUpCombatScenes();
-    this.setTargetList();
-    this.displayIntro();
+    this.startIntro();
   }
 
   restart() {
-    this.#isOutroDisplayed = false;
-    this.#bossAppearanceFrame = 13 * this.#fps;
-    this.#endingFrame = 400 * MODIFIER.FRAME;
-    this.#hasEnteredSpace = false;
-
     if (this.throneRoom.boss.hasBackgroundMusicPlayed) {
       this.throneRoom.boss.backgroundMusic.pauseAudio();
       this.intro.battleMusic.isPaused = false;
       this.intro.battleMusic.playAudio();
     }
 
+    this.primarySetup();
+
     this.outro.pauseOutroMusic();
-    this.player = new Player();
     this.setUpBackgroundScenes(true);
-    this.setUpCombatScenes();
-    this.setTargetList();
     this.plate.replay();
     this.block.replay();
+  }
+
+  primarySetup() {
+    this.#isOutroDisplayed = false;
+    this.#bossAppearanceFrame = 13.5 * this.#fps;
+    this.#endingFrame = 400;
+    this.#hasEnteredSpace = false;
+    this.#hasBossMusicStarted = false;
+
+    this.player = new Player();
+
+    this.setUpCombatScenes();
+    this.setTargetList();
   }
 }
 

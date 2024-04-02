@@ -1,5 +1,3 @@
-import MODIFIER from "../constants/modifier";
-
 import Explosion from "../graphics/Explosion";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
@@ -12,7 +10,7 @@ class SpaceShip {
     this.isVanished = false;
     this.isHit = false;
     this.healthPoint = health;
-    this.hitFrame = 6 * MODIFIER.FRAME;
+    this.hitFrame = 6;
     this.frame = 0;
 
     this.explosion = new Explosion(isBoss);

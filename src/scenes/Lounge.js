@@ -1,5 +1,4 @@
 import Renderer from "../graphics/Renderer";
-import MODIFIER from "../constants/modifier";
 
 import Cross from "../entities/enemies/Cross";
 import Wings from "../entities/enemies/Wings";
@@ -67,7 +66,7 @@ class Lounge extends Renderer {
   }
 
   respawnCross() {
-    if ((this.frame % 300) * MODIFIER.FRAME !== 0 || this.wings.isDestroyed) {
+    if (this.frame % 300 !== 0 || this.wings.isDestroyed) {
       return;
     }
 

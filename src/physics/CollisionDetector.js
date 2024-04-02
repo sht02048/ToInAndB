@@ -1,5 +1,4 @@
 import ITEM from "../constants/item";
-import MODIFIER from "../constants/modifier";
 
 class CollisionDetector {
   #hitBoxModifier = 10;
@@ -33,7 +32,7 @@ class CollisionDetector {
             break;
 
           case ITEM.SPEED_UP:
-            target.shipSpeed += 1.5 * MODIFIER.SPEED;
+            target.shipSpeed += 1.5;
             break;
         }
 

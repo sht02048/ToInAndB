@@ -7,7 +7,6 @@ import CollisionDetector from "../physics/CollisionDetector";
 import Renderer from "../graphics/Renderer";
 import Explosion from "../graphics/Explosion";
 
-import MODIFIER from "../constants/modifier";
 import PLAYER_HEALTH from "../constants/playerHealth";
 import { PLAYER, PROJECTILE } from "../constants/path";
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
@@ -16,14 +15,14 @@ class Player extends SpaceShip {
   #staticWidth = 35;
   #staticHeight = 49;
   #straightMissileWidth = 36;
-  #straightMissileSpeed = 5 * MODIFIER.SPEED;
-  #straightMissileReload = 16 * MODIFIER.FRAME;
+  #straightMissileSpeed = 5;
+  #straightMissileReload = 16;
   #guidedMissileGap = 80;
-  #guidedMissileSpeed = 3 * MODIFIER.SPEED;
-  #guidedMissileReload = 100 * MODIFIER.FRAME;
+  #guidedMissileSpeed = 3;
+  #guidedMissileReload = 100;
   #missileDamage = 2;
   #isPlayerIn = false;
-  #outSpeed = 1.5 * MODIFIER.SPEED;
+  #outSpeed = 1.5;
 
   constructor() {
     super({
@@ -59,10 +58,10 @@ class Player extends SpaceShip {
     this.y = this.canvasHeight - this.#staticHeight * 3;
 
     this.level = 1;
-    this.shipSpeed = 2 * MODIFIER.SPEED;
+    this.shipSpeed = 2;
     this.isShooting = false;
-    this.reloadFrame = 10 * MODIFIER.FRAME;
-    this.invincibleFrame = 200 * MODIFIER.FRAME;
+    this.reloadFrame = 10;
+    this.invincibleFrame = 200;
     this.isInvincible = false;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
@@ -105,7 +104,7 @@ class Player extends SpaceShip {
       this.updateSpawn();
       this.invincibleFrame -= 1;
 
-      if (this.invincibleFrame > 100 * MODIFIER.FRAME) {
+      if (this.invincibleFrame > 100) {
         return;
       }
     }
@@ -158,13 +157,13 @@ class Player extends SpaceShip {
   }
 
   updateSpawn() {
-    if (this.invincibleFrame > 100 * MODIFIER.FRAME) {
-      this.y -= 2 * MODIFIER.SPEED;
+    if (this.invincibleFrame > 100) {
+      this.y -= 2;
     }
 
     if (this.invincibleFrame < 0) {
       this.isInvincible = false;
-      this.invincibleFrame = 200 * MODIFIER.FRAME;
+      this.invincibleFrame = 200;
     }
   }
 

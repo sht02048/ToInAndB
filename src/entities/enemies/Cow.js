@@ -2,12 +2,11 @@ import Enemy from "./Enemy";
 
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
-import MODIFIER from "../../constants/modifier";
 
 class Cow extends Enemy {
   #missileWidth = 25;
-  #missileSpeed = 2 * MODIFIER.SPEED;
-  #missileInterval = 160 * MODIFIER.FRAME;
+  #missileSpeed = 2;
+  #missileInterval = 160;
   #isCowReachedStartPoint = false;
 
   constructor({ x, y, isLeft }) {

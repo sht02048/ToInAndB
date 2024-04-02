@@ -1,16 +1,16 @@
 import Enemy from "./Enemy";
 
 import Item from "../../item/item";
+
 import ITEM_TYPE from "../../constants/item";
-import MODIFIER from "../../constants/modifier";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";
 
 class Mini extends Enemy {
-  #miniSpeed = 2 * MODIFIER.SPEED;
+  #miniSpeed = 2;
   #missileWidth = 16;
-  #missileSpeed = 2 * MODIFIER.SPEED;
-  #missileInterval = 200 * MODIFIER.FRAME;
+  #missileSpeed = 2;
+  #missileInterval = 200;
   #isItemSpawned = false;
   #isMiniReached = false;
 
