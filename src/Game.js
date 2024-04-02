@@ -259,7 +259,7 @@ class Game extends Renderer {
   }
 
   startIntro() {
-    this.playIntro = setInterval(() => this.displayIntro(), 1000 / 120);
+    this.playIntro = setInterval(() => this.displayIntro(), 1000 / this.#fps);
   }
 
   play() {
@@ -280,7 +280,7 @@ class Game extends Renderer {
   }
 
   startPlay() {
-    this.playGame = setInterval(() => this.play(), 1000 / 120);
+    this.playGame = setInterval(() => this.play(), 1000 / this.#fps);
   }
 
   handleEvent() {
@@ -359,12 +359,12 @@ class Game extends Renderer {
     const toggleIsPaused = this.toggleIsPaused.bind(this);
     const restart = this.restart.bind(this);
 
+    this.startIntro();
     this.primarySetup();
 
     this.menu = new Menu(toggleIsPaused, restart);
 
     this.setUpBackgroundScenes(isReplay);
-    this.startIntro();
   }
 
   restart() {

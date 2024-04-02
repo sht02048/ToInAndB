@@ -44,10 +44,10 @@ class DisplayOptimizer {
 
   static preloadImages() {
     const imageTypes = [
+      IMAGE,
       PLAYER,
       ENEMIES,
       BACKGROUNDS,
-      IMAGE,
       PROJECTILE,
       ENEMY_PROJECTILE,
       ITEM_IMAGE,
