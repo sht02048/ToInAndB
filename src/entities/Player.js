@@ -83,6 +83,8 @@ class Player extends SpaceShip {
       MISSILE_ROUTE_COMMAND.GUIDED,
       this.#guidedMissileSpeed,
     );
+    this.straightCollisionDetector.detectCollision();
+    this.guidedCollisionDetector.detectCollision();
 
     if (this.shouldOut) {
       this.out();
@@ -114,8 +116,6 @@ class Player extends SpaceShip {
     this.upgrade();
     this.cockpit.makeShotSound();
     this.cockpit.control(this.shipSpeed);
-    this.straightCollisionDetector.detectCollision();
-    this.guidedCollisionDetector.detectCollision();
   }
 
   render() {
