@@ -1,6 +1,6 @@
 import Enemy from "./Enemy";
 
-import Item from "../../item/item";
+import Item from "../../item/Item";
 
 import ITEM_TYPE from "../../constants/item";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";

@@ -1,4 +1,4 @@
-import ITEM from "../constants/item";
+import ITEM_TYPE from "../constants/item";
 
 class CollisionDetector {
   #hitBoxModifier = 10;
@@ -27,11 +27,11 @@ class CollisionDetector {
         }
 
         switch (item.type) {
-          case ITEM.POWER_UP:
+          case ITEM_TYPE.POWER_UP:
             target.level += 1;
             break;
 
-          case ITEM.SPEED_UP:
+          case ITEM_TYPE.SPEED_UP:
             target.shipSpeed += 1.5;
             break;
         }
@@ -74,10 +74,10 @@ class CollisionDetector {
     const objectBottom = gameObject.y + gameObject.height;
 
     return (
-      targetLeft <= objectRight &&
-      targetRight >= objectLeft &&
-      targetTop <= objectBottom &&
-      targetBottom >= objectTop
+      targetLeft < objectRight &&
+      targetRight > objectLeft &&
+      targetTop < objectBottom &&
+      targetBottom > objectTop
     );
   }
 }
