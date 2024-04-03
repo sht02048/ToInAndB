@@ -7,5 +7,7 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text"],
     },
+    setupFiles: ["src/setupTest.js"],
+    environment: "jsdom",
   },
 });
