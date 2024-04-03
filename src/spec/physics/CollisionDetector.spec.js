@@ -114,7 +114,6 @@ describe("collisionDetector", () => {
       missile.x = 33;
       missile.y = 33;
 
-      collisionDetector = new CollisionDetector();
       collisionDetector.setItem(missile);
       collisionDetector.setTargetList([target]);
       collisionDetector.detectCollision();
@@ -123,9 +122,6 @@ describe("collisionDetector", () => {
       expect(missile.isVanished).to.equal(false);
       expect(target.healthPoint).to.equal(healthPoint);
       expect(target.explosion.explosionFrame).to.equal(explosionFrame);
-
-      missile.x = 0;
-      missile.y = 0;
     });
 
     it("but ignore when target or missile is not active", () => {

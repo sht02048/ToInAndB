@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`missileLauncher > should render missile 1`] = `
+[
+  {
+    "props": {},
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "save",
+  },
+  {
+    "props": {
+      "x": 21,
+      "y": 20,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      21,
+      20,
+    ],
+    "type": "translate",
+  },
+  {
+    "props": {
+      "angle": -1.3370531459259953,
+    },
+    "transform": [
+      0.2316205273060396,
+      -0.9728062146853669,
+      0.9728062146853669,
+      0.2316205273060396,
+      21,
+      20,
+    ],
+    "type": "rotate",
+  },
+  {
+    "props": {},
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "restore",
+  },
+]
+`;
