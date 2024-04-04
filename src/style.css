@@ -1,20 +1,18 @@
 body {
-  background-image: url("/images/space.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 #canvas-container {
+  background-image: url("/images/space.jpg");
   width: 100vw;
-  height: 100vh;
+  height: 105vh;
   display: flex;
   justify-content: center;
 }
@@ -33,4 +31,28 @@ canvas {
 #mute-toggle {
   background-color: transparent;
   border: none;
+}
+
+#mobile-message {
+  display: none;
+  background-color: #fff4e5;
+  color: #333;
+  padding: 15px;
+  border: 1px solid #ffcc00;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  #canvas-container {
+    display: none;
+  }
+  #mute-container {
+    display: none;
+  }
+  #mobile-message {
+    display: block;
+  }
 }
