@@ -1,6 +1,6 @@
 import Enemy from "./Enemy";
 
-import Item from "../../item/Item";
+import Item from "../../graphics/Item";
 
 import ITEM_TYPE from "../../constants/item";
 import { ENEMIES, ENEMY_PROJECTILE, ITEM_IMAGE } from "../../constants/path";

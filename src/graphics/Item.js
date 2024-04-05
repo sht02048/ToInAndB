@@ -1,4 +1,4 @@
-import Renderer from "../graphics/Renderer";
+import Renderer from "./Renderer";
 import CollisionDetector from "../physics/CollisionDetector";
 
 class Item extends Renderer {
