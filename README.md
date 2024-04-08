@@ -1,10 +1,46 @@
-![Title](https://github.com/sht02048/ToInAndB/assets/131152690/2755a28c-8d1b-4c3b-b5e9-4760c2c2aa8d)
+![Title](https://github.com/sht02048/ToInAndB/assets/131152690/15740108-a42b-450f-b78e-2790cba60f1e)
 
-<p align="center">
+<div align="center">
+1945년 고전 게임에서 영감을 받은 아드레날린이 솟구치는 2D 슈팅 게임에 빠져보세요! <br/>
+친구들과 격렬한 결투에 도전해서 화려한 우주전쟁을 승리로 이끄세요. <br>
+
+<br>
+
+Written in javascript, **without libraries!** 🎮🕹 <br/>
+
+</br>
+
 <a href="https://toinandb.minsug.dev">
-<img alt="play game" src="https://github.com/sht02048/ToInAndB/assets/131152690/b8a99092-7ba3-4308-ad60-7cadb8aea93b"/>
+<img alt="play screenshot first stage" src="https://github.com/sht02048/ToInAndB/assets/131152690/b8a99092-7ba3-4308-ad60-7cadb8aea93b"/>
 </a>
-</p>
+</div>
+
+</br>
+
+# Quick gameplay intructions
+- 방향키: 플레이어 이동
+- 스페이스바: 공격
+- ESC: 일시정지
+- M: 소리 켜기/끄기
+
+</br>
+
+# Game scenes
+
+<div align="center">
+  <img height=200 alt="play game" src="https://github.com/sht02048/ToInAndB/assets/131152690/268624d4-606a-431f-8149-64fbec06aa42"/>
+  <img height=200 alt="play game" src="https://github.com/sht02048/ToInAndB/assets/131152690/58440145-2ee1-497c-bf28-29e8b1236570"/>
+</div>
+
+<br>
+
+<div align="center">
+  <img height=200 alt="play game" src="https://github.com/sht02048/ToInAndB/assets/131152690/23221fa8-c1d0-4a2a-8d4b-31c4e53da9ef"/>
+  <img height=200 alt="boss scene" src="https://github.com/sht02048/ToInAndB/assets/131152690/bd7a461f-e038-476a-a91a-1d47b98e1755"/>
+</div>
+
+</br>
+</br>
 
 # Table of Contents
 
@@ -13,6 +49,8 @@
   - [What the heck is OOP](#what-the-heck-is-oop)
     - [Don't put all your eggs in one basket](#dont-put-all-your-eggs-in-one-basket)
     - [Inheritance VS. Compose](#inheritance-vs-compose)
+
+</br>
 
 # What drove me to ToInAndB
 투인앤비는 외부 라이브러리 없이 바닐라 자바스크립트로 만들어진 프로젝트입니다.
@@ -27,6 +65,8 @@
 개발자가 추상적으로 물체를 정의하고 재사용해서 코드의 효율성과 깔끔함을 효과적으로 유지할 수 있기 때문이지요.
 
 그러나, 머리로 이해하는 것과 실제로 구현하는 것은 너무나도 달라서 투인앤비를 처음 제작할 당시 많은 시행착오를 겪었습니다.
+
+</br>
 
 ### Don't put all your eggs in one basket
 초기 객체를 구분 지을 때 기준은 그 덩어리가 매우 커서 OOP의 장점을 하나도 적용하지 못했습니다.
@@ -49,6 +89,8 @@ class Player {} {
 적 물체는 쓸 수 없게 되었습니다. 이 상태로 계속 개발을 이어갈 수 없어 1차 리팩토링을 시작했습니다.
 
 이때 객체를 구분하는 기준을 "그래픽"에서 "**기능**"으로 재설정했습니다.
+
+</br>
 
 ### Inheritance VS. Compose
 디자인 원칙에 "Favoring Compose over Inheritance"라는 말이 있습니다. 이게 무슨 뜻일까요?
