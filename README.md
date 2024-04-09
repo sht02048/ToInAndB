@@ -49,6 +49,10 @@ Written in javascript, **without libraries!** 🎮🕹 <br/>
   - [What the heck is OOP](#what-the-heck-is-oop)
     - [Don't put all your eggs in one basket](#dont-put-all-your-eggs-in-one-basket)
     - [Inheritance VS. Compose](#inheritance-vs-compose)
+  - [Different Hz, different speed](#different-hz-different-speed)
+    - [Proper way to use Canvas API](#proper-way-to-use-canvas-api)
+    - [Probably best way to implement animation](#probably-best-way-to-implement-animation)
+    = [There is no never](#there-is-no-never)
 
 </br>
 
@@ -156,3 +160,76 @@ class Player extends SpaceShip {
   }
 }
 ```
+
+</br>
+
+## Different Hz different Speed
+게임에서 속도와 관련된 모든 설정은 중요합니다. 왜냐하면 게임의 난이도부터 시작해서 경험 자체에 영향을 주기 때문입니다.
+이런 면에서 투인앤비는 빠른 게임 속도를 지향해서 제작되었지만 배포 후 한 가지 문제에 직면했었습니다. 바로 모니터의 주사율에 따라 속도가 변화한다는 것입니다.
+
+그리고 이는 Canvas API의 작동 원리를 세심히 들여다 보지 못해서 생긴 일이었습니다.
+
+</br>
+
+### Proper way to use Canvas API
+Canvas API는 2004년에 도입된 이래로 자바스크립트로 애니메이션을 구현을 가능하게 하는 매우 강력한 툴로 자리잡았습니다.
+Canvas API가 애니메이션을 구현하는 방법은 매우 심플합니다. 연속적인 그림을 그렸다 지웠다를 매우 짧은 시간에 반복하는 것입니다. 여기서 포인트는 **매우 짧은 시간**입니다.
+이 시간이 짧으면 짧을소록 사람은 애니메이션이 부드럽다고 느낄 것입니다. 그리고 이 짧은 시간을 Window에서 제공하는 두 가지 메서드로 구현할 수 있습니다.
+
+첫번째는 requestAnimationFrame이고 두번째는 setInterval입니다.
+
+<br/>
+
+### Probably best way to implement Animation
+requestAnimationFrame(_이하 rAF_) 함수가 호출되는 주기는 렌더링되는 모니터의 주파수와 같습니다.
+예를 들어, 채민석의 모니터 주파수가 60Hz라면 1초에 requestAnimationFrame이 60번 실행될 것이고,
+만약 모니터 주파수가 120Hz라면 1초에 120번 호출될 것입니다.
+
+rAF는 setTimeOut과 Promise 객체가 담기는 Task queue나 MicroTask queue와 다른 Animation frames queue에 담겨서 비동기적으로 실행됩니다. Animation frames는 브라우저의 렌더링 엔진이 다음 프레임을 그리기 전에 실행되는 queue입니다.
+
+> Animation frames queue는 MicroTask queue보다는 우선순위가 낮지만 Task queue보다는 높습니다. <br/>
+> **Queue Priority**: MicroTask queue > Animation frames queue > Task queue
+
+다음 프레임을 그리기 전에 실행된다는 특징때문에 rAF는 여러 가지 이점을 갖습니다.
+
+- 백그라운드 동작 중지: 페이지가 비활성화 상태일 경우 렌더링도 되지않기 때문에 rAF에 등록한 콜백 함수도 실행되지 않습니다.
+즉, 불필요한 리소스를 낭비하지 않습니다.
+
+- 렌더링 최적화: 모니터 주파수에 따라 애니메이션이 그려지는 횟수도 변화하기 때문에 주파수와 관계없이 사용 환경에서 최적화된 애니메이션 효과를 보장합니다.
+
+- 프레임 밀림 현상 방지: setInterval과 같은 함수는 지연 시간을 정수 형태로만 받기 때문에 1초에 60번 혹은 120번 렌더링을 보장할 수 없습니다. 그러나 rAF는 렌더링 이전에 호출되기때문에 렌더링 횟수를 보장하며 프레임 밀림 현상이 일어나지 않습니다.
+
+rAF의 생성 목적이 렌더링을 위함이기 때문에 여러므로 최적화가 잘 되어 있어 애니메이션을 구현할 때 rAF 사용을 당연시 여깁니다.
+그러나, 투인앤비는 rAF를 사용하지 않았는데 그 이유를 설명 드리겠습니다.
+
+<br/>
+
+### There is no never
+애니메이션을 구현하는 방법 중 하나인 setInterval은 rAF와 비교해 뚜렷한 장점을 가지고 있지 않습니다.
+되려 setInterval은 rAF의 장점들을 가지고 있지 않습니다.
+
+그럼에도 제가 rAF가 아닌 setInterval를 사용한 이유는 동일한 게임 속도를 유지하기 위해서 입니다. 게임의 속도는 플레이되는 환경과 관계없이 게임 설정과 같아야 하는데 rAF를 쓸 경우 모니터 주파수에 따라 달라지는 현상이 발생했습니다. 얘를 들어, 전투기의 y값이 매 프레임마다 1씩 증가한다고 했을 때 120Hz의 모니터에서는 1초에 120만큼 y축을 이동하지만 60Hz의 모니터는 절반만큼 이동합니다.
+
+<div align=center>
+
+**requestAnimationFrame을 사용할때 기체의 속도**
+
+<img width=500 alt="boss scene" src="https://github.com/sht02048/ToInAndB/assets/131152690/6501ac2f-c512-4df9-a563-673cd8edbf1a"/>
+</div>
+
+</br>
+
+이러한 문제를 해결하기 위해 모니터의 주파수를 측정하는 함수를 작성해 속도 관련 값을 가변적으로 할당하는 방법을 계획했었으나
+객체 디자인과 측정 딜레이 시간 등의 한계로 인해 실현하지 못했습니다. 그래서 고안해낸 방법이 setInterval를 사용하는 것이었습니다. 주파사와 관계없이 동일한 시간에 따라 실행되기 때문에 <br/> 다양환 실행 환경에서 동일한 게임 속도를 보장할 수 있었습니다.
+
+<div align=center>
+
+**setInterval을 사용할때 기체의 속도**
+
+<img width=500 alt="boss scene" src="https://github.com/sht02048/ToInAndB/assets/131152690/40e5a28c-595c-49df-9d6f-f0c708b4a2a3"/>
+</div>
+
+</br>
+
+setInterval이 가지고 있는 한계점은 투인앤비에 한해서 한계점이 아니었고 오히려 rAF가 가지고 있는 장점이 문제를 발생키는 상황이었습니다.
+이를 통해 각 상황마다 적합한 속성과 특징이 있다는 것을 더 절설히 깨달을 수 있었습니다.
