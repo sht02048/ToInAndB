@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Intro > should render title and instruction 1`] = `
+[
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": -139.5,
+      "dy": 100,
+      "img": <img
+        src="/images/title.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": -83.5,
+      "dy": 0,
+      "img": <img
+        src="/images/instruction_start.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+]
+`;
