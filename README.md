@@ -52,7 +52,7 @@ Written in javascript, **without libraries!** 🎮🕹 <br/>
   - [Different Hz, different speed](#different-hz-different-speed)
     - [Proper way to use Canvas API](#proper-way-to-use-canvas-api)
     - [Probably best way to implement animation](#probably-best-way-to-implement-animation)
-    = [There is no never](#there-is-no-never)
+    - [There is no never](#there-is-no-never)
 
 </br>
 
