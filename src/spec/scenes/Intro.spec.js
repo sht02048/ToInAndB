@@ -1,4 +1,3 @@
-import { beforeEach } from "vitest";
 import Intro from "../../scenes/Intro";
 
 describe("Intro", () => {
