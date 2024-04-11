@@ -396,6 +396,5 @@ class Game extends Renderer {
   }
 }
 
-DisplayOptimizer.preloadImages();
 DisplayOptimizer.resize();
 new Game();

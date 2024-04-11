@@ -1,6 +1,6 @@
 import Renderer from "./Renderer";
 import Sound from "../utils/Sound";
-import { ENEMY_EXPLOSION, AUDIO } from "../constants/path";
+import { EXPLOSION, EXPLOSION_BOSS, AUDIO } from "../constants/path";
 
 class Explosion {
   #enemyExplosionList = [];
@@ -15,15 +15,11 @@ class Explosion {
     this.isExplosionSoundPlaying = false;
 
     for (let i = 1; i < 12; i += 1) {
-      this.#enemyExplosionList.push(
-        new Renderer(`${ENEMY_EXPLOSION}enemy_${i}.png`),
-      );
+      this.#enemyExplosionList.push(new Renderer(EXPLOSION[i]));
     }
 
-    for (let i = 1; i < 20; i += 1) {
-      this.#bossExplosionList.push(
-        new Renderer(`${ENEMY_EXPLOSION}boss_${i}.png`),
-      );
+    for (let i = 1; i <= 20; i += 1) {
+      this.#bossExplosionList.push(new Renderer(EXPLOSION_BOSS[i]));
     }
   }
 

@@ -41,27 +41,6 @@ class DisplayOptimizer {
       requestAnimationFrame(countFrames);
     });
   }
-
-  static preloadImages() {
-    const imageTypes = [
-      IMAGE,
-      PLAYER,
-      ENEMIES,
-      BACKGROUNDS,
-      PROJECTILE,
-      ENEMY_PROJECTILE,
-      ITEM_IMAGE,
-    ];
-
-    imageTypes.forEach((images) => {
-      const paths = Object.values(images);
-
-      paths.forEach((path) => {
-        const image = new Image();
-        image.src = path;
-      });
-    });
-  }
 }
 
 export default DisplayOptimizer;
