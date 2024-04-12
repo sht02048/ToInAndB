@@ -45,10 +45,7 @@ describe("Entrance", () => {
   });
 
   it("should check if scene is done", () => {
-    entrance.bugList.forEach((bug) => {
-      bug.isDestroyed = true;
-    });
-
+    entrance.bugList.forEach((bug) => (bug.isDestroyed = true));
     entrance.heavy.isDestroyed = true;
 
     entrance.checkSceneStatus();

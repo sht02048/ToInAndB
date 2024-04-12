@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Lounge > should render wings and cross 1`] = `
+[
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 100,
+      "dy": -100,
+      "img": <img
+        src="/src/assets/sprites/enemies/wings.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 100,
+      "dy": -100,
+      "img": <img
+        src="/src/assets/sprites/enemies/cross.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 600,
+      "dy": -150,
+      "img": <img
+        src="/src/assets/sprites/enemies/cross.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+]
+`;
