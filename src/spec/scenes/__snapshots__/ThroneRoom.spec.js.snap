@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ThroneRoom > should render boss 1`] = `
+[
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 36,
+      "dy": -300,
+      "img": <img
+        src="/src/assets/sprites/enemies/boss.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+]
+`;
