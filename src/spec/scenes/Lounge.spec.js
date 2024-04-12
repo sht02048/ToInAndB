@@ -21,6 +21,7 @@ describe("Lounge", () => {
     expect(lounge.setTarget).to.be.a("function");
     expect(lounge.setSceneTargetList).to.be.a("function");
     expect(lounge.checkSceneStatus).to.be.a("function");
+    expect(lounge.respawnCross).to.be.a("function");
   });
 
   it("should render wings and cross", () => {

@@ -1,0 +1,323 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GuardChamber > should render enemies 1`] = `
+[
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -100,
+      "img": <img
+        src="/src/assets/sprites/enemies/emperor.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -150,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -150,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+]
+`;
+
+exports[`GuardChamber > should render enemies 2`] = `
+[
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -100,
+      "img": <img
+        src="/src/assets/sprites/enemies/emperor.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -150,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -150,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 114.5,
+      "dy": -99,
+      "img": <img
+        src="/src/assets/sprites/enemies/emperor.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 14.5,
+      "dy": -149,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 214.5,
+      "dy": -149,
+      "img": <img
+        src="/src/assets/sprites/enemies/cow.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+]
+`;
