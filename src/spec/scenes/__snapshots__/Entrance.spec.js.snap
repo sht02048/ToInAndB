@@ -1,15 +1,15 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`player > should be destroyed when hit 1`] = `
+exports[`Entrance > should render bug and heavy 1`] = `
 [
   {
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
+      "dx": 200,
+      "dy": -50,
       "img": <img
-        src="/src/assets/sprites/player/player_static.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -30,10 +30,226 @@ exports[`player > should be destroyed when hit 1`] = `
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": 3,
+      "dx": 55,
+      "dy": -50,
       "img": <img
-        src="/src/assets/images/explosion_enemy_1.png"
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 200,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 200,
+      "dy": -350,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -350,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 200,
+      "dy": -500,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -500,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 200,
+      "dy": -650,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -650,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 125,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/heavy.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -53,16 +269,16 @@ exports[`player > should be destroyed when hit 1`] = `
 ]
 `;
 
-exports[`player > should be rendered invincible mode 1`] = `
+exports[`Entrance > should update bug and heavy 1`] = `
 [
   {
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
+      "dx": 200,
+      "dy": -50,
       "img": <img
-        src="/src/assets/sprites/player/player_static.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -83,130 +299,10 @@ exports[`player > should be rendered invincible mode 1`] = `
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": 3,
+      "dx": 55,
+      "dy": -50,
       "img": <img
-        src="/src/assets/images/explosion_enemy_1.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
-  },
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-]
-`;
-
-exports[`player > should be rendered on canvas 1`] = `
-[
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_static.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-]
-`;
-
-exports[`player > should be rendered spawn 1`] = `
-[
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_static.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -227,163 +323,10 @@ exports[`player > should be rendered spawn 1`] = `
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": 3,
+      "dx": 200,
+      "dy": -200,
       "img": <img
-        src="/src/assets/images/explosion_enemy_1.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
-  },
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
-  },
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-]
-`;
-
-exports[`player > should launch missiles > to enemy 1`] = `
-[
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_static.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -404,163 +347,10 @@ exports[`player > should launch missiles > to enemy 1`] = `
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": 3,
+      "dx": 55,
+      "dy": -200,
       "img": <img
-        src="/src/assets/images/explosion_enemy_1.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
-  },
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
-  },
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
-      />,
-      "sHeight": 0,
-      "sWidth": 0,
-      "sx": 0,
-      "sy": 0,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-]
-`;
-
-exports[`player > should launch missiles > to straight 1`] = `
-[
-  {
-    "props": {
-      "dHeight": 0,
-      "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
-      "img": <img
-        src="/src/assets/sprites/player/player_static.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -581,10 +371,10 @@ exports[`player > should launch missiles > to straight 1`] = `
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": 3,
+      "dx": 200,
+      "dy": -350,
       "img": <img
-        src="/src/assets/images/explosion_enemy_1.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -600,41 +390,15 @@ exports[`player > should launch missiles > to straight 1`] = `
       0,
     ],
     "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
   },
   {
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
+      "dx": 55,
+      "dy": -350,
       "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -650,53 +414,15 @@ exports[`player > should launch missiles > to straight 1`] = `
       0,
     ],
     "type": "drawImage",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "restore",
-  },
-  {
-    "props": {},
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "save",
-  },
-  {
-    "props": {
-      "value": 0.4,
-    },
-    "transform": [
-      1,
-      0,
-      0,
-      1,
-      0,
-      0,
-    ],
-    "type": "globalAlpha",
   },
   {
     "props": {
       "dHeight": 0,
       "dWidth": 0,
-      "dx": 132.5,
-      "dy": -147,
+      "dx": 200,
+      "dy": -500,
       "img": <img
-        src="/src/assets/sprites/player/player_straight.png"
+        src="/src/assets/sprites/enemies/bug.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -714,7 +440,19 @@ exports[`player > should launch missiles > to straight 1`] = `
     "type": "drawImage",
   },
   {
-    "props": {},
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -500,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
     "transform": [
       1,
       0,
@@ -723,7 +461,391 @@ exports[`player > should launch missiles > to straight 1`] = `
       0,
       0,
     ],
-    "type": "restore",
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 200,
+      "dy": -650,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 55,
+      "dy": -650,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 125,
+      "dy": -200,
+      "img": <img
+        src="/src/assets/sprites/enemies/heavy.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 220,
+      "dy": 6,
+      "img": <img
+        src="/src/assets/images/projectile_1_enemy.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 204.3371161279701,
+      "dy": -48,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 75,
+      "dy": 6,
+      "img": <img
+        src="/src/assets/images/projectile_1_enemy.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 59.337116127970084,
+      "dy": -48,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 204.3371161279701,
+      "dy": -198,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 59.337116127970084,
+      "dy": -198,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 204.3371161279701,
+      "dy": -348,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 59.337116127970084,
+      "dy": -348,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 204.3371161279701,
+      "dy": -498,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 59.337116127970084,
+      "dy": -498,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 204.3371161279701,
+      "dy": -648,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 59.337116127970084,
+      "dy": -648,
+      "img": <img
+        src="/src/assets/sprites/enemies/bug.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
+  },
+  {
+    "props": {
+      "dHeight": 0,
+      "dWidth": 0,
+      "dx": 125,
+      "dy": -199,
+      "img": <img
+        src="/src/assets/sprites/enemies/heavy.png"
+      />,
+      "sHeight": 0,
+      "sWidth": 0,
+      "sx": 0,
+      "sy": 0,
+    },
+    "transform": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ],
+    "type": "drawImage",
   },
 ]
 `;

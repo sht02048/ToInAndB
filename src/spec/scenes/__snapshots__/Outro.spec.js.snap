@@ -9,7 +9,7 @@ exports[`Outro > should render 1`] = `
       "dx": -247.5,
       "dy": 100,
       "img": <img
-        src="/images/outro_title.png"
+        src="/src/assets/images/outro_title.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
@@ -33,7 +33,7 @@ exports[`Outro > should render 1`] = `
       "dx": -236,
       "dy": 400,
       "img": <img
-        src="/images/outro_message.png"
+        src="/src/assets/images/outro_message.png"
       />,
       "sHeight": 0,
       "sWidth": 0,
