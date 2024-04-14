@@ -9,7 +9,7 @@ class Explosion {
   constructor(isBoss) {
     this.isBoss = isBoss;
     this.explosionFrame = 0;
-    this.explosionSound = new Sound(AUDIO.EXPLOSION);
+    this.explosionSound = new Sound(AUDIO.EXPLOSION_AUDIO);
     this.explosionSound.sound.loop = false;
     this.explosionSound.sound.volume = 0.3;
     this.isExplosionSoundPlaying = false;
