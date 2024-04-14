@@ -1,7 +1,7 @@
 ![Title](https://github.com/sht02048/ToInAndB/assets/131152690/15740108-a42b-450f-b78e-2790cba60f1e)
 
 <div align="center">
-1945년 고전 게임에서 영감을 받은 아드레날린이 솟구치는 2D 슈팅 게임에 빠져보세요! <br/>
+고전 게임 1945에서 영감을 받은 아드레날린이 솟구치는 2D 슈팅 게임에 빠져보세요! <br/>
 친구들과 격렬한 결투에 도전해서 화려한 우주전쟁을 승리로 이끄세요. <br>
 
 <br>
@@ -53,6 +53,7 @@ Written in javascript, **without libraries!** 🎮🕹 <br/>
     - [Proper way to use Canvas API](#proper-way-to-use-canvas-api)
     - [Probably best way to implement animation](#probably-best-way-to-implement-animation)
     - [There is no never](#there-is-no-never)
+- [Still love to code](#still-love-to-code)
 
 </br>
 
@@ -161,6 +162,10 @@ class Player extends SpaceShip {
 }
 ```
 
+**SpaceShip 실체화**
+
+<img width=600 alt="space-ship" src="https://github.com/sht02048/ToInAndB/assets/131152690/768423ce-16e9-4dc8-b9fb-d19ca1fe7a51"/>
+
 </br>
 
 ## Different Hz different Speed
@@ -233,3 +238,10 @@ rAF의 생성 목적이 렌더링을 위함이기 때문에 여러므로 최적�
 
 setInterval이 가지고 있는 한계점은 투인앤비에 한해서 한계점이 아니었고 오히려 rAF가 가지고 있는 장점이 문제를 발생키는 상황이었습니다.
 이를 통해 각 상황마다 적합한 속성과 특징이 있다는 것을 더 절설히 깨달을 수 있었습니다.
+
+# Still love to code
+투인앤비를 만들면서 가장 크게 느낀 점은 "개발은 재밌다"입니다. 두 가지 이유가 있습니다. 첫 번째는 무에서 유를 창조하는, 저의 흔적을 남기는 설렘이 입니다. 두 번째는 개발하는 방법이 끊임없이 개선된다는 점입니다. 처음 제작할 당시와 지금 완성된 코드를 비교만 해봐도 구조가 완전히 달라지고 그로 인해 유지 보수성과 가독성이 향상되었습니다. 앞으로 리펙토링 및 타입 스크립트로 마이그레이션하면서 얼마나 더 효율적인 코드를 쓸 수 있을지 기대됩니다.
+
+현재 투인앤비는 총 5개의 스테이지로 이루어져 있으며 하나의 보스전만이 있습니다. 이후 스테이지를 더 확장할 계획은 없지만 지속적인 유지 보수를 통해 렌더링 및 로딩 최적화를 진행할 예정입니다. 만약 추가될 게임 스테이지에 관해 아이디어가 있다면 자유롭게 연락바랍니다.
+
+contact: [sht02048@gmail.com](sht02048@gmail.com)
