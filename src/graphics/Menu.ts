@@ -15,7 +15,17 @@ class Menu {
   #buttonLeft = 640;
   #buttonRight = 930;
 
-  constructor(toggleIsPaused, restart) {
+  private paused: Renderer;
+  private resume: Renderer;
+  private replay:  Renderer;
+  private gameOver: Renderer;
+  private ctx: CanvasRenderingContext2D;
+  private canvasWidth: number;
+  private canvasHeight: number;
+  private isPaused: boolean;
+  private isGameOver: boolean;
+
+  constructor(toggleIsPaused: Function, restart: Function) {
     this.paused = new Renderer(IMAGE.PAUSED);
     this.resume = new Renderer(IMAGE.RESUME);
     this.replay = new Renderer(IMAGE.REPLAY);
@@ -58,7 +68,7 @@ class Menu {
     );
   }
 
-  update(isPaused, playerHealth) {
+  update(isPaused: boolean, playerHealth: number) {
     this.isPaused = isPaused;
 
     if (playerHealth === 0) {
@@ -72,7 +82,7 @@ class Menu {
     }
   }
 
-  handleEvent(handleIsPaused, restart) {
+  handleEvent(handleIsPaused: Function, restart: Function) {
     const replayTop = this.#replayTop;
     const replayBottom = replayTop + this.#replayHeight;
     const resumeTop = this.#resumeTop;

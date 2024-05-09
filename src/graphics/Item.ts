@@ -4,7 +4,15 @@ import CollisionDetector from "../physics/CollisionDetector";
 class Item extends Renderer {
   #itemSpeedLimit = 5;
 
-  constructor(itemImage, itemType) {
+  private x: number;
+  private y: number;
+  private xSpeed: number;
+  private ySpeed: number;
+  private isGained: boolean;
+  private type: string;
+  private collisionDetector: CollisionDetector;
+
+  constructor(itemImage: string, itemType: string) {
     super(itemImage);
 
     this.x;
@@ -49,7 +57,7 @@ class Item extends Renderer {
     this.y = y;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList: Renderer[]) {
     this.collisionDetector.setTargetList(targetList);
   }
 }

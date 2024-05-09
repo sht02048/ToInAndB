@@ -6,7 +6,12 @@ class Explosion {
   #enemyExplosionList = [];
   #bossExplosionList = [];
 
-  constructor(isBoss) {
+  private isBoss: boolean;
+  private explosionFrame: number;
+  private explosionSound: Sound;
+  private isExplosionSoundPlaying: boolean;
+
+  constructor(isBoss: boolean) {
     this.isBoss = isBoss;
     this.explosionFrame = 0;
     this.explosionSound = new Sound(AUDIO.EXPLOSION_AUDIO);
@@ -23,16 +28,16 @@ class Explosion {
     }
   }
 
-  render(x, y, width, makeExplosionSound) {
+  render(x: number, y: number, width: number, shouldMakeExplosionSound: boolean) {
     if (this.isBoss) {
       this.destroyBoss(x, y, width);
       return;
     }
 
-    this.destroy(x, y, width, makeExplosionSound);
+    this.destroy(x, y, width, shouldMakeExplosionSound);
   }
 
-  destroyBoss(x, y, width) {
+  destroyBoss(x: number, y: number, width: number) {
     if (this.explosionFrame === 76) {
       return;
     }
@@ -50,12 +55,12 @@ class Explosion {
     this.explosionFrame += 1;
   }
 
-  destroy(x, y, width, makeExplosionSound = true) {
+  destroy(x: number, y: number, width: number, shouldMakeExplosionSound: boolean = true) {
     if (this.explosionFrame === 44) {
       return;
     }
 
-    if (!this.isExplosionSoundPlaying && makeExplosionSound) {
+    if (!this.isExplosionSoundPlaying && shouldMakeExplosionSound) {
       this.explosionSound.playAudio();
     }
 
@@ -81,7 +86,7 @@ class Explosion {
     this.explosionFrame = 0;
   }
 
-  hit(substituteImage, x, y) {
+  hit(substituteImage: Renderer, x: number, y: number) {
     substituteImage.render(x, y);
   }
 }

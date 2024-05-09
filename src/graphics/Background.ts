@@ -3,14 +3,24 @@ import Renderer from "./Renderer";
 class Background {
   #isInStarted = true;
 
+  private firstBackground: Renderer;
+  private secondBackground: Renderer;
+  private canvasWidth: number;
+  private canvasHeight: number;
+  private x: number;
+  private y: number;
+  private shouldOut: boolean;
+  private isOut: boolean;
+  private shouldBeDisplayed: boolean;
+
   constructor(imagePath) {
     this.firstBackground = new Renderer(imagePath);
     this.secondBackground = new Renderer(imagePath);
     this.canvasWidth = this.firstBackground.canvasWidth;
     this.canvasHeight = this.firstBackground.canvasHeight;
+
     this.x = 0;
     this.y = 0;
-
     this.shouldOut = false;
     this.isOut = false;
     this.shouldBeDisplayed = false;
@@ -22,7 +32,7 @@ class Background {
     }
 
     this.in();
-    this.circulateDown(this.shouldOut);
+    this.circulateDown();
     this.checkIsOut();
   }
 

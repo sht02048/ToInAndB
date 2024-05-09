@@ -6,6 +6,9 @@ import PLAYER_HEALTH from "../constants/playerHealth";
 class LifeBoard {
   #currentHealth = PLAYER_HEALTH - 1;
 
+  private healthList: Renderer[];
+  private shouldBeDisplayed: boolean;
+
   constructor() {
     this.healthList = [];
     this.shouldBeDisplayed = true;
@@ -15,7 +18,7 @@ class LifeBoard {
     }
   }
 
-  render(playerHealth) {
+  render(playerHealth: number) {
     this.healthList.forEach((health, index) => {
       if (playerHealth - 1 <= index) {
         return;

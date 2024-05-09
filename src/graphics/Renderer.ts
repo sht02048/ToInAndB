@@ -3,15 +3,32 @@ class Renderer {
   #rightBlockSize = 145;
   #playerShipHeight = 61;
 
-  constructor(imagePath) {
+  private imagePath: string;
+  private image: HTMLImageElement;
+  private frame: number;
+  private introCanvas: HTMLCanvasElement;
+  private introCtx: CanvasRenderingContext2D ;
+  
+  protected width: number;
+  protected height: number;
+  
+  public readonly maxX: number;
+  public readonly minY: number;
+  public readonly maxY: number;
+  public readonly minX: number;
+  public readonly canvasWidth: number;
+  public readonly canvasHeight: number;
+  public readonly mainCanvas: HTMLCanvasElement;
+  public readonly mainCtx: CanvasRenderingContext2D ;
+  public readonly inAndOutSpeed: number;
+
+  constructor(imagePath: string) {
     this.imagePath = imagePath;
     this.image = new Image();
-    this.width;
-    this.height;
     this.image.src = this.imagePath;
 
-    this.mainCanvas = document.getElementById("main-canvas");
-    this.introCanvas = document.getElementById("intro-canvas");
+    this.mainCanvas = document.getElementById("main-canvas") as HTMLCanvasElement;
+    this.introCanvas = document.getElementById("intro-canvas") as HTMLCanvasElement;
     this.mainCtx = this.mainCanvas.getContext("2d");
     this.introCtx = this.introCanvas.getContext("2d");
     this.canvasWidth = this.mainCanvas.width;
@@ -27,9 +44,10 @@ class Renderer {
       this.width = this.image.width;
       this.height = this.image.height;
     };
+
   }
 
-  render(x, y, width, height) {
+  render(x: number, y: number, width?: number, height?: number): void {
     if (width !== undefined && height !== undefined) {
       this.mainCtx.drawImage(this.image, x, y, width, height);
 
@@ -39,7 +57,7 @@ class Renderer {
     this.mainCtx.drawImage(this.image, x, y);
   }
 
-  renderAngle(x, y, width, height, angle) {
+  renderAngle(x: number, y: number, width: number, height: number, angle: number): void {
     this.mainCtx.save();
     this.mainCtx.translate(x, y + 10);
     this.mainCtx.rotate(angle);
@@ -47,7 +65,7 @@ class Renderer {
     this.mainCtx.restore();
   }
 
-  renderIntro(x, y, width, height) {
+  renderIntro(x: number, y: number, width: number, height: number): void  {
     this.introCtx.drawImage(this.image, x, y, width, height);
   }
 }
