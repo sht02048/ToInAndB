@@ -9,7 +9,7 @@ class Cow extends Enemy {
   #missileInterval = 160;
   #isCowReachedStartPoint = false;
 
-  constructor({ x, y, isLeft }) {
+  constructor({ x, y }) {
     super({
       x,
       y,
@@ -21,7 +21,6 @@ class Cow extends Enemy {
     });
 
     this.shootingPoint = y + 100;
-    this.isLeft = isLeft;
   }
 
   update(x, y) {

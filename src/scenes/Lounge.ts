@@ -1,10 +1,17 @@
 import Renderer from "../graphics/Renderer";
 
+import Player from "../entities/Player";
 import Cross from "../entities/enemies/Cross";
 import Wings from "../entities/enemies/Wings";
 
 class Lounge extends Renderer {
   #isDone = true;
+
+  private wings: Wings;
+  private crossList: Cross[];
+  private shouldBeDisplayed: boolean;
+  private hasStarted: boolean;
+  private player: Player;
 
   constructor() {
     super();
@@ -32,7 +39,7 @@ class Lounge extends Renderer {
     this.crossList.forEach((cross) => cross.render());
   }
 
-  setTarget(player) {
+  setTarget(player: Player) {
     this.wings.setTargetList(player);
     this.crossList.forEach((cross) => {
       cross.setTargetList(player);
@@ -42,9 +49,7 @@ class Lounge extends Renderer {
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.wings];
-
-    this.crossList.forEach((cross) => sceneTargetList.push(cross));
+    const sceneTargetList = [this.wings, ...this.crossList];
 
     return sceneTargetList;
   }
@@ -77,8 +82,8 @@ class Lounge extends Renderer {
     const firstRandomY = Math.random() * 100 + 44;
     const secondRandomY = Math.random() * 100 + 44;
 
-    const firstCross = new Cross({ x: firstRandomX, y: -firstRandomY });
-    const secondCross = new Cross({ x: secondRandomX, y: -secondRandomY });
+    const firstCross: Cross = new Cross({ x: firstRandomX, y: -firstRandomY });
+    const secondCross: Cross = new Cross({ x: secondRandomX, y: -secondRandomY });
 
     firstCross.setTargetList(this.player);
     secondCross.setTargetList(this.player);

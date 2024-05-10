@@ -9,6 +9,20 @@ class Intro {
   #instructionWidth = 934;
   #instructionHeight = 53;
 
+  private title: Renderer;
+  private instruction: Renderer;
+  private introMusic: Sound;
+  private battleMusic: Sound;
+  private canvasWidth: number;
+  private canvasHeight: number;
+  private inAndOutSpeed: number;
+  private x: number;
+  private instructionY: number;
+  private titleY: number;
+  private isUp: boolean;
+  private amplitude: number;
+  private shouldBeDisplayed: boolean;
+
   constructor() {
     this.title = new Renderer(IMAGE.TITLE);
     this.instruction = new Renderer(IMAGE.INSTRUCTION_START);

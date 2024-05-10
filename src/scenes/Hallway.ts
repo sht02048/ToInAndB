@@ -1,4 +1,6 @@
 import Renderer from "../graphics/Renderer";
+
+import Player from "../entities/Player";
 import Mini from "../entities/enemies/Mini";
 import Cannon from "../entities/enemies/Cannon";
 import Danger from "../entities/enemies/Danger";
@@ -6,6 +8,12 @@ import Danger from "../entities/enemies/Danger";
 class Hallway extends Renderer {
   #isDone = true;
   #miniWidth = 44;
+
+  private mini: Mini;
+  private cannonList: Cannon[];
+  private dangerList: Danger[];
+  private shouldBeDisplayed: boolean;
+  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -44,17 +52,14 @@ class Hallway extends Renderer {
     this.dangerList.forEach((danger) => danger.render());
   }
 
-  setTarget(player) {
+  setTarget(player: Player) {
     this.mini.setTargetList(player);
     this.cannonList.forEach((cannon) => cannon.setTargetList(player));
     this.dangerList.forEach((danger) => danger.setTargetList(player));
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.mini];
-
-    this.cannonList.forEach((cannon) => sceneTargetList.push(cannon));
-    this.dangerList.forEach((danger) => sceneTargetList.push(danger));
+    const sceneTargetList = [this.mini, ...this.cannonList, ...this.dangerList];
 
     return sceneTargetList;
   }

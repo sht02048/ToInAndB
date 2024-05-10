@@ -3,15 +3,15 @@ class Renderer {
   #rightBlockSize = 145;
   #playerShipHeight = 61;
 
-  private imagePath: string;
+  private imagePath?: string;
   private image: HTMLImageElement;
-  private frame: number;
   private introCanvas: HTMLCanvasElement;
-  private introCtx: CanvasRenderingContext2D ;
-  
+  private introCtx: CanvasRenderingContext2D;
+
+  protected frame: number;
   protected width: number;
-  protected height: number;
-  
+
+  public height: number;
   public readonly maxX: number;
   public readonly minY: number;
   public readonly maxY: number;
@@ -19,13 +19,13 @@ class Renderer {
   public readonly canvasWidth: number;
   public readonly canvasHeight: number;
   public readonly mainCanvas: HTMLCanvasElement;
-  public readonly mainCtx: CanvasRenderingContext2D ;
+  public readonly mainCtx: CanvasRenderingContext2D;
   public readonly inAndOutSpeed: number;
 
-  constructor(imagePath: string) {
+  constructor(imagePath?: string) {
     this.imagePath = imagePath;
     this.image = new Image();
-    this.image.src = this.imagePath;
+    this.image.src = this.imagePath || "";
 
     this.mainCanvas = document.getElementById("main-canvas") as HTMLCanvasElement;
     this.introCanvas = document.getElementById("intro-canvas") as HTMLCanvasElement;
@@ -44,7 +44,6 @@ class Renderer {
       this.width = this.image.width;
       this.height = this.image.height;
     };
-
   }
 
   render(x: number, y: number, width?: number, height?: number): void {

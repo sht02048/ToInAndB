@@ -1,5 +1,6 @@
 import Renderer from "../graphics/Renderer";
 
+import Player from "../entities/Player";
 import Bug from "../entities/enemies/Bug";
 import Heavy from "../entities/enemies/Heavy";
 
@@ -7,6 +8,11 @@ class Entrance extends Renderer {
   #appearanceFrame = 300;
   #heavyWidth = 50;
   #isDone = true;
+
+  private bugList: Bug[];
+  private heavy: Heavy;
+  private shouldBeDisplayed: boolean;
+  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -37,15 +43,13 @@ class Entrance extends Renderer {
     }
   }
 
-  setTarget(player) {
+  setTarget(player: Player) {
     this.bugList.forEach((bug) => bug.setTargetList(player));
     this.heavy.setTargetList(player);
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.heavy];
-
-    this.bugList.forEach((bug) => sceneTargetList.push(bug));
+    const sceneTargetList = [this.heavy, ...this.bugList];
 
     return sceneTargetList;
   }

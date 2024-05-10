@@ -12,14 +12,21 @@ class Outro {
   #haltFrame = 16 * this.#fps;
   #hasMusicStarted = false;
 
+  private title: Renderer;
+  private message: Renderer;
+  private outroMusic: Sound;
+  private canvasWidth: number;
+  private x: number;
+  private y: number;
+  private isOut: boolean;
+  private shouldBeDisplayed: boolean;
+
   constructor() {
     this.title = new Renderer(IMAGE.OUTRO_TITLE);
     this.message = new Renderer(IMAGE.OUTRO_MESSAGE);
-
     this.outroMusic = new Sound(AUDIO.OUTRO);
 
     this.canvasWidth = this.title.canvasWidth;
-
     this.x = this.canvasWidth / 2;
     this.y = 0;
 

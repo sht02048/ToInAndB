@@ -1,10 +1,18 @@
 import Renderer from "../graphics/Renderer";
+
+import Player from "../entities/Player";
 import Guard from "../entities/enemies/Guard";
 import Cow from "../entities/enemies/Cow";
 
 class GuardChamber extends Renderer {
   #emperorWidth = 71;
   #isDone = true;
+
+  private guard: Guard;
+  private cowLeftList: Cow[];
+  private cowRightList: Cow[];
+  private shouldBeDisplayed: boolean;
+  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -60,17 +68,14 @@ class GuardChamber extends Renderer {
     this.cowRightList.forEach((cow) => cow.render());
   }
 
-  setTarget(player) {
+  setTarget(player: Player) {
     this.guard.setTargetList(player);
     this.cowLeftList.forEach((cow) => cow.setTargetList(player));
     this.cowRightList.forEach((cow) => cow.setTargetList(player));
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.guard];
-
-    this.cowLeftList.forEach((cow) => sceneTargetList.push(cow));
-    this.cowRightList.forEach((cow) => sceneTargetList.push(cow));
+    const sceneTargetList = [this.guard, ...this.cowLeftList, ...this.cowRightList];
 
     return sceneTargetList;
   }
