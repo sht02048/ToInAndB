@@ -3,7 +3,9 @@
     "allowJs": true,
     "target": "ES2015",
     "outDir": "./dist",
-    "moduleResolution": "Node",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
     "lib": ["ES2015", "DOM", "DOM.Iterable"]
   },
   "include": ["./src/**/*"],
