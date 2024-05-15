@@ -7,9 +7,10 @@ class Explosion {
   #bossExplosionList = [];
 
   private isBoss: boolean;
-  private explosionFrame: number;
   private explosionSound: Sound;
   private isExplosionSoundPlaying: boolean;
+
+  public explosionFrame: number;
 
   constructor(isBoss: boolean) {
     this.isBoss = isBoss;

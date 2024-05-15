@@ -1,16 +1,18 @@
 import Renderer from "./Renderer";
 import CollisionDetector from "../physics/CollisionDetector";
+import Player from "../entities/Player";
 
 class Item extends Renderer {
   #itemSpeedLimit = 5;
 
-  private x: number;
-  private y: number;
   private xSpeed: number;
   private ySpeed: number;
-  private isGained: boolean;
-  private type: string;
   private collisionDetector: CollisionDetector;
+
+  public x: number;
+  public y: number;
+  public isGained: boolean;
+  public readonly type: string;
 
   constructor(itemImage: string, itemType: string) {
     super(itemImage);
@@ -24,7 +26,8 @@ class Item extends Renderer {
     this.isGained = false;
     this.type = itemType;
 
-    this.collisionDetector = new CollisionDetector([this]);
+    this.collisionDetector = new CollisionDetector();
+    this.collisionDetector.setItem(this);
   }
 
   renderItem() {
@@ -57,8 +60,8 @@ class Item extends Renderer {
     this.y = y;
   }
 
-  setTargetList(targetList: Renderer[]) {
-    this.collisionDetector.setTargetList(targetList);
+  setTarget(player: Player) {
+    this.collisionDetector.setPlayer(player);
   }
 }
 

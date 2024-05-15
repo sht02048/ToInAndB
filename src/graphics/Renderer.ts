@@ -9,9 +9,11 @@ class Renderer {
   private introCtx: CanvasRenderingContext2D;
 
   protected frame: number;
-  protected width: number;
 
   public height: number;
+  public width: number;
+  public x: number | null;
+  public y: number | null;
   public readonly maxX: number;
   public readonly minY: number;
   public readonly maxY: number;
@@ -33,6 +35,8 @@ class Renderer {
     this.introCtx = this.introCanvas.getContext("2d");
     this.canvasWidth = this.mainCanvas.width;
     this.canvasHeight = this.mainCanvas.height;
+    this.x = null;
+    this.y = null;
     this.minX = this.#leftBlockSize;
     this.maxX = this.canvasWidth - this.#rightBlockSize;
     this.minY = -10;

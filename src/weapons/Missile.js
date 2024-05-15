@@ -5,7 +5,7 @@ class Missile extends Renderer {
     super(imagePath);
 
     this.isVanished = false;
-    this.damage;
+    this.damage = 1;
     this.vx;
     this.vy;
     this.angle;
