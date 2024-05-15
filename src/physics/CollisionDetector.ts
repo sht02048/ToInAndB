@@ -1,48 +1,57 @@
 import ITEM_TYPE from "../constants/item";
+import Player from "../entities/Player";
+import SpaceShip from "../entities/Spaceship";
+import Item from "../graphics/Item";
+import Missile from "../weapons/Missile";
 
 class CollisionDetector {
   #hitBoxModifier = 10;
 
-  constructor(gameObjectList) {
-    this.gameObjectList = gameObjectList;
-  }
+  private targetList:  SpaceShip[];
+  private missileList: Missile[];
+  private item: Item;
+  private player: Player;
 
-  setTargetList(targetList) {
+  setTargetList(targetList: SpaceShip[]) {
     this.targetList = targetList;
   }
 
-  setItem(item) {
-    this.gameObjectList = [item];
+  setMissileList(missileList: Missile[]) {
+    this.missileList = missileList;
+  }
+
+  setItem(item: Item) {
+    this.item = item;
+  }
+
+  setPlayer(player: Player) {
+    this.player = player;
   }
 
   detectItem() {
-    this.gameObjectList.forEach((item) => {
-      this.targetList.forEach((target) => {
-        if (
-          item.isGained ||
-          target.isDestroyed ||
-          !this.isOverLapping(item, target)
-        ) {
-          return;
-        }
+    if (
+      this.item.isGained ||
+      this.player.isDestroyed ||
+      !this.isOverLapping(this.item, this.player)
+    ) {
+      return;
+    }
 
-        switch (item.type) {
-          case ITEM_TYPE.POWER_UP:
-            target.level += 1;
-            break;
+    switch (this.item.type) {
+      case ITEM_TYPE.POWER_UP:
+        this.player.level += 1;
+        break;
 
-          case ITEM_TYPE.SPEED_UP:
-            target.shipSpeed += 1.5;
-            break;
-        }
+      case ITEM_TYPE.SPEED_UP:
+        this.player.shipSpeed += 1.5;
+        break;
+    }
 
-        item.isGained = true;
-      });
-    });
+    this.item.isGained = true;
   }
 
   detectCollision() {
-    this.gameObjectList.forEach((missile) => {
+    this.missileList.forEach((missile) => {
       this.targetList.forEach((target) => {
         if (
           missile.isVanished ||
@@ -62,7 +71,7 @@ class CollisionDetector {
     });
   }
 
-  isOverLapping(gameObject, target) {
+  isOverLapping(gameObject, target): boolean {
     const targetLeft = target.x;
     const targetRight = target.x + target.width;
     const targetTop = target.y + this.#hitBoxModifier;
