@@ -96,7 +96,7 @@ class Mini extends Enemy {
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-    this.speedUp.setTargetList(targetList);
+    this.speedUp.setTarget(targetList[0]);
   }
 }
 

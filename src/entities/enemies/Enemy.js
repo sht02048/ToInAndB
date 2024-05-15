@@ -31,9 +31,8 @@ class Enemy extends SpaceShip {
     this.ship = new Renderer(shipImage);
     this.hitShip = new Renderer(hitShipImage);
     this.missileLauncher = new MissileLauncher(width, height);
-    this.collisionDetector = new CollisionDetector(
-      this.missileLauncher.missileList,
-    );
+    this.collisionDetector = new CollisionDetector();
+    this.collisionDetector.setMissileList(this.missileLauncher.missileList);
 
     this.makeExplosionSound = true;
     this.width = width;

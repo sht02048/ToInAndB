@@ -154,7 +154,7 @@ class Guard extends Enemy {
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-    this.powerUp.setTargetList(targetList);
+    this.powerUp.setTarget(targetList[0]);
   }
 }
 

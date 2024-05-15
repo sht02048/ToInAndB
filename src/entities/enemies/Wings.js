@@ -39,10 +39,12 @@ class Wings extends Enemy {
       this.#wingsWidth,
       this.#wingsHeight,
     );
-    this.leftMissileDetector = new CollisionDetector(
+    this.leftMissileDetector = new CollisionDetector();
+    this.leftMissileDetector.setMissileList(
       this.leftMissileLauncher.missileList,
     );
-    this.rightMissileDetector = new CollisionDetector(
+    this.rightMissileDetector = new CollisionDetector();
+    this.rightMissileDetector.setMissileList(
       this.rightMissileLauncher.missileList,
     );
   }

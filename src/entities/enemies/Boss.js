@@ -288,7 +288,8 @@ class Boss extends Enemy {
 
     weapons.forEach((weapon) => {
       const launcher = new MissileLauncher(this.#bossWidth, this.#bossHeight);
-      const detector = new CollisionDetector(launcher.missileList);
+      const detector = new CollisionDetector();
+      detector.setMissileList(launcher.missileList);
       this.#missileLaunchers[weapon] = launcher;
       this.#collisionDetectors[weapon] = detector;
     });

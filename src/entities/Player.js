@@ -40,10 +40,12 @@ class Player extends SpaceShip {
       this.#staticWidth,
       this.#staticHeight,
     );
-    this.straightCollisionDetector = new CollisionDetector(
+    this.straightCollisionDetector = new CollisionDetector();
+    this.straightCollisionDetector.setMissileList(
       this.missileLauncher.missileList,
     );
-    this.guidedCollisionDetector = new CollisionDetector(
+    this.guidedCollisionDetector = new CollisionDetector();
+    this.guidedCollisionDetector.setMissileList(
       this.guidedMissileLauncher.missileList,
     );
 
@@ -62,7 +64,6 @@ class Player extends SpaceShip {
     this.isShooting = false;
     this.reloadFrame = 10;
     this.invincibleFrame = 200;
-    this.isInvincible = false;
     this.straightProjectile = PROJECTILE.LEVEL_1;
     this.guidedProjectile = PROJECTILE.GUIDED;
     this.shouldOut = false;

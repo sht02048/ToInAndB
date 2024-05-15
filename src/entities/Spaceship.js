@@ -9,15 +9,15 @@ class SpaceShip {
     this.isDestroyed = false;
     this.isVanished = false;
     this.isHit = false;
+    this.isInvincible = false;
     this.healthPoint = health;
     this.hitFrame = 6;
     this.frame = 0;
 
     this.explosion = new Explosion(isBoss);
     this.missileLauncher = new MissileLauncher(width, height);
-    this.collisionDetector = new CollisionDetector(
-      this.missileLauncher.missileList,
-    );
+    this.collisionDetector = new CollisionDetector();
+    this.collisionDetector.setMissileList(this.missileLauncher.missileList);
   }
 
   setMissileInformation({

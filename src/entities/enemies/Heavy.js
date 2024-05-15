@@ -100,7 +100,8 @@ class Heavy extends Enemy {
   setTargetList(targetList) {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-    this.powerUp.setTargetList(targetList);
+    // Todo 추후에 collisionDetector 로직 수정 필요. 단일 개체 혹은 배열 들어올 수 있음
+    this.powerUp.setTarget(targetList[0]);
   }
 }
 
