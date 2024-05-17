@@ -1,5 +1,6 @@
 import Sound from "../utils/Sound";
 import { AUDIO } from "../constants/path";
+import Player from "./Player";
 
 class Cockpit {
   #keyPresses = {
@@ -9,14 +10,28 @@ class Cockpit {
     ArrowRight: false,
     Space: false,
   };
+
   #currentPower = 1;
   #currentSpeed = 2;
 
-  constructor(ship) {
+  private ship: Player;
+  private minX: number;
+  private minY: number;
+  private maxX: number;
+  private maxY: number;
+  private shotSound: Sound;
+  private powerUpSound: Sound;
+  private speedUpSound: Sound;
+  private isShotSoundPlaying: boolean;
+  private currentSoundTime: number;
+  private isInvincibleFrame: number;
+  private frame: number;
+
+  constructor(ship: Player) {
     this.ship = ship;
     this.minX = this.ship.currentDirection.minX;
-    this.maxX = this.ship.currentDirection.maxX;
     this.minY = this.ship.currentDirection.minY;
+    this.maxX = this.ship.currentDirection.maxX;
     this.maxY = this.ship.currentDirection.maxY;
 
     this.shotSound = new Sound(AUDIO.SHOT);
@@ -84,7 +99,7 @@ class Cockpit {
   }
 
   addEvent() {
-    const handleControl = (event, isDown) => {
+    const handleControl = (event: KeyboardEvent, isDown: boolean) => {
       const pressedKey = event.key === " " ? "Space" : event.key;
 
       if (Object.hasOwn(this.#keyPresses, pressedKey)) {
@@ -92,11 +107,15 @@ class Cockpit {
       }
     };
 
-    addEventListener("keydown", (event) => handleControl(event, true));
-    addEventListener("keyup", (event) => handleControl(event, false));
+    document.addEventListener("keydown", (event: KeyboardEvent) =>
+      handleControl(event, true),
+    );
+    document.addEventListener("keyup", (event: KeyboardEvent) =>
+      handleControl(event, false),
+    );
   }
 
-  checkPlayerStatus(power, speed) {
+  checkPlayerStatus(power: number, speed: number) {
     if (this.ship.healthPoint <= 0) {
       this.ship.isDestroyed = true;
     }
