@@ -5,7 +5,6 @@ import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
 import Renderer from "../graphics/Renderer";
-import Explosion from "../graphics/Explosion";
 
 import PLAYER_HEALTH from "../constants/playerHealth";
 import { PLAYER, PROJECTILE } from "../constants/path";
@@ -24,14 +23,40 @@ class Player extends SpaceShip {
   #isPlayerIn = false;
   #outSpeed = 1.5;
 
+  private guidedMissileLauncher: MissileLauncher;
+  private straightCollisionDetector: CollisionDetector;
+  private guidedCollisionDetector: CollisionDetector;
+  private canvasHeight: number;
+  private spawnX: number;
+  private spawnY: number;
+  private initialY: number;
+  private reloadFrame: number;
+  private invincibleFrame: number;
+  private straightProjectile: URL;
+  private guidedProjectile: URL;
+  private shouldOut: boolean;
+  private isOut: boolean;
+  private cockpit: Cockpit;
+
+  public level: number;
+  public isShooting: boolean;
+  public currentDirection: Renderer;
+  public readonly canvasWidth: number;
+  public readonly leftShip: Renderer;
+  public readonly rightShip: Renderer;
+  public readonly staticShip: Renderer;
+  public readonly straightShip: Renderer;
+
   constructor() {
     super({
+      x: 0,
+      y: 0,
       width: 35,
       height: 49,
       health: PLAYER_HEALTH,
+      isBoss: false,
     });
 
-    this.explosion = new Explosion();
     this.leftShip = new Renderer(PLAYER.LEFT);
     this.rightShip = new Renderer(PLAYER.RIGHT);
     this.staticShip = new Renderer(PLAYER.STATIC);
@@ -76,14 +101,8 @@ class Player extends SpaceShip {
     this.frame += 1;
 
     this.cockpit.checkPlayerStatus(this.level, this.shipSpeed);
-    this.missileLauncher.setMissileRoute(
-      MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT,
-      this.#straightMissileSpeed,
-    );
-    this.guidedMissileLauncher.setMissileRoute(
-      MISSILE_ROUTE_COMMAND.GUIDED,
-      this.#guidedMissileSpeed,
-    );
+    this.missileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT);
+    this.guidedMissileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.GUIDED);
     this.straightCollisionDetector.detectCollision();
     this.guidedCollisionDetector.detectCollision();
 
@@ -124,7 +143,7 @@ class Player extends SpaceShip {
     this.missileLauncher.render();
 
     if (this.isHit) {
-      this.explosion.render(this.x, this.y, this.#staticWidth);
+      this.explosion.render(this.x, this.y, this.#staticWidth, true);
       return;
     }
 
@@ -180,6 +199,9 @@ class Player extends SpaceShip {
         this.#missileDamage = 4;
         this.straightProjectile = PROJECTILE.LEVEL_3;
         this.#straightMissileWidth = 106;
+        break;
+
+      default:
         break;
     }
   }
