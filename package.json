@@ -16,11 +16,14 @@
     "type-check": "tsc --noEmit"
   },
   "lint-staged": {
-    "src/**/*.{js,json,md}": [
-      "prettier --write"
+    "src/**/*.{js,ts,json,md}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
     "@vitest/coverage-v8": "^1.4.0",
     "@vitest/ui": "^1.4.0",
     "eslint": "^8.57.0",
