@@ -254,7 +254,7 @@ OOP를 공부하고 코드에 적용해나감에 따라 기존 코드의 결점�
 Task Queue는 큐의 특징과 큐에 담기는 메서드에 따라 종류에 따라 세 가지로 나뉠 수 있습니다.
 
 - Micro Task Queue: `promise`와 `mutationObserver` 콜백이 담기는 큐로 다른 큐들을 방문하기 이전에 그리고 렌더링 이전에 처리됩니다.
-- Animation Frame Queue:  `requestAnimationFrame` 콜백이 담기는 큐로, 렌더링 단계 전에 실행되어 화면 업데이트를 준비합니다**.** 그러나 이 큐는 Macro Task Queue나 Micro Task Queue와는 별개로, 렌더링 사이클에 따라 관리되며, **일반적으로 매 화면 갱신마다 실행됩니다.**
+- Animation Frame Queue:  `requestAnimationFrame` 콜백이 담기는 큐로, 렌더링 단계 전에 실행되어 화면 업데이트를 준비합니다. 그러나 이 큐는 Macro Task Queue나 Micro Task Queue와는 별개로, 렌더링 사이클에 따라 관리되며, **일반적으로 매 화면 갱신마다 실행됩니다.**
 - Macro Task Queue: `setTimeout`, `setInterval`, I/O 작업, UI 이벤트 (예: 마우스 클릭, 키보드 입력) 및 기타 대부분의 비동기 콜백이 담깁니다. Macro Task는 한 번에 하나씩 처리됩니다.
 
 여기서 집중해야될 것은 Animation Frame Queue가 매 화면 갱신마다 실행된다는 점입니다. 다시 말해서, 모니터 주파수에 맞게 렌더링이 최적화된다는 뜻입니다.  이게 특별한 이유는 애니메이션을 구현하는 다른 Web API들은 프레임 밀림 현상을 보일뿐더러 애니메이션 최적화를 할 수 없기 때문입니다.
