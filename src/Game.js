@@ -1,3 +1,4 @@
+/* eslint-disable*/
 import "@fortawesome/fontawesome-free/js/all.js";
 
 import "./style.css";
@@ -23,6 +24,8 @@ import FPS from "./constants/fps";
 import { BACKGROUNDS } from "./constants/path";
 
 class Game extends Renderer {
+  #playGame;
+  #playIntro;
   #fps = FPS;
   #isMutedDuringPause = false;
   #isGameStarted = false;
@@ -31,6 +34,9 @@ class Game extends Renderer {
   #hasBossMusicStarted = false;
   #endingFrame = 400;
   #hasEnteredSpace = false;
+  #lastRender = 0;
+  #accumulator = 0;
+  #timestep = 1 / this.#fps;
 
   constructor() {
     super();
@@ -259,7 +265,21 @@ class Game extends Renderer {
   }
 
   startIntro() {
-    this.playIntro = setInterval(() => this.displayIntro(), 1000 / this.#fps);
+    this.#lastRender = performance.now();
+    this.#playIntro = requestAnimationFrame(this.introLoop.bind(this));
+  }
+
+  introLoop(timestamp) {
+    const deltaTime = (timestamp - this.#lastRender) / 1000;
+    this.#lastRender = timestamp;
+    this.#accumulator += deltaTime;
+
+    while (this.#accumulator >= this.#timestep) {
+      this.displayIntro();
+      this.#accumulator -= this.#timestep;
+    }
+
+    this.#playIntro = requestAnimationFrame(this.introLoop.bind(this));
   }
 
   play() {
@@ -280,7 +300,21 @@ class Game extends Renderer {
   }
 
   startPlay() {
-    this.playGame = setInterval(() => this.play(), 1000 / this.#fps);
+    this.#lastRender = performance.now();
+    this.#playGame = requestAnimationFrame(this.gameLoop.bind(this));
+  }
+
+  gameLoop(timestamp) {
+    const deltaTime = (timestamp - this.#lastRender) / 1000;
+    this.#lastRender = timestamp;
+    this.#accumulator += deltaTime;
+
+    while (this.#accumulator >= this.#timestep) {
+      this.play();
+      this.#accumulator -= this.#timestep;
+    }
+
+    this.#playGame = requestAnimationFrame(this.gameLoop.bind(this));
   }
 
   handleEvent() {
@@ -294,7 +328,7 @@ class Game extends Renderer {
           return;
         }
 
-        clearInterval(this.playIntro);
+        cancelAnimationFrame(this.#playIntro);
         this.intro.playBattleMusic();
         this.startPlay();
         this.#isGameStarted = true;
@@ -316,7 +350,7 @@ class Game extends Renderer {
     };
 
     this.intro.playIntroMusic();
-    addEventListener("keydown", handleEnter);
+    document.addEventListener("keydown", handleEnter);
   }
 
   handlePause() {
@@ -340,7 +374,7 @@ class Game extends Renderer {
       }
     };
 
-    addEventListener("keydown", this.activatePause);
+    document.addEventListener("keydown", this.activatePause);
   }
 
   toggleIsPaused() {
@@ -349,7 +383,7 @@ class Game extends Renderer {
 
   afterEnding() {
     this.outro.pauseOutroMusic();
-    clearInterval(this.playGame);
+    cancelAnimationFrame(this.#playGame);
     this.mainCtx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.#isGameStarted = false;
     this.start();
