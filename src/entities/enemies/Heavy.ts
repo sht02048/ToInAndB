@@ -16,6 +16,8 @@ class Heavy extends Enemy {
   #isHeavyReached = false;
   #isItemSpawned = false;
 
+  private powerUp: Item;
+
   constructor(x, y) {
     super({
       x,
@@ -30,7 +32,7 @@ class Heavy extends Enemy {
     this.powerUp = new Item(ITEM_IMAGE.POWER_UP, ITEM_TYPE.POWER_UP);
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
@@ -43,13 +45,13 @@ class Heavy extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     const renderItem = this.renderItem.bind(this);
 
     this.renderEnemy(renderItem);
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval === 0 && this.y + this.height > 0) {
       this.#missileRound = 3;
     }
@@ -68,18 +70,17 @@ class Heavy extends Enemy {
     }
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.y > this.ship.canvasHeight / 3) {
       this.#isHeavyReached = true;
     }
 
     if (!this.#isHeavyReached) {
       this.y += this.#heavySpeed;
-      return;
     }
   }
 
-  renderItem() {
+  renderItem(): void {
     if (this.powerUp.isGained) {
       return;
     }
@@ -87,7 +88,7 @@ class Heavy extends Enemy {
     this.powerUp.renderItem();
   }
 
-  updateItem() {
+  updateItem(): void {
     if (!this.#isItemSpawned) {
       this.powerUp.setItemLocation(this.x, this.y);
       this.#isItemSpawned = true;
@@ -97,7 +98,7 @@ class Heavy extends Enemy {
     this.powerUp.detectItem();
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
     // Todo 추후에 collisionDetector 로직 수정 필요. 단일 개체 혹은 배열 들어올 수 있음

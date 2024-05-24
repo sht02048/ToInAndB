@@ -10,6 +10,8 @@ class Danger extends Enemy {
   #dangerSpeed = 4;
   #isTurningPointReached = false;
 
+  private isLeft: boolean;
+
   constructor({ x, y, isLeft }) {
     super({
       x,
@@ -24,7 +26,7 @@ class Danger extends Enemy {
     this.isLeft = isLeft;
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
@@ -35,11 +37,11 @@ class Danger extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval !== 0 || this.y + this.height < 0) {
       return;
     }
@@ -54,7 +56,7 @@ class Danger extends Enemy {
     this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.isLeft) {
       this.leftRoute();
       return;
@@ -63,7 +65,7 @@ class Danger extends Enemy {
     this.rightRoute();
   }
 
-  leftRoute() {
+  leftRoute(): void {
     if (this.x + this.width / 2 > this.ship.canvasWidth / 2) {
       this.#isTurningPointReached = true;
     }
@@ -78,7 +80,7 @@ class Danger extends Enemy {
     this.y += this.#dangerSpeed / 1.5;
   }
 
-  rightRoute() {
+  rightRoute(): void {
     if (this.x + this.width / 2 < this.ship.canvasWidth / 2) {
       this.#isTurningPointReached = true;
     }
@@ -93,7 +95,7 @@ class Danger extends Enemy {
     this.y += this.#dangerSpeed / 1.5;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
   }

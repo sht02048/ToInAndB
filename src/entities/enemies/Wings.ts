@@ -20,6 +20,11 @@ class Wings extends Enemy {
   #isWingsReachedMaxX = false;
   #isWingSReachedMinY = false;
 
+  private leftMissileLauncher: MissileLauncher;
+  private rightMissileLauncher: MissileLauncher;
+  private leftCollisionDetector: CollisionDetector;
+  private rightCollisionDetector: CollisionDetector;
+
   constructor({ x, y }) {
     super({
       x,
@@ -39,22 +44,22 @@ class Wings extends Enemy {
       this.#wingsWidth,
       this.#wingsHeight,
     );
-    this.leftMissileDetector = new CollisionDetector();
-    this.leftMissileDetector.setMissileList(
+    this.leftCollisionDetector = new CollisionDetector();
+    this.leftCollisionDetector.setMissileList(
       this.leftMissileLauncher.missileList,
     );
-    this.rightMissileDetector = new CollisionDetector();
-    this.rightMissileDetector.setMissileList(
+    this.rightCollisionDetector = new CollisionDetector();
+    this.rightCollisionDetector.setMissileList(
       this.rightMissileLauncher.missileList,
     );
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
-    this.leftMissileDetector.detectCollision();
-    this.rightMissileDetector.detectCollision();
+    this.leftCollisionDetector.detectCollision();
+    this.rightCollisionDetector.detectCollision();
     this.leftMissileLauncher.setMissileRoute(MISSILE_ROUTE_COMMAND.ENEMY_AIMED);
     this.rightMissileLauncher.setMissileRoute(
       MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
@@ -67,13 +72,13 @@ class Wings extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
     this.leftMissileLauncher.render();
     this.rightMissileLauncher.render();
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.y > 100) {
       this.#isWingsAppeared = true;
       this.#isWingSReachedMinY = false;
@@ -115,7 +120,7 @@ class Wings extends Enemy {
     }
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval === 0 && this.y + this.height > 0) {
       this.#missileRound = 3;
     }
@@ -151,13 +156,13 @@ class Wings extends Enemy {
     }
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.leftMissileLauncher.setTargetList(targetList);
     this.rightMissileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
-    this.leftMissileDetector.setTargetList(targetList);
-    this.rightMissileDetector.setTargetList(targetList);
+    this.leftCollisionDetector.setTargetList(targetList);
+    this.rightCollisionDetector.setTargetList(targetList);
   }
 }
 

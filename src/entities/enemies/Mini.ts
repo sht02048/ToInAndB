@@ -14,6 +14,8 @@ class Mini extends Enemy {
   #isItemSpawned = false;
   #isMiniReached = false;
 
+  private speedUp: Item;
+
   constructor(x, y) {
     super({
       x,
@@ -28,7 +30,7 @@ class Mini extends Enemy {
     this.speedUp = new Item(ITEM_IMAGE.SPEED_UP, ITEM_TYPE.SPEED_UP);
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
@@ -41,13 +43,13 @@ class Mini extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     const renderItem = this.renderItem.bind(this);
 
     this.renderEnemy(renderItem);
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (
       this.frame % this.#missileInterval !== 0 ||
       this.y + this.height < 0 ||
@@ -66,7 +68,7 @@ class Mini extends Enemy {
     this.missileLauncher.loadMultipleMissile(missileInformation);
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.y > this.ship.canvasHeight / 2.5) {
       this.#isMiniReached = true;
       return;
@@ -75,7 +77,7 @@ class Mini extends Enemy {
     this.y += this.#miniSpeed;
   }
 
-  updateItem() {
+  updateItem(): void {
     if (!this.#isItemSpawned) {
       this.speedUp.setItemLocation(this.x, this.y);
       this.#isItemSpawned = true;
@@ -85,7 +87,7 @@ class Mini extends Enemy {
     this.speedUp.detectItem();
   }
 
-  renderItem() {
+  renderItem(): void {
     if (this.speedUp.isGained) {
       return;
     }
@@ -93,7 +95,7 @@ class Mini extends Enemy {
     this.speedUp.renderItem();
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
     this.speedUp.setTarget(targetList[0]);

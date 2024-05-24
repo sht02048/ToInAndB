@@ -19,6 +19,8 @@ class Guard extends Enemy {
   #isEmperorReachedMaxY = false;
   #isItemSpawned = false;
 
+  private powerUp: Item;
+
   constructor({ x, y }) {
     super({
       x,
@@ -33,7 +35,7 @@ class Guard extends Enemy {
     this.powerUp = new Item(ITEM_IMAGE.POWER_UP, ITEM_TYPE.POWER_UP);
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
@@ -48,13 +50,13 @@ class Guard extends Enemy {
     this.frame += 1;
   }
 
-  render() {
+  render(): void {
     const renderItem = this.renderItem.bind(this);
 
     this.renderEnemy(renderItem);
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (
       this.frame % this.#missileInterval !== 0 ||
       this.y + this.height < 0 ||
@@ -73,7 +75,7 @@ class Guard extends Enemy {
     this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
-  setRoute() {
+  setRoute(): void {
     if (
       this.y < this.ship.canvasHeight / 5 &&
       !this.#isEmperorReachedStartPoint
@@ -129,11 +131,10 @@ class Guard extends Enemy {
 
     if (this.#isEmperorReachedMinX && this.#isEmperorReachedMaxY) {
       this.y -= Math.sqrt(2) * this.#emperorSpeed;
-      return;
     }
   }
 
-  updateItem() {
+  updateItem(): void {
     if (!this.#isItemSpawned) {
       this.powerUp.setItemLocation(this.x, this.y);
       this.#isItemSpawned = true;
@@ -143,7 +144,7 @@ class Guard extends Enemy {
     this.powerUp.detectItem();
   }
 
-  renderItem() {
+  renderItem(): void {
     if (this.powerUp.isGained) {
       return;
     }
@@ -151,7 +152,7 @@ class Guard extends Enemy {
     this.powerUp.renderItem();
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
     this.powerUp.setTarget(targetList[0]);

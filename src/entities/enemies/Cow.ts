@@ -9,6 +9,8 @@ class Cow extends Enemy {
   #missileInterval = 160;
   #isCowReachedStartPoint = false;
 
+  private shootingPoint: number;
+
   constructor({ x, y }) {
     super({
       x,
@@ -23,7 +25,7 @@ class Cow extends Enemy {
     this.shootingPoint = y + 100;
   }
 
-  update(x, y) {
+  update(x, y): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
@@ -39,11 +41,11 @@ class Cow extends Enemy {
     this.frame += 1;
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (
       this.frame % this.#missileInterval !== 0 ||
       this.y + this.height < 0 ||
@@ -62,7 +64,7 @@ class Cow extends Enemy {
     this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.y < this.ship.canvasHeight / 5 + this.shootingPoint) {
       return;
     }
@@ -70,7 +72,7 @@ class Cow extends Enemy {
     this.#isCowReachedStartPoint = true;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
   }

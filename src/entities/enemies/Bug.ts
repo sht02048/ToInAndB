@@ -10,6 +10,8 @@ class Bug extends Enemy {
   #bugSpeed = 2;
   #bugAngle = 1;
 
+  private isLeft: boolean;
+
   constructor({ x, y, isLeft }) {
     super({
       x,
@@ -24,7 +26,7 @@ class Bug extends Enemy {
     this.isLeft = isLeft;
   }
 
-  update() {
+  update(): void {
     this.launchMissile = this.launchMissile.bind(this);
     this.setRoute = this.setRoute.bind(this);
 
@@ -35,11 +37,11 @@ class Bug extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval !== 0 || this.y + this.height < 0) {
       return;
     }
@@ -54,7 +56,7 @@ class Bug extends Enemy {
     this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
-  setRoute() {
+  setRoute(): void {
     this.y += this.#bugSpeed;
 
     if (this.frame > 300) {
@@ -71,7 +73,7 @@ class Bug extends Enemy {
     this.x += Math.sin(this.#bugAngle) * 5;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
   }

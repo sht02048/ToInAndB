@@ -7,6 +7,20 @@ import CollisionDetector from "../../physics/CollisionDetector";
 import { AUDIO, ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
+interface MissileLaunchers {
+  leftStraight: MissileLauncher;
+  rightStraight: MissileLauncher;
+  leftGuided: MissileLauncher;
+  rightGuided: MissileLauncher;
+}
+
+interface CollisionDetectors {
+  leftStraight: CollisionDetector;
+  rightStraight: CollisionDetector;
+  leftGuided: CollisionDetector;
+  rightGuided: CollisionDetector;
+}
+
 class Boss extends Enemy {
   #bossWidth = 228;
   #bossHeight = 218;
@@ -33,8 +47,23 @@ class Boss extends Enemy {
   #resetFrame = 400;
   #AudioVolume = 0.7;
   #AudioFadeOutFrame = 200;
-  #missileLaunchers = {};
-  #collisionDetectors = {};
+  #missileLaunchers: MissileLaunchers = {
+    leftStraight: null,
+    rightStraight: null,
+    leftGuided: null,
+    rightGuided: null,
+  };
+
+  #collisionDetectors: CollisionDetectors = {
+    leftStraight: null,
+    rightStraight: null,
+    leftGuided: null,
+    rightGuided: null,
+  };
+
+  private backgroundMusic: Sound;
+  private hasBackgroundMusicPlayed: boolean;
+  public shouldSpawnBot: boolean;
 
   constructor({ x, y }) {
     super({
@@ -74,7 +103,7 @@ class Boss extends Enemy {
     this.renderEnemy();
 
     const launchers = Object.values(this.#missileLaunchers);
-    launchers.forEach((launcher) => launcher.render());
+    launchers.forEach((launcher: MissileLauncher) => launcher.render());
   }
 
   setRoute() {
@@ -255,13 +284,17 @@ class Boss extends Enemy {
 
     const launchers = Object.values(this.#missileLaunchers);
     const detectors = Object.values(this.#collisionDetectors);
-    launchers.forEach((launcher) => launcher.setTargetList(targetList));
-    detectors.forEach((detector) => detector.setTargetList(targetList));
+    launchers.forEach((launcher: MissileLauncher) =>
+      launcher.setTargetList(targetList),
+    );
+    detectors.forEach((detector: CollisionDetector) =>
+      detector.setTargetList(targetList),
+    );
   }
 
   setMissileRoute() {
     const launchers = Object.entries(this.#missileLaunchers);
-    launchers.forEach(([weapon, launcher]) => {
+    launchers.forEach(([weapon, launcher]: [string, MissileLauncher]) => {
       if (weapon.includes("Guided")) {
         launcher.setMissileRoute(MISSILE_ROUTE_COMMAND.GUIDED);
         return;
@@ -275,7 +308,9 @@ class Boss extends Enemy {
 
   detectCollision() {
     const detectors = Object.values(this.#collisionDetectors);
-    detectors.forEach((detector) => detector.detectCollision());
+    detectors.forEach((detector: CollisionDetector) =>
+      detector.detectCollision(),
+    );
   }
 
   #setWeapon() {

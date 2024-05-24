@@ -11,6 +11,8 @@ class Bot extends Enemy {
   #botOutSpeed = 0.5;
   #hasReachedPoint = false;
 
+  private isLeft: boolean;
+
   constructor({ x, y, isLeft }) {
     super({
       x,
@@ -25,7 +27,7 @@ class Bot extends Enemy {
     this.isLeft = isLeft;
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
@@ -36,11 +38,11 @@ class Bot extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval !== 0) {
       return;
     }
@@ -55,7 +57,7 @@ class Bot extends Enemy {
     this.missileLauncher.loadSingleMissile(guidedMissile);
   }
 
-  setRoute() {
+  setRoute(): void {
     if (this.y < this.ship.canvasHeight / 10) {
       this.#hasReachedPoint = true;
     }

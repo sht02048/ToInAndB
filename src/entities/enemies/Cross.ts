@@ -3,27 +3,27 @@ import Enemy from "./Enemy";
 import { ENEMIES, ENEMY_PROJECTILE } from "../../constants/path";
 import MISSILE_ROUTE_COMMAND from "../../constants/missileRouteCommand";
 
-class Cannon extends Enemy {
+class Cross extends Enemy {
   #missileWidth = 16;
-  #missileSpeed = 5;
-  #missileInterval = 60;
-  #cannonSpeed = 2;
+  #missileSpeed = 2;
+  #missileInterval = 200;
+  #crossSpeed = 0.8;
 
   constructor({ x, y }) {
     super({
       x,
       y,
       health: 10,
-      shipImage: ENEMIES.CANNON,
-      hitShipImage: ENEMIES.CANNON_HIT,
-      width: 56,
-      height: 54,
+      shipImage: ENEMIES.CROSS,
+      hitShipImage: ENEMIES.CROSS_HIT,
+      width: 44,
+      height: 44,
     });
   }
 
-  update() {
+  update(): void {
     const launchMissile = this.launchMissile.bind(this);
-    const setRoute = this.setRoute.bind(this);
+    const setRoute = this.seRoute.bind(this);
 
     this.updateEnemy(
       launchMissile,
@@ -32,11 +32,11 @@ class Cannon extends Enemy {
     );
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
   }
 
-  launchMissile() {
+  launchMissile(): void {
     if (this.frame % this.#missileInterval !== 0 || this.y + this.height < 0) {
       return;
     }
@@ -51,16 +51,14 @@ class Cannon extends Enemy {
     this.missileLauncher.loadSingleMissile(missileInformation);
   }
 
-  setRoute() {
-    if (this.y < this.ship.canvasHeight / 6) {
-      this.y += this.#cannonSpeed;
-    }
+  seRoute(): void {
+    this.y += this.#crossSpeed;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
   }
 }
 
-export default Cannon;
+export default Cross;
