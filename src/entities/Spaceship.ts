@@ -3,9 +3,9 @@ import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
 interface MissileInformation {
-  projectilePath: URL;
   x?: number;
   y?: number;
+  projectilePath: string;
   missileWidth: number;
   missileSpeed: number;
   missileDamage?: number;

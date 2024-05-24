@@ -32,8 +32,8 @@ class Player extends SpaceShip {
   private initialY: number;
   private reloadFrame: number;
   private invincibleFrame: number;
-  private straightProjectile: URL;
-  private guidedProjectile: URL;
+  private straightProjectile: string;
+  private guidedProjectile: string;
   private shouldOut: boolean;
   private isOut: boolean;
   private cockpit: Cockpit;

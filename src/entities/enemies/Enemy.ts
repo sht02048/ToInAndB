@@ -38,6 +38,8 @@ class Enemy extends SpaceShip {
     command,
     updateItem,
   }: EnemyUpdateInformation): void {
+    this.isInvincible = this.isAboveCanvas();
+
     if (!this.isBoss || (this.isBoss && !this.isDestroyed)) {
       this.collisionDetector.detectCollision();
     }
@@ -118,6 +120,14 @@ class Enemy extends SpaceShip {
     ) {
       this.isVanished = true;
     }
+  }
+
+  isAboveCanvas(): boolean {
+    if (this.y < 0) {
+      return true;
+    }
+
+    return false;
   }
 }
 
