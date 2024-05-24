@@ -1,30 +1,20 @@
+/* eslint-disable*/
 import STATIC from "../assets/sprites/player/player_static.png";
 import STRAIGHT from "../assets/sprites/player/player_straight.png";
 import LEFT from "../assets/sprites/player/player_left.png";
 import RIGHT from "../assets/sprites/player/player_right.png";
 import LIFE from "../assets/sprites/player/player_life.png";
 import HEAVY from "../assets/sprites/enemies/heavy.png";
-import HEAVY_HIT from "../assets/sprites/enemies/heavy_hit.png";
 import BUG from "../assets/sprites/enemies/bug.png";
-import BUG_HIT from "../assets/sprites/enemies/bug_hit.png";
 import MINI from "../assets/sprites/enemies/mini.png";
-import MINI_HIT from "../assets/sprites/enemies/mini_hit.png";
 import CANNON from "../assets/sprites/enemies/cannon.png";
-import CANNON_HIT from "../assets/sprites/enemies/cannon_hit.png";
 import DANGER from "../assets/sprites/enemies/danger.png";
-import DANGER_HIT from "../assets/sprites/enemies/danger_hit.png";
 import WINGS from "../assets/sprites/enemies/wings.png";
-import WINGS_HIT from "../assets/sprites/enemies/wings_hit.png";
 import CROSS from "../assets/sprites/enemies/cross.png";
-import CROSS_HIT from "../assets/sprites/enemies/cross_hit.png";
 import COW from "../assets/sprites/enemies/cow.png";
-import COW_HIT from "../assets/sprites/enemies/cow_hit.png";
 import EMPEROR from "../assets/sprites/enemies/emperor.png";
-import EMPEROR_HIT from "../assets/sprites/enemies/emperor_hit.png";
 import BOT from "../assets/sprites/enemies/bot.png";
-import BOT_HIT from "../assets/sprites/enemies/bot_hit.png";
 import BOSS from "../assets/sprites/enemies/boss.png";
-import BOSS_HIT from "../assets/sprites/enemies/boss_hit.png";
 import BASE from "../assets/sprites/backgrounds/base.png";
 import BLOCK from "../assets/sprites/backgrounds/block.png";
 import PLATE from "../assets/sprites/backgrounds/plate.png";
@@ -98,27 +88,16 @@ const PLAYER = {
 
 const ENEMIES = {
   HEAVY,
-  HEAVY_HIT,
   BUG,
-  BUG_HIT,
   MINI,
-  MINI_HIT,
   CANNON,
-  CANNON_HIT,
   DANGER,
-  DANGER_HIT,
   WINGS,
-  WINGS_HIT,
   CROSS,
-  CROSS_HIT,
   COW,
-  COW_HIT,
   EMPEROR,
-  EMPEROR_HIT,
   BOT,
-  BOT_HIT,
   BOSS,
-  BOSS_HIT,
 };
 
 const BACKGROUNDS = {
