@@ -42,6 +42,7 @@ module.exports = {
     "rules": {
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
+        "class-methods-use-this": "off",
         "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
         "import/extensions": [
             "error",

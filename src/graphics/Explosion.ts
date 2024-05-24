@@ -2,10 +2,10 @@ import Renderer from "./Renderer";
 import Sound from "../utils/Sound";
 import { EXPLOSION, EXPLOSION_BOSS, AUDIO } from "../constants/path";
 
-class Explosion {
-  #enemyExplosionList = [];
-  #bossExplosionList = [];
+const enemyExplosionList = [];
+const bossExplosionList = [];
 
+class Explosion {
   private isBoss: boolean;
   private explosionSound: Sound;
   private isExplosionSoundPlaying: boolean;
@@ -20,16 +20,29 @@ class Explosion {
     this.explosionSound.sound.volume = 0.3;
     this.isExplosionSoundPlaying = false;
 
-    for (let i = 1; i < 12; i += 1) {
-      this.#enemyExplosionList.push(new Renderer(EXPLOSION[i]));
+    if (isBoss) {
+      for (let i = 1; i <= 20; i += 1) {
+        bossExplosionList.push(new Renderer(EXPLOSION_BOSS[i]));
+      }
+
+      return;
     }
 
-    for (let i = 1; i <= 20; i += 1) {
-      this.#bossExplosionList.push(new Renderer(EXPLOSION_BOSS[i]));
+    if (enemyExplosionList.length === 11) {
+      return;
+    }
+
+    for (let i = 1; i < 12; i += 1) {
+      enemyExplosionList.push(new Renderer(EXPLOSION[i]));
     }
   }
 
-  render(x: number, y: number, width: number, shouldMakeExplosionSound: boolean) {
+  render(
+    x: number,
+    y: number,
+    width: number,
+    shouldMakeExplosionSound: boolean,
+  ) {
     if (this.isBoss) {
       this.destroyBoss(x, y, width);
       return;
@@ -51,12 +64,17 @@ class Explosion {
 
     const currentFrame = Math.floor(this.explosionFrame / 4);
 
-    this.#bossExplosionList[currentFrame].render(x, y, width, width);
+    bossExplosionList[currentFrame].render(x, y, width, width);
 
     this.explosionFrame += 1;
   }
 
-  destroy(x: number, y: number, width: number, shouldMakeExplosionSound: boolean = true) {
+  destroy(
+    x: number,
+    y: number,
+    width: number,
+    shouldMakeExplosionSound: boolean = true,
+  ) {
     if (this.explosionFrame === 44) {
       return;
     }
@@ -69,7 +87,7 @@ class Explosion {
 
     const currentFrame = Math.floor(this.explosionFrame / 4);
 
-    this.#enemyExplosionList[currentFrame].render(x, y, width, width);
+    enemyExplosionList[currentFrame].render(x, y, width, width);
 
     this.explosionFrame += 1;
   }
