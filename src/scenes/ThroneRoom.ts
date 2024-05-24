@@ -27,12 +27,11 @@ class ThroneRoom extends Renderer {
     this.hasStarted = false;
   }
 
-  update() {
+  update(): void {
     this.boss.update();
-    this.botList.forEach((bot) => {
+    this.botList.forEach((bot: Bot) => {
       if (this.boss.isDestroyed) {
-        bot.isDestroyed = true;
-        bot.makeExplosionSound = false;
+        bot.markDestroyed();
       }
 
       bot.update();
@@ -43,12 +42,12 @@ class ThroneRoom extends Renderer {
     this.frame += 1;
   }
 
-  render() {
+  render(): void {
     this.boss.render();
     this.botList.forEach((bot) => bot.render());
   }
 
-  spawnBot() {
+  spawnBot(): void {
     if (
       !this.boss.shouldSpawnBot ||
       this.frame % this.#spawnInterval !== 0 ||
@@ -75,25 +74,25 @@ class ThroneRoom extends Renderer {
     this.botList.push(leftBot, rightBot);
   }
 
-  setTarget(player: Player) {
+  setTarget(player: Player): void {
     this.boss.setTargetList(player);
     this.botList.forEach((bot) => bot.setTargetList(player));
   }
 
-  setSceneTargetList() {
+  setSceneTargetList(): (Boss | Bot)[] {
     const sceneTargetList = [this.boss, ...this.botList];
 
     return sceneTargetList;
   }
 
-  checkSceneStatus() {
+  checkSceneStatus(): boolean {
     this.isDone = true;
 
     if (!this.boss.isDestroyed) {
       this.isDone = false;
     }
 
-    this.botList.forEach((bot) => {
+    this.botList.forEach((bot: Bot) => {
       if (!bot.isDestroyed && !bot.isVanished) {
         this.isDone = false;
       }

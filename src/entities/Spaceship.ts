@@ -2,12 +2,22 @@ import Explosion from "../graphics/Explosion";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
 
-class SpaceShip {
-  private hitFrame: number;
-  private collisionDetector: CollisionDetector;
+interface MissileInformation {
+  projectilePath: URL;
+  x?: number;
+  y?: number;
+  missileWidth: number;
+  missileSpeed: number;
+  missileDamage?: number;
+  isAimed?: boolean;
+  shouldTilt?: boolean;
+}
 
+class SpaceShip {
+  protected hitFrame: number;
   protected height: number;
   protected frame: number;
+  protected collisionDetector: CollisionDetector;
   protected readonly missileLauncher: MissileLauncher;
 
   public x: number;
@@ -33,7 +43,7 @@ class SpaceShip {
     this.frame = 0;
     this.width = width;
     this.height = height;
-    this.shipSpeed;
+    this.shipSpeed = 0;
 
     this.explosion = new Explosion(isBoss);
     this.missileLauncher = new MissileLauncher(width, height);
@@ -50,7 +60,7 @@ class SpaceShip {
     missileDamage,
     isAimed = false,
     shouldTilt = false,
-  }) {
+  }: MissileInformation) {
     const missileInformation = {
       projectilePath,
       x,
@@ -65,9 +75,8 @@ class SpaceShip {
     return missileInformation;
   }
 
-  noop() {
-    return;
-  }
+  // eslint-disable-next-line class-methods-use-this
+  noop() {}
 }
 
 export default SpaceShip;

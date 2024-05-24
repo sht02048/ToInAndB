@@ -82,6 +82,11 @@ class Bot extends Enemy {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
   }
+
+  markDestroyed() {
+    this.isDestroyed = true;
+    this.shouldMakeExplosionSound = false;
+  }
 }
 
 export default Bot;
