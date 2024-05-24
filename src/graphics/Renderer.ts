@@ -55,6 +55,7 @@ class Renderer {
         this.height = this.image!.height;
       };
     }
+
     return this.image;
   }
 
