@@ -26,6 +26,9 @@ class Renderer {
 
   constructor(imagePath?: string) {
     this.imagePath = imagePath;
+    this.image = new Image();
+    this.image.src = this.imagePath;
+
     this.mainCanvas = document.getElementById(
       "main-canvas",
     ) as HTMLCanvasElement;
@@ -44,27 +47,18 @@ class Renderer {
     this.maxY = this.canvasHeight - this.#playerShipHeight + 5;
     this.inAndOutSpeed = 4;
     this.frame = 0;
-  }
 
-  private loadImage(): HTMLImageElement {
-    if (!this.image) {
-      this.image = new Image();
-      this.image.src = this.imagePath || "";
-      this.image.onload = () => {
-        this.width = this.image!.width;
-        this.height = this.image!.height;
-      };
-    }
-
-    return this.image;
+    this.image.onload = () => {
+      this.width = this.image.width;
+      this.height = this.image.height;
+    };
   }
 
   render(x: number, y: number, width?: number, height?: number): void {
-    const img = this.loadImage();
     if (width && height) {
-      this.mainCtx.drawImage(img, x, y, width, height);
+      this.mainCtx.drawImage(this.image, x, y, width, height);
     } else {
-      this.mainCtx.drawImage(img, x, y);
+      this.mainCtx.drawImage(this.image, x, y);
     }
   }
 
@@ -75,17 +69,15 @@ class Renderer {
     height: number,
     angle: number,
   ): void {
-    const img = this.loadImage();
     this.mainCtx.save();
     this.mainCtx.translate(x + width / 2, y + height / 2);
     this.mainCtx.rotate(angle);
-    this.mainCtx.drawImage(img, -width / 2, -height / 2, width, height);
+    this.mainCtx.drawImage(this.image, -width / 2, -height / 2, width, height);
     this.mainCtx.restore();
   }
 
   renderIntro(x: number, y: number, width: number, height: number): void {
-    const img = this.loadImage();
-    this.introCtx.drawImage(img, x, y, width, height);
+    this.introCtx.drawImage(this.image, x, y, width, height);
   }
 }
 
