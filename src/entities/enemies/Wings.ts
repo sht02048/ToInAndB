@@ -31,7 +31,6 @@ class Wings extends Enemy {
       y,
       health: 200,
       shipImage: ENEMIES.WINGS,
-      hitShipImage: ENEMIES.WINGS_HIT,
       width: 72,
       height: 71,
     });
@@ -65,11 +64,11 @@ class Wings extends Enemy {
       MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
     );
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+    });
   }
 
   render(): void {

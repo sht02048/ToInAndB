@@ -1,6 +1,13 @@
 import SpaceShip from "../Spaceship";
 import Renderer from "../../graphics/Renderer";
 
+interface EnemyUpdateInformation {
+  launchMissile?: () => void;
+  setRoute: () => void;
+  command: string;
+  updateItem?: () => void;
+}
+
 class Enemy extends SpaceShip {
   private hitShip: Renderer;
   private isBoss: boolean;
@@ -8,16 +15,7 @@ class Enemy extends SpaceShip {
   protected ship: Renderer;
   public shouldMakeExplosionSound: boolean;
 
-  constructor({
-    x,
-    y,
-    health,
-    shipImage,
-    hitShipImage,
-    width,
-    height,
-    isBoss = false,
-  }) {
+  constructor({ x, y, health, shipImage, width, height, isBoss = false }) {
     super({
       x,
       y,
@@ -27,7 +25,6 @@ class Enemy extends SpaceShip {
       isBoss,
     });
     this.ship = new Renderer(shipImage);
-    this.hitShip = new Renderer(hitShipImage);
 
     this.shouldMakeExplosionSound = true;
     this.width = width;
@@ -35,7 +32,12 @@ class Enemy extends SpaceShip {
     this.isBoss = isBoss;
   }
 
-  updateEnemy(launchMissile, setRoute, command, updateItem = this.noop): void {
+  updateEnemy({
+    launchMissile,
+    setRoute,
+    command,
+    updateItem,
+  }: EnemyUpdateInformation): void {
     if (!this.isBoss || (this.isBoss && !this.isDestroyed)) {
       this.collisionDetector.detectCollision();
     }
@@ -43,18 +45,24 @@ class Enemy extends SpaceShip {
     this.missileLauncher.setMissileRoute(command);
 
     if (this.isDestroyed || this.isVanished) {
-      updateItem();
+      if (updateItem !== undefined) {
+        updateItem();
+      }
+
       return;
     }
 
-    launchMissile();
+    if (launchMissile !== undefined) {
+      launchMissile();
+    }
+
     setRoute();
     this.checkShipStatus();
 
     this.frame += 1;
   }
 
-  renderEnemy(renderItem = this.noop): void {
+  renderEnemy(renderItem?: () => void): void {
     this.missileLauncher.render();
 
     if (this.isDestroyed) {
@@ -65,7 +73,9 @@ class Enemy extends SpaceShip {
         this.shouldMakeExplosionSound,
       );
 
-      renderItem();
+      if (renderItem !== undefined) {
+        renderItem();
+      }
 
       return;
     }
@@ -83,8 +93,12 @@ class Enemy extends SpaceShip {
   }
 
   renderHit(): void {
+    this.ship.mainCtx.save();
+    this.ship.mainCtx.filter = "brightness(120%)";
+    this.ship.render(this.x, this.y);
+    this.ship.mainCtx.restore();
+
     this.hitFrame -= 1;
-    this.hitShip.render(this.x, this.y);
 
     if (this.hitFrame === 0) {
       this.isHit = false;

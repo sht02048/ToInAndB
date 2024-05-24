@@ -1,5 +1,4 @@
 import Enemy from "./Enemy";
-
 import Item from "../../graphics/Item";
 
 import ITEM_TYPE from "../../constants/item";
@@ -24,7 +23,6 @@ class Heavy extends Enemy {
       y,
       health: 20,
       shipImage: ENEMIES.HEAVY,
-      hitShipImage: ENEMIES.HEAVY_HIT,
       width: 50,
       height: 64,
     });
@@ -37,12 +35,12 @@ class Heavy extends Enemy {
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+      command: MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
       updateItem,
-    );
+    });
   }
 
   render(): void {

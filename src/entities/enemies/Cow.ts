@@ -17,7 +17,6 @@ class Cow extends Enemy {
       y,
       health: 30,
       shipImage: ENEMIES.COW,
-      hitShipImage: ENEMIES.COW_HIT,
       width: 50,
       height: 48,
     });
@@ -32,11 +31,11 @@ class Cow extends Enemy {
     this.x = x;
     this.y = y;
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+    });
 
     this.frame += 1;
   }

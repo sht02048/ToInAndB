@@ -18,7 +18,6 @@ class Danger extends Enemy {
       y,
       health: 4,
       shipImage: ENEMIES.DANGER,
-      hitShipImage: ENEMIES.DANGER_HIT,
       width: 40,
       height: 51,
     });
@@ -30,11 +29,11 @@ class Danger extends Enemy {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+    });
   }
 
   render(): void {

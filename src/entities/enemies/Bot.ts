@@ -19,7 +19,6 @@ class Bot extends Enemy {
       y,
       health: 12,
       shipImage: ENEMIES.BOT,
-      hitShipImage: ENEMIES.BOT_HIT,
       width: 48,
       height: 29,
     });
@@ -31,11 +30,11 @@ class Bot extends Enemy {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_AIMED,
+    });
   }
 
   render(): void {

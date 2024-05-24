@@ -71,7 +71,6 @@ class Boss extends Enemy {
       y,
       health: 600,
       shipImage: ENEMIES.BOSS,
-      hitShipImage: ENEMIES.BOSS_HIT,
       width: 228,
       height: 218,
       isBoss: true,
@@ -96,17 +95,20 @@ class Boss extends Enemy {
     this.setMissileRoute();
 
     const setRoute = this.setRoute.bind(this);
-    this.updateEnemy(this.noop, setRoute, MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY);
+    this.updateEnemy({
+      setRoute,
+      command: MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY,
+    });
   }
 
-  render() {
+  render(): void {
     this.renderEnemy();
 
     const launchers = Object.values(this.#missileLaunchers);
     launchers.forEach((launcher: MissileLauncher) => launcher.render());
   }
 
-  setRoute() {
+  setRoute(): void {
     if (!this.#isAtInitial) {
       this.#isAtInitial = this.setInitialPosition();
       return;
@@ -153,7 +155,7 @@ class Boss extends Enemy {
     this.#isAtMaxX = false;
   }
 
-  launchAllWay() {
+  launchAllWay(): void {
     if (this.frame % this.#allWayInterval !== 0) {
       return;
     }
@@ -169,7 +171,7 @@ class Boss extends Enemy {
     this.missileLauncher.loadMultipleMissile(allWayMissile);
   }
 
-  launchGuided() {
+  launchGuided(): void {
     if (this.frame % this.#guidedInterval !== 0) {
       return;
     }
@@ -195,7 +197,7 @@ class Boss extends Enemy {
     this.#missileLaunchers.rightGuided.loadSingleMissile(rightMissile);
   }
 
-  launchStraight() {
+  launchStraight(): void {
     if (this.frame % this.#straightInterval !== 0) {
       return;
     }
@@ -221,7 +223,7 @@ class Boss extends Enemy {
     this.#missileLaunchers.rightStraight.loadSingleMissile(rightMissile);
   }
 
-  moveForward() {
+  moveForward(): void {
     if (this.y > 400) {
       this.#isAtInitial = false;
       this.#shouldMoveForward = false;
@@ -231,7 +233,7 @@ class Boss extends Enemy {
     this.y += this.#bossSpeed;
   }
 
-  moveSideToSide() {
+  moveSideToSide(): void {
     const minX = 100;
     const maxX = this.ship.canvasWidth - this.ship.width - 100;
 
@@ -262,7 +264,7 @@ class Boss extends Enemy {
     }
   }
 
-  setInitialPosition() {
+  setInitialPosition(): boolean {
     const initialX = this.ship.canvasWidth / 2 - this.#bossWidth / 2;
     const initialY = 50;
     const dx = initialX - this.x;
@@ -278,7 +280,7 @@ class Boss extends Enemy {
     return false;
   }
 
-  setTargetList(targetList) {
+  setTargetList(targetList): void {
     this.missileLauncher.setTargetList(targetList);
     this.collisionDetector.setTargetList(targetList);
 
@@ -292,7 +294,7 @@ class Boss extends Enemy {
     );
   }
 
-  setMissileRoute() {
+  setMissileRoute(): void {
     const launchers = Object.entries(this.#missileLaunchers);
     launchers.forEach(([weapon, launcher]: [string, MissileLauncher]) => {
       if (weapon.includes("Guided")) {
@@ -306,14 +308,14 @@ class Boss extends Enemy {
     });
   }
 
-  detectCollision() {
+  detectCollision(): void {
     const detectors = Object.values(this.#collisionDetectors);
     detectors.forEach((detector: CollisionDetector) =>
       detector.detectCollision(),
     );
   }
 
-  #setWeapon() {
+  #setWeapon(): void {
     const weapons = [
       "leftGuided",
       "rightGuided",
@@ -330,16 +332,16 @@ class Boss extends Enemy {
     });
   }
 
-  playBossAudio() {
+  playBossAudio(): void {
     this.backgroundMusic.playAudio();
     this.hasBackgroundMusicPlayed = true;
   }
 
-  adjustBossAudio() {
+  adjustBossAudio(): void {
     this.backgroundMusic.sound.currentTime = 16;
   }
 
-  fadeOutAudio() {
+  fadeOutAudio(): void {
     if (
       this.backgroundMusic.sound.volume <=
       this.#AudioVolume / this.#AudioFadeOutFrame

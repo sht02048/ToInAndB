@@ -74,9 +74,6 @@ class SpaceShip {
 
     return missileInformation;
   }
-
-  // eslint-disable-next-line class-methods-use-this
-  noop() {}
 }
 
 export default SpaceShip;

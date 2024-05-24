@@ -1,5 +1,4 @@
 import Enemy from "./Enemy";
-
 import Item from "../../graphics/Item";
 
 import ITEM_TYPE from "../../constants/item";
@@ -22,7 +21,6 @@ class Mini extends Enemy {
       y,
       health: 60,
       shipImage: ENEMIES.MINI,
-      hitShipImage: ENEMIES.MINI_HIT,
       width: 44,
       height: 47,
     });
@@ -35,12 +33,12 @@ class Mini extends Enemy {
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY,
+      command: MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY,
       updateItem,
-    );
+    });
   }
 
   render(): void {

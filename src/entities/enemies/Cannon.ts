@@ -15,7 +15,6 @@ class Cannon extends Enemy {
       y,
       health: 10,
       shipImage: ENEMIES.CANNON,
-      hitShipImage: ENEMIES.CANNON_HIT,
       width: 56,
       height: 54,
     });
@@ -25,11 +24,11 @@ class Cannon extends Enemy {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.setRoute.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
+    });
   }
 
   render(): void {

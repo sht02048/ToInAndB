@@ -15,7 +15,6 @@ class Cross extends Enemy {
       y,
       health: 10,
       shipImage: ENEMIES.CROSS,
-      hitShipImage: ENEMIES.CROSS_HIT,
       width: 44,
       height: 44,
     });
@@ -25,11 +24,11 @@ class Cross extends Enemy {
     const launchMissile = this.launchMissile.bind(this);
     const setRoute = this.seRoute.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
-    );
+      command: MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
+    });
   }
 
   render(): void {

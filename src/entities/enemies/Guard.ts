@@ -1,5 +1,4 @@
 import Enemy from "./Enemy";
-
 import Item from "../../graphics/Item";
 
 import ITEM_TYPE from "../../constants/item";
@@ -27,7 +26,6 @@ class Guard extends Enemy {
       y,
       health: 200,
       shipImage: ENEMIES.EMPEROR,
-      hitShipImage: ENEMIES.EMPEROR_HIT,
       width: 71,
       height: 71,
     });
@@ -40,12 +38,12 @@ class Guard extends Enemy {
     const setRoute = this.setRoute.bind(this);
     const updateItem = this.updateItem.bind(this);
 
-    this.updateEnemy(
+    this.updateEnemy({
       launchMissile,
       setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
+      command: MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
       updateItem,
-    );
+    });
 
     this.frame += 1;
   }

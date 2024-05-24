@@ -27,7 +27,7 @@ class Entrance extends Renderer {
     this.hasStarted = false;
   }
 
-  update() {
+  update(): void {
     if (this.frame > this.#appearanceFrame) {
       this.bugList.forEach((bug) => bug.update());
       this.heavy.update();
@@ -36,25 +36,25 @@ class Entrance extends Renderer {
     this.frame += 1;
   }
 
-  render() {
+  render(): void {
     if (this.frame > this.#appearanceFrame) {
       this.bugList.forEach((bug) => bug.render());
       this.heavy.render();
     }
   }
 
-  setTarget(player: Player) {
+  setTarget(player: Player): void {
     this.bugList.forEach((bug) => bug.setTargetList(player));
     this.heavy.setTargetList(player);
   }
 
-  setSceneTargetList() {
+  setSceneTargetList(): (Heavy | Bug)[] {
     const sceneTargetList = [this.heavy, ...this.bugList];
 
     return sceneTargetList;
   }
 
-  checkSceneStatus() {
+  checkSceneStatus(): boolean {
     this.#isDone = true;
 
     this.bugList.forEach((bug) => {

@@ -18,7 +18,6 @@ class Bug extends Enemy {
       y,
       health: 4,
       shipImage: ENEMIES.BUG,
-      hitShipImage: ENEMIES.BUG_HIT,
       width: 56,
       height: 53,
     });
@@ -27,14 +26,14 @@ class Bug extends Enemy {
   }
 
   update(): void {
-    this.launchMissile = this.launchMissile.bind(this);
-    this.setRoute = this.setRoute.bind(this);
+    const launchMissile = this.launchMissile.bind(this);
+    const setRoute = this.setRoute.bind(this);
 
-    this.updateEnemy(
-      this.launchMissile,
-      this.setRoute,
-      MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
-    );
+    this.updateEnemy({
+      launchMissile,
+      setRoute,
+      command: MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT,
+    });
   }
 
   render(): void {
