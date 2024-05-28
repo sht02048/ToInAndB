@@ -6,4 +6,15 @@ interface MissileRouteCommand {
   GUIDED: string;
 }
 
-export default MissileRouteCommand;
+interface MissileInformation {
+  x?: number;
+  y?: number;
+  projectilePath: string;
+  missileWidth: number;
+  missileSpeed: number;
+  missileDamage?: number;
+  isAimed?: boolean;
+  shouldTilt?: boolean;
+}
+
+export { MissileRouteCommand, MissileInformation };

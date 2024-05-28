@@ -1,21 +1,10 @@
 import Explosion from "../graphics/Explosion";
 import MissileLauncher from "../weapons/MissileLauncher";
 import CollisionDetector from "../physics/CollisionDetector";
-
-interface MissileInformation {
-  x?: number;
-  y?: number;
-  projectilePath: string;
-  missileWidth: number;
-  missileSpeed: number;
-  missileDamage?: number;
-  isAimed?: boolean;
-  shouldTilt?: boolean;
-}
+import { MissileInformation } from "../types/interfaces";
 
 class SpaceShip {
   protected hitFrame: number;
-  protected height: number;
   protected frame: number;
   protected collisionDetector: CollisionDetector;
   protected readonly missileLauncher: MissileLauncher;
@@ -23,6 +12,7 @@ class SpaceShip {
   public x: number;
   public y: number;
   public width: number;
+  public height: number;
   public isDestroyed: boolean;
   public isVanished: boolean;
   public isHit: boolean;
@@ -51,7 +41,7 @@ class SpaceShip {
     this.collisionDetector.setMissileList(this.missileLauncher.missileList);
   }
 
-  setMissileInformation({
+  public setMissileInformation({
     projectilePath,
     x = this.x,
     y = this.y + this.width,

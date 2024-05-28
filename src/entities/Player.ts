@@ -189,20 +189,19 @@ class Player extends SpaceShip {
 
   upgrade() {
     switch (this.level) {
-      case 2:
+      case 2: {
         this.#missileDamage = 3;
         this.straightProjectile = PROJECTILE.LEVEL_2;
         this.#straightMissileWidth = 52;
         break;
+      }
 
-      case 3:
+      case 3: {
         this.#missileDamage = 4;
         this.straightProjectile = PROJECTILE.LEVEL_3;
         this.#straightMissileWidth = 106;
         break;
-
-      default:
-        break;
+      }
     }
   }
 

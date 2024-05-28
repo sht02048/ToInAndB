@@ -1,11 +1,20 @@
 import Renderer from "../graphics/Renderer";
 
 class Missile extends Renderer {
-  constructor(imagePath) {
+  public isVanished: boolean;
+  public damage: number;
+  public speed: number;
+  public vx: number;
+  public vy: number;
+  public angle: number;
+  public targetIndex: number | null;
+
+  constructor(imagePath: string) {
     super(imagePath);
 
     this.isVanished = false;
     this.damage = 1;
+    this.speed;
     this.vx;
     this.vy;
     this.angle;
@@ -23,17 +32,17 @@ class Missile extends Renderer {
     }
   }
 
-  playerStraight(missileSpeed) {
+  public playerStraight(missileSpeed: number): void {
     this.y -= missileSpeed;
     this.#checkVanished();
   }
 
-  enemyStraight(missileSpeed) {
+  public enemyStraight(missileSpeed: number): void {
     this.y += missileSpeed;
     this.#checkVanished();
   }
 
-  enemyTargetMove() {
+  public enemyTargetMove(): void {
     this.x += this.vx;
     this.y += this.vy;
     this.#checkVanished();

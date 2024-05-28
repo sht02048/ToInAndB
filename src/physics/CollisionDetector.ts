@@ -7,7 +7,7 @@ import Missile from "../weapons/Missile";
 class CollisionDetector {
   #hitBoxModifier = 10;
 
-  private targetList:  SpaceShip[];
+  private targetList: SpaceShip[];
   private missileList: Missile[];
   private item: Item;
   private player: Player;
@@ -38,13 +38,15 @@ class CollisionDetector {
     }
 
     switch (this.item.type) {
-      case ITEM_TYPE.POWER_UP:
+      case ITEM_TYPE.POWER_UP: {
         this.player.level += 1;
         break;
+      }
 
-      case ITEM_TYPE.SPEED_UP:
+      case ITEM_TYPE.SPEED_UP: {
         this.player.shipSpeed += 1.5;
         break;
+      }
     }
 
     this.item.isGained = true;

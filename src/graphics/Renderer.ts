@@ -1,15 +1,10 @@
 class Renderer {
-  #leftBlockSize = 100;
-  #rightBlockSize = 145;
-  #playerShipHeight = 61;
-
   private imagePath?: string;
   private image: HTMLImageElement;
   private introCanvas: HTMLCanvasElement;
   private introCtx: CanvasRenderingContext2D;
 
-  protected frame: number;
-
+  public frame: number;
   public height: number;
   public width: number;
   public x: number | null;
@@ -23,6 +18,10 @@ class Renderer {
   public readonly mainCanvas: HTMLCanvasElement;
   public readonly mainCtx: CanvasRenderingContext2D;
   public readonly inAndOutSpeed: number;
+
+  #leftBlockSize = 100;
+  #rightBlockSize = 145;
+  #playerShipHeight = 61;
 
   constructor(imagePath?: string) {
     this.imagePath = imagePath;
@@ -54,7 +53,7 @@ class Renderer {
     };
   }
 
-  render(x: number, y: number, width?: number, height?: number): void {
+  public render(x: number, y: number, width?: number, height?: number): void {
     if (width && height) {
       this.mainCtx.drawImage(this.image, x, y, width, height);
     } else {
@@ -62,7 +61,7 @@ class Renderer {
     }
   }
 
-  renderAngle(
+  public renderAngle(
     x: number,
     y: number,
     width: number,
@@ -76,7 +75,12 @@ class Renderer {
     this.mainCtx.restore();
   }
 
-  renderIntro(x: number, y: number, width: number, height: number): void {
+  public renderIntro(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+  ): void {
     this.introCtx.drawImage(this.image, x, y, width, height);
   }
 }

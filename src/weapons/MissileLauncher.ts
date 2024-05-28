@@ -1,12 +1,27 @@
 import Missile from "./Missile";
+
 import MISSILE_ROUTE_COMMAND from "../constants/missileRouteCommand";
+import { MissileInformation } from "../types/interfaces";
+
+import Player from "../entities/Player";
+import Enemy from "../entities/enemies/Enemy";
+import SpaceShip from "../entities/Spaceship";
 
 class MissileLauncher {
+  private target: Player | Enemy;
+  private x: number;
+  private y: number;
+  private width: number;
+  private height: number;
+  private targetList: SpaceShip[];
+
+  public missileList: Missile[];
+
   #multipleAngle = 0.1;
   #projectileNumber = 15;
   #enemyDamage = 1;
 
-  constructor(width, height) {
+  constructor(width: number, height: number) {
     this.x;
     this.y;
     this.width = width;
@@ -15,11 +30,11 @@ class MissileLauncher {
     this.missileList = [];
   }
 
-  setTargetList(targetList) {
+  public setTargetList(targetList: SpaceShip[]): void {
     this.targetList = targetList;
   }
 
-  makeMissile({
+  public makeMissile({
     projectilePath,
     x,
     y,
@@ -27,7 +42,7 @@ class MissileLauncher {
     missileDamage = this.#enemyDamage,
     missileSpeed,
     isAimed = false,
-  }) {
+  }: MissileInformation): Missile {
     const missile = new Missile(projectilePath);
     this.x = x;
     this.y = y;
@@ -52,13 +67,13 @@ class MissileLauncher {
     return missile;
   }
 
-  loadSingleMissile(missileInformation) {
+  public loadSingleMissile(missileInformation: MissileInformation): void {
     const missile = this.makeMissile(missileInformation);
 
     this.missileList.push(missile);
   }
 
-  loadMultipleMissile(missileInformation) {
+  public loadMultipleMissile(missileInformation: MissileInformation): void {
     const radiansPerProjectile = (Math.PI * 2) / this.#projectileNumber;
 
     for (let i = 0; i < this.#projectileNumber; i += 1) {
@@ -79,8 +94,8 @@ class MissileLauncher {
     }
   }
 
-  render() {
-    this.missileList.forEach((missile) => {
+  public render(): void {
+    this.missileList.forEach((missile: Missile): void => {
       if (missile.isVanished) {
         return;
       }
@@ -100,26 +115,29 @@ class MissileLauncher {
     });
   }
 
-  setMissileRoute(missileRoute) {
-    this.missileList.forEach((missile) => {
+  setMissileRoute(missileRoute: string): void {
+    this.missileList.forEach((missile: Missile): void => {
       if (missile.isVanished) {
         return;
       }
 
       switch (missileRoute) {
-        case MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT:
+        case MISSILE_ROUTE_COMMAND.PLAYER_STRAIGHT: {
           missile.playerStraight(missile.speed);
           break;
+        }
 
-        case MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT:
+        case MISSILE_ROUTE_COMMAND.ENEMY_STRAIGHT: {
           missile.enemyStraight(missile.speed);
           break;
+        }
 
-        case MISSILE_ROUTE_COMMAND.ENEMY_AIMED:
+        case MISSILE_ROUTE_COMMAND.ENEMY_AIMED: {
           missile.enemyTargetMove();
           break;
+        }
 
-        case MISSILE_ROUTE_COMMAND.GUIDED:
+        case MISSILE_ROUTE_COMMAND.GUIDED: {
           const { vx, vy, angle, targetIndex } = this.#lockOn(missile);
 
           missile.targetIndex = targetIndex;
@@ -143,17 +161,19 @@ class MissileLauncher {
 
           missile.enemyTargetMove();
           break;
+        }
 
-        case MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY:
+        case MISSILE_ROUTE_COMMAND.ENEMY_ALLWAY: {
           missile.enemyTargetMove();
           break;
+        }
       }
 
       missile.frame += 1;
     });
   }
 
-  #lockOn(missile) {
+  #lockOn(missile: Missile) {
     const missileVector = {
       vx: 0,
       vy: 0,
@@ -197,7 +217,7 @@ class MissileLauncher {
     return missileVector;
   }
 
-  #getTargetDirection(target, missile) {
+  #getTargetDirection(target: SpaceShip, missile: Missile) {
     const targetX = target.x + target.width / 2;
     const targetY = target.y + target.height / 2;
     const missileX = missile.x + missile.width / 2;

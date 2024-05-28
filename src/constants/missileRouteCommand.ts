@@ -1,4 +1,4 @@
-import MissileRouteCommand from "../types/interfaces";
+import { MissileRouteCommand } from "../types/interfaces";
 
 const MISSILE_ROUTE_COMMAND: MissileRouteCommand = {
   PLAYER_STRAIGHT: "PLAYER_STRAIGHT",
