@@ -45,6 +45,8 @@ module.exports = {
         "class-methods-use-this": "off",
         "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
         "no-param-reassign": ["error", { "props": false }],
+        "no-unused-expressions": "off",
+        "default-case": "off",
         "quotes": [
             "error",
             "double",
