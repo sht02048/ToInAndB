@@ -44,6 +44,15 @@ module.exports = {
         "quotes": ["error", "double"],
         "class-methods-use-this": "off",
         "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+        "no-param-reassign": ["error", { "props": false }],
+        "quotes": [
+            "error",
+            "double",
+            {
+              "avoidEscape": true,
+              "allowTemplateLiterals": true
+            }
+          ],
         "import/extensions": [
             "error",
             "ignorePackages",
