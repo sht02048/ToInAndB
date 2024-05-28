@@ -1,13 +1,18 @@
 class Sound {
+  public sound: HTMLAudioElement;
+  private path: string;
+  private isPaused: boolean;
+  private index: number;
+
   static hasIntroPlayed = false;
   static isPlaying = false;
   static audioList = [];
   static muteToggle = document.getElementById("mute-toggle");
 
-  constructor(soundPath) {
+  constructor(soundPath: string) {
     this.sound = new Audio(soundPath);
     this.sound.loop = true;
-    this.sound.muted = Sound.isPlaying ? false : true;
+    this.sound.muted = !Sound.isPlaying;
     this.path = soundPath;
     this.isPaused = false;
     this.index = Sound.audioList.length;
@@ -15,7 +20,7 @@ class Sound {
     Sound.audioList.push(this);
   }
 
-  static unmute() {
+  static unmute(): void {
     Sound.audioList.forEach((audio) => {
       audio.sound.muted = false;
     });
@@ -28,7 +33,7 @@ class Sound {
     Sound.isPlaying = true;
   }
 
-  static mute() {
+  static mute(): void {
     Sound.audioList.forEach((audio) => {
       audio.sound.muted = true;
     });
@@ -42,7 +47,7 @@ class Sound {
     Sound.isPlaying = false;
   }
 
-  playAudio() {
+  public playAudio(): void {
     const currentSound = Sound.audioList[this.index];
 
     if (currentSound.isPaused) {
@@ -52,7 +57,7 @@ class Sound {
     this.sound.play();
   }
 
-  pauseAudio() {
+  public pauseAudio(): void {
     const currentSound = Sound.audioList[this.index];
     currentSound.isPaused = true;
     this.sound.pause();
