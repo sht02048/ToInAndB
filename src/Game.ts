@@ -2,19 +2,21 @@
 import "@fortawesome/fontawesome-free/js/all.js";
 
 import "./style.css";
+import Scene from "./scenes/Scene";
 import Player from "./entities/Player";
 
 import Sound from "./utils/Sound";
 import DisplayOptimizer from "./utils/DisplayOptimizer";
 
-import Intro from "./scenes/Intro";
-import Outro from "./scenes/Outro";
+import Intro from "./graphics/Intro";
+import Outro from "./graphics/Outro";
 import Lounge from "./scenes/Lounge";
 import Hallway from "./scenes/Hallway";
 import Entrance from "./scenes/Entrance";
 import ThroneRoom from "./scenes/ThroneRoom";
 import GuardChamber from "./scenes/GuardChamber";
 
+import Map from "./graphics/Map";
 import Menu from "./graphics/Menu";
 import Renderer from "./graphics/Renderer";
 import LifeBoard from "./graphics/LifeBoard";
@@ -24,6 +26,24 @@ import FPS from "./constants/fps";
 import { BACKGROUNDS } from "./constants/path";
 
 class Game extends Renderer {
+  private player: Player;
+  private entrance: Entrance;
+  private hallWay: Hallway;
+  private lounge: Lounge;
+  private guardChamber: GuardChamber;
+  private throneRoom: ThroneRoom;
+  private block: Map;
+  private plate: Map;
+  private base: Map;
+  private space: Map;
+  private lifeBoard: LifeBoard;
+  private intro: Intro;
+  private outro: Outro;
+  private menu: Menu;
+  private isPaused: boolean;
+  private backgroundScenes: (Map | Intro | LifeBoard | Outro)[];
+  private combatScenes: Scene[];
+
   #playGame;
   #playIntro;
   #fps = FPS;
@@ -49,7 +69,7 @@ class Game extends Renderer {
   }
 
   update() {
-    this.backgroundScenes.forEach((background) => {
+    this.backgroundScenes.forEach((background): void => {
       if (!background.shouldBeDisplayed) {
         return;
       }
@@ -59,7 +79,9 @@ class Game extends Renderer {
         return;
       }
 
-      background.update?.();
+      if (!(background instanceof LifeBoard)) {
+        background.update();
+      }
     });
 
     this.combatScenes.forEach((combat) => {
@@ -81,17 +103,13 @@ class Game extends Renderer {
 
       if (background instanceof LifeBoard) {
         background.render(this.player.healthPoint);
-      }
-
-      if (Array.isArray(background?.healthList)) {
-        background.render(this.player.healthPoint);
         return;
       }
 
       background.render();
     });
 
-    this.combatScenes.forEach((combat) => {
+    this.combatScenes.forEach((combat: Scene) => {
       if (!combat.shouldBeDisplayed) {
         return;
       }
@@ -134,10 +152,10 @@ class Game extends Renderer {
       this.backgroundScenes.push(this.intro);
     }
 
-    this.block = new Background(BACKGROUNDS.BLOCK);
-    this.plate = new Background(BACKGROUNDS.PLATE);
-    this.base = new Background(BACKGROUNDS.BASE);
-    this.space = new Background(BACKGROUNDS.SPACE_BOSS);
+    this.block = new Map(BACKGROUNDS.BLOCK);
+    this.plate = new Map(BACKGROUNDS.PLATE);
+    this.base = new Map(BACKGROUNDS.BASE);
+    this.space = new Map(BACKGROUNDS.SPACE_BOSS);
     this.lifeBoard = new LifeBoard();
     this.outro = new Outro();
 
@@ -155,9 +173,9 @@ class Game extends Renderer {
   }
 
   setTargetList() {
-    this.playerTargetList = this.entrance.setSceneTargetList();
-    this.entrance.setTarget([this.player]);
-    this.player.setTargetList(this.playerTargetList);
+    const playerTargetList = this.entrance.setSceneTargetList();
+    this.entrance.setTarget(this.player);
+    this.player.setTargetList(playerTargetList);
   }
 
   controlScene() {
@@ -174,7 +192,7 @@ class Game extends Renderer {
     if (isEntranceOver && !this.hallWay.hasStarted) {
       this.hallWay.shouldBeDisplayed = true;
       this.hallWay.hasStarted = true;
-      this.hallWay.setTarget([this.player]);
+      this.hallWay.setTarget(this.player);
 
       const hallwayTarget = this.hallWay.setSceneTargetList();
       this.player.setTargetList(hallwayTarget);
@@ -192,7 +210,7 @@ class Game extends Renderer {
 
       const loungeTarget = this.lounge.setSceneTargetList();
       this.player.setTargetList(loungeTarget);
-      this.lounge.setTarget([this.player]);
+      this.lounge.setTarget(this.player);
 
       return;
     }
@@ -200,7 +218,7 @@ class Game extends Renderer {
     if (isLoungeOver && !this.guardChamber.hasStarted) {
       this.guardChamber.shouldBeDisplayed = true;
       this.guardChamber.hasStarted = true;
-      this.guardChamber.setTarget([this.player]);
+      this.guardChamber.setTarget(this.player);
 
       const guardChamberTarget = this.guardChamber.setSceneTargetList();
       this.player.setTargetList(guardChamberTarget);
@@ -238,7 +256,7 @@ class Game extends Renderer {
 
       const throneRoomTarget = this.throneRoom.setSceneTargetList();
       this.player.setTargetList(throneRoomTarget);
-      this.throneRoom.setTarget([this.player]);
+      this.throneRoom.setTarget(this.player);
     }
 
     if (isThroneRoomOver && this.#endingFrame > 0) {
@@ -354,7 +372,7 @@ class Game extends Renderer {
   }
 
   handlePause() {
-    this.activatePause = (event) => {
+    const activatePause = (event: KeyboardEvent): void => {
       if (event.key === "Escape") {
         this.toggleIsPaused();
 
@@ -374,7 +392,7 @@ class Game extends Renderer {
       }
     };
 
-    document.addEventListener("keydown", this.activatePause);
+    document.addEventListener("keydown", activatePause);
   }
 
   toggleIsPaused() {
