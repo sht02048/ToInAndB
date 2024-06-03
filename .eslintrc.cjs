@@ -2,7 +2,8 @@ module.exports = {
     "parser": "@typescript-eslint/parser",
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "plugins": [
         "@typescript-eslint"
@@ -40,6 +41,7 @@ module.exports = {
         "project": "./tsconfig.json"
     },
     "rules": {
+        "no-underscore-dangle":  "off",
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
         "class-methods-use-this": "off",

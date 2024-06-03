@@ -1,5 +1,5 @@
 import Sound from "../utils/Sound";
-import Renderer from "../graphics/Renderer";
+import Renderer from "./Renderer";
 
 import FPS from "../constants/fps";
 import { IMAGE, AUDIO } from "../constants/path";
@@ -18,8 +18,9 @@ class Outro {
   private canvasWidth: number;
   private x: number;
   private y: number;
-  private isOut: boolean;
-  private shouldBeDisplayed: boolean;
+
+  public isOut: boolean;
+  public shouldBeDisplayed: boolean;
 
   constructor() {
     this.title = new Renderer(IMAGE.OUTRO_TITLE);

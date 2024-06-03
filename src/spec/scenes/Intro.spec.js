@@ -1,4 +1,4 @@
-import Intro from "../../scenes/Intro";
+import Intro from "../../graphics/Intro";
 
 describe("Intro", () => {
   const mainCanvas = document.createElement("canvas");

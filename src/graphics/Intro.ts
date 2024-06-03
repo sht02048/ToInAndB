@@ -1,29 +1,31 @@
 import Sound from "../utils/Sound";
 import { IMAGE, AUDIO } from "../constants/path";
-import Renderer from "../graphics/Renderer";
+import Renderer from "./Renderer";
+import Background from "./Background";
 
-class Intro {
+class Intro extends Background {
+  private title: Renderer;
+  private instruction: Renderer;
+  private inAndOutSpeed: number;
+  private instructionY: number;
+  private titleY: number;
+  private isUp: boolean;
+  private amplitude: number;
+
+  public canvasWidth: number;
+  public canvasHeight: number;
+  public introMusic: Sound;
+  public battleMusic: Sound;
+
   #floatSpeed = 0.1;
   #titleWidth = 1158;
   #titleHeight = 951;
   #instructionWidth = 934;
   #instructionHeight = 53;
 
-  private title: Renderer;
-  private instruction: Renderer;
-  private introMusic: Sound;
-  private battleMusic: Sound;
-  private canvasWidth: number;
-  private canvasHeight: number;
-  private inAndOutSpeed: number;
-  private x: number;
-  private instructionY: number;
-  private titleY: number;
-  private isUp: boolean;
-  private amplitude: number;
-  private shouldBeDisplayed: boolean;
-
   constructor() {
+    super();
+
     this.title = new Renderer(IMAGE.TITLE);
     this.instruction = new Renderer(IMAGE.INSTRUCTION_START);
 
@@ -37,7 +39,6 @@ class Intro {
 
     this.isUp = true;
     this.amplitude = 0;
-    this.shouldBeDisplayed = false;
 
     this.introMusic = new Sound(AUDIO.INTRO);
     this.battleMusic = new Sound(AUDIO.BATTLE);
