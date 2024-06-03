@@ -1,18 +1,15 @@
-import Renderer from "../graphics/Renderer";
+import Scene from "./Scene";
 
 import Player from "../entities/Player";
 import Bug from "../entities/enemies/Bug";
 import Heavy from "../entities/enemies/Heavy";
 
-class Entrance extends Renderer {
+class Entrance extends Scene {
   #appearanceFrame = 300;
   #heavyWidth = 50;
-  #isDone = true;
 
   private bugList: Bug[];
   private heavy: Heavy;
-  private shouldBeDisplayed: boolean;
-  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -22,9 +19,6 @@ class Entrance extends Renderer {
       new Bug({ x: this.maxX - 100, y: index * -150 - 50, isLeft: false }),
     ]).flat();
     this.heavy = new Heavy(this.canvasWidth / 2 - this.#heavyWidth / 2, -200);
-
-    this.shouldBeDisplayed = false;
-    this.hasStarted = false;
   }
 
   update(): void {
@@ -44,8 +38,8 @@ class Entrance extends Renderer {
   }
 
   setTarget(player: Player): void {
-    this.bugList.forEach((bug) => bug.setTargetList(player));
-    this.heavy.setTargetList(player);
+    this.bugList.forEach((bug) => bug.setTargetList([player]));
+    this.heavy.setTargetList([player]);
   }
 
   setSceneTargetList(): (Heavy | Bug)[] {
@@ -55,19 +49,19 @@ class Entrance extends Renderer {
   }
 
   checkSceneStatus(): boolean {
-    this.#isDone = true;
+    this.isDone = true;
 
     this.bugList.forEach((bug) => {
       if (!bug.isDestroyed && !bug.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
     if (!this.heavy.isDestroyed && !this.heavy.isVanished) {
-      this.#isDone = false;
+      this.isDone = false;
     }
 
-    return this.#isDone;
+    return this.isDone;
   }
 }
 

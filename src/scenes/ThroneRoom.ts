@@ -1,18 +1,15 @@
-import Renderer from "../graphics/Renderer";
+import Scene from "./Scene";
 
 import Player from "../entities/Player";
 import Boss from "../entities/enemies/Boss";
 import Bot from "../entities/enemies/Bot";
 
-class ThroneRoom extends Renderer {
+class ThroneRoom extends Scene {
   #bossWidth = 228;
   #spawnInterval = 60;
 
-  private boss: Boss;
+  public boss: Boss;
   private botList: Bot[];
-  private shouldBeDisplayed: boolean;
-  private hasStarted: boolean;
-  private isDone: boolean;
 
   constructor() {
     super();
@@ -22,9 +19,6 @@ class ThroneRoom extends Renderer {
       y: -300,
     });
     this.botList = [];
-
-    this.shouldBeDisplayed = false;
-    this.hasStarted = false;
   }
 
   update(): void {
@@ -75,8 +69,8 @@ class ThroneRoom extends Renderer {
   }
 
   setTarget(player: Player): void {
-    this.boss.setTargetList(player);
-    this.botList.forEach((bot) => bot.setTargetList(player));
+    this.boss.setTargetList([player]);
+    this.botList.forEach((bot) => bot.setTargetList([player]));
   }
 
   setSceneTargetList(): (Boss | Bot)[] {

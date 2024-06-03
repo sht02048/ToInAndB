@@ -1,8 +1,9 @@
 class Sound {
-  public sound: HTMLAudioElement;
   private path: string;
-  private isPaused: boolean;
   private index: number;
+
+  public sound: HTMLAudioElement;
+  public isPaused: boolean;
 
   static hasIntroPlayed = false;
   static isPlaying = false;

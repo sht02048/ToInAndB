@@ -1,19 +1,16 @@
-import Renderer from "../graphics/Renderer";
+import Scene from "./Scene";
 
 import Player from "../entities/Player";
 import Mini from "../entities/enemies/Mini";
 import Cannon from "../entities/enemies/Cannon";
 import Danger from "../entities/enemies/Danger";
 
-class Hallway extends Renderer {
-  #isDone = true;
+class Hallway extends Scene {
   #miniWidth = 44;
 
   private mini: Mini;
   private cannonList: Cannon[];
   private dangerList: Danger[];
-  private shouldBeDisplayed: boolean;
-  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -35,9 +32,6 @@ class Hallway extends Renderer {
         isLeft: false,
       }),
     ]).flat();
-
-    this.shouldBeDisplayed = false;
-    this.hasStarted = false;
   }
 
   update() {
@@ -53,9 +47,9 @@ class Hallway extends Renderer {
   }
 
   setTarget(player: Player) {
-    this.mini.setTargetList(player);
-    this.cannonList.forEach((cannon) => cannon.setTargetList(player));
-    this.dangerList.forEach((danger) => danger.setTargetList(player));
+    this.mini.setTargetList([player]);
+    this.cannonList.forEach((cannon) => cannon.setTargetList([player]));
+    this.dangerList.forEach((danger) => danger.setTargetList([player]));
   }
 
   setSceneTargetList() {
@@ -65,25 +59,25 @@ class Hallway extends Renderer {
   }
 
   checkSceneStatus() {
-    this.#isDone = true;
+    this.isDone = true;
 
     if (!this.mini.isDestroyed && !this.mini.isVanished) {
-      this.#isDone = false;
+      this.isDone = false;
     }
 
     this.cannonList.forEach((cannon) => {
       if (!cannon.isDestroyed && !cannon.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
     this.dangerList.forEach((danger) => {
       if (!danger.isDestroyed && !danger.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
-    return this.#isDone;
+    return this.isDone;
   }
 }
 

@@ -1,18 +1,15 @@
-import Renderer from "../graphics/Renderer";
+import Scene from "./Scene";
 
 import Player from "../entities/Player";
 import Guard from "../entities/enemies/Guard";
 import Cow from "../entities/enemies/Cow";
 
-class GuardChamber extends Renderer {
+class GuardChamber extends Scene {
   #emperorWidth = 71;
-  #isDone = true;
 
   private guard: Guard;
   private cowLeftList: Cow[];
   private cowRightList: Cow[];
-  private shouldBeDisplayed: boolean;
-  private hasStarted: boolean;
 
   constructor() {
     super();
@@ -41,9 +38,6 @@ class GuardChamber extends Renderer {
         y: -200,
       }),
     ];
-
-    this.shouldBeDisplayed = false;
-    this.hasStarted = false;
   }
 
   update() {
@@ -69,37 +63,41 @@ class GuardChamber extends Renderer {
   }
 
   setTarget(player: Player) {
-    this.guard.setTargetList(player);
-    this.cowLeftList.forEach((cow) => cow.setTargetList(player));
-    this.cowRightList.forEach((cow) => cow.setTargetList(player));
+    this.guard.setTargetList([player]);
+    this.cowLeftList.forEach((cow) => cow.setTargetList([player]));
+    this.cowRightList.forEach((cow) => cow.setTargetList([player]));
   }
 
   setSceneTargetList() {
-    const sceneTargetList = [this.guard, ...this.cowLeftList, ...this.cowRightList];
+    const sceneTargetList = [
+      this.guard,
+      ...this.cowLeftList,
+      ...this.cowRightList,
+    ];
 
     return sceneTargetList;
   }
 
   checkSceneStatus() {
-    this.#isDone = true;
+    this.isDone = true;
 
     if (!this.guard.isDestroyed && !this.guard.isVanished) {
-      this.#isDone = false;
+      this.isDone = false;
     }
 
     this.cowLeftList.forEach((cow) => {
       if (!cow.isDestroyed && !cow.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
     this.cowRightList.forEach((cow) => {
       if (!cow.isDestroyed && !cow.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
-    return this.#isDone;
+    return this.isDone;
   }
 }
 

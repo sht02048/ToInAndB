@@ -1,16 +1,12 @@
-import Renderer from "../graphics/Renderer";
+import Scene from "./Scene";
 
 import Player from "../entities/Player";
 import Cross from "../entities/enemies/Cross";
 import Wings from "../entities/enemies/Wings";
 
-class Lounge extends Renderer {
-  #isDone = true;
-
+class Lounge extends Scene {
   private wings: Wings;
   private crossList: Cross[];
-  private shouldBeDisplayed: boolean;
-  private hasStarted: boolean;
   private player: Player;
 
   constructor() {
@@ -21,9 +17,6 @@ class Lounge extends Renderer {
       new Cross({ x: 100, y: -100 }),
       new Cross({ x: 600, y: -150 }),
     ];
-
-    this.shouldBeDisplayed = false;
-    this.hasStarted = false;
   }
 
   update() {
@@ -40,9 +33,9 @@ class Lounge extends Renderer {
   }
 
   setTarget(player: Player) {
-    this.wings.setTargetList(player);
+    this.wings.setTargetList([player]);
     this.crossList.forEach((cross) => {
-      cross.setTargetList(player);
+      cross.setTargetList([player]);
     });
 
     this.player = player;
@@ -55,19 +48,19 @@ class Lounge extends Renderer {
   }
 
   checkSceneStatus() {
-    this.#isDone = true;
+    this.isDone = true;
 
     if (!this.wings.isDestroyed && !this.wings.isVanished) {
-      this.#isDone = false;
+      this.isDone = false;
     }
 
     this.crossList.forEach((cross) => {
       if (!cross.isDestroyed && !cross.isVanished) {
-        this.#isDone = false;
+        this.isDone = false;
       }
     });
 
-    return this.#isDone;
+    return this.isDone;
   }
 
   respawnCross() {
@@ -83,7 +76,10 @@ class Lounge extends Renderer {
     const secondRandomY = Math.random() * 100 + 44;
 
     const firstCross: Cross = new Cross({ x: firstRandomX, y: -firstRandomY });
-    const secondCross: Cross = new Cross({ x: secondRandomX, y: -secondRandomY });
+    const secondCross: Cross = new Cross({
+      x: secondRandomX,
+      y: -secondRandomY,
+    });
 
     firstCross.setTargetList(this.player);
     secondCross.setTargetList(this.player);
