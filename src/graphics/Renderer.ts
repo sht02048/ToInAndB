@@ -2,7 +2,6 @@ class Renderer {
   private imagePath?: string;
   private image: HTMLImageElement;
   private introCanvas: HTMLCanvasElement;
-  private introCtx: CanvasRenderingContext2D;
 
   public frame: number;
   public height: number;
@@ -17,6 +16,7 @@ class Renderer {
   public readonly canvasHeight: number;
   public readonly mainCanvas: HTMLCanvasElement;
   public readonly mainCtx: CanvasRenderingContext2D;
+  public introCtx: CanvasRenderingContext2D;
   public readonly inAndOutSpeed: number;
 
   #leftBlockSize = 100;

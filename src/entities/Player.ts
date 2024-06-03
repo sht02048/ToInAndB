@@ -34,10 +34,10 @@ class Player extends SpaceShip {
   private invincibleFrame: number;
   private straightProjectile: string;
   private guidedProjectile: string;
-  private shouldOut: boolean;
   private isOut: boolean;
   private cockpit: Cockpit;
 
+  public shouldOut: boolean;
   public level: number;
   public isShooting: boolean;
   public currentDirection: Renderer;

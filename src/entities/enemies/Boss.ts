@@ -22,6 +22,10 @@ interface CollisionDetectors {
 }
 
 class Boss extends Enemy {
+  public backgroundMusic: Sound;
+  public hasBackgroundMusicPlayed: boolean;
+  public shouldSpawnBot: boolean;
+
   #bossWidth = 228;
   #bossHeight = 218;
   #guidedYModifier = 30;
@@ -60,10 +64,6 @@ class Boss extends Enemy {
     leftGuided: null,
     rightGuided: null,
   };
-
-  private backgroundMusic: Sound;
-  private hasBackgroundMusicPlayed: boolean;
-  public shouldSpawnBot: boolean;
 
   constructor({ x, y }) {
     super({
