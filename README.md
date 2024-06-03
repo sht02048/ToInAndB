@@ -439,7 +439,7 @@ PhaserJS의 가장 큰 특징은 `fixedStep의` 값에 따라 델타 타임 애�
 그럼 이번엔 PixiJS의 소스 코드를 보겠습니다.
 
 <details>
-  <summary><b>PhaserJS의 소스코드</b></summary>
+  <summary><b>PixiJS의 소스코드</b></summary>
 
   ```js
      public update(currentTime: number = performance.now()): void
