@@ -1,5 +1,7 @@
 /* eslint-disable*/
+import { inject } from "@vercel/analytics";
 import "@fortawesome/fontawesome-free/js/all.js";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 
 import "./style.css";
 import Scene from "./scenes/Scene";
@@ -448,5 +450,7 @@ class Game extends Renderer {
   }
 }
 
+inject();
+injectSpeedInsights();
 DisplayOptimizer.resize();
 new Game();
